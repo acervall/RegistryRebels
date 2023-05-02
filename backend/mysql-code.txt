@@ -1,0 +1,49 @@
+CREATE DATABASE RegistryRebels DEFAULT CHARACTER SET = 'utf8mb4';
+
+CREATE TABLE
+    category (
+        category_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        categoryName VARCHAR (50)
+    );
+
+CREATE TABLE
+    product (
+        product_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        productName VARCHAR(50),
+        productPrice INT,
+        productAmount INT,
+        productPurchased INT,
+        productImg VARCHAR(500),
+        productURL VARCHAR(50),
+        productFavorite BOOLEAN,
+        productPriority INT,
+        productCategory_Id INT,
+        FOREIGN KEY (productCategory_Id) REFERENCES category(category_Id)
+    );
+
+SELECT * FROM product;
+
+CREATE TABLE
+    guest (
+        guest_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        guestName VARCHAR(50),
+        guestEmail VARCHAR(50),
+        guestGreeting VARCHAR(250)
+    );
+
+CREATE TABLE
+    productGuest (
+        productGuest_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        productGuestP_Id INT,
+        productGuestG_Id INT,
+        FOREIGN KEY (productGuestP_Id) REFERENCES product(product_Id),
+        FOREIGN KEY (productGuestG_Id) REFERENCES guest(guest_Id)
+    );
+
+SHOW TABLES;
+
+SELECT * FROM category;
+
+SELECT * FROM guest;
+
+SELECT * FROM productGuest;
