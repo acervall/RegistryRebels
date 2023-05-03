@@ -9,7 +9,7 @@ CREATE TABLE
 CREATE TABLE
     product (
         product_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        productName VARCHAR(50) UNIQUE INDEX,
+        productName VARCHAR(50),
         productPrice INT,
         productImg VARCHAR(500),
         productURL VARCHAR(500),
