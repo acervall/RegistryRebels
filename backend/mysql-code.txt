@@ -15,11 +15,7 @@ CREATE TABLE
         productName VARCHAR(50) UNIQE INDEX,
         productPrice INT,
         productImg VARCHAR(500),
-<<<<<<< HEAD
         productURL VARCHAR(500),
-=======
-        productURL VARCHAR(50),
->>>>>>> 81f08dec66cf8de0b18ebbbf1a6f871a43031867
         productCategory_Id INT,
         FOREIGN KEY (productCategory_Id) REFERENCES category(category_Id)
     );
