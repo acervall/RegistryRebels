@@ -6,13 +6,20 @@ CREATE TABLE
         categoryName VARCHAR (50)
     );
 
+INSERT INTO category (categoryName)
+VALUES('All Gifts', 'Coffee', 'Kitchen', 'Games');
+
 CREATE TABLE
     product (
         product_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         productName VARCHAR(50) UNIQE INDEX,
         productPrice INT,
         productImg VARCHAR(500),
+<<<<<<< HEAD
         productURL VARCHAR(500),
+=======
+        productURL VARCHAR(50),
+>>>>>>> 81f08dec66cf8de0b18ebbbf1a6f871a43031867
         productCategory_Id INT,
         FOREIGN KEY (productCategory_Id) REFERENCES category(category_Id)
     );
@@ -39,12 +46,21 @@ CREATE TABLE
     );
 
 CREATE TABLE
-    productGuest (
-        productGuest_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        productGuestP_Id INT,
-        productGuestG_Id INT,
-        FOREIGN KEY (productGuestP_Id) REFERENCES product(product_Id),
-        FOREIGN KEY (productGuestG_Id) REFERENCES guest(guest_Id)
+    productListGuest (
+        productListGuest_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        productListGuestP_Id INT,
+        productListGuestG_Id INT,
+        FOREIGN KEY (productListGuestP_Id) REFERENCES productList(productList_Id),
+        FOREIGN KEY (productListGuestG_Id) REFERENCES guest(guest_Id)
+    );
+    
+CREATE TABLE
+    user (
+        user_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        userName VARCHAR (50),
+        userEmail VARCHAR (50),
+        userPassword VARCHAR(50),
+        userProductList_Id INT
     );
 
 SHOW TABLES;

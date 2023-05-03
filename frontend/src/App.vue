@@ -8,7 +8,7 @@
       /*      CitiesList,
       CounterButton,
       HelloWorld*/
-    }
+    },
   }
 </script>
 

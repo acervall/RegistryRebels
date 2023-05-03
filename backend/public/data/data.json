@@ -1,12 +1,14 @@
  [
     {
-      "bokId": "1",
-      "bokTitel": "Sagan om ringen",
-      "bokForfattare": "J.R.R Tolkien"
+      "name": "Johan",
+      "foodchoices": "Gluten, Sprit"
     },
     {
-      "bokId": "2",
-      "bokTitel": "Pippi på de sju haven",
-      "bokForfattare": "Astrid Lindgren"
+      "name": "Markus",
+      "foodchoices": "Fläskitarian"
+    },
+    {
+      "name": "Thiti",
+      "foodchoices": "Äggallergiker"
     }
   ]
