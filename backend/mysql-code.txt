@@ -6,6 +6,9 @@ CREATE TABLE
         categoryName VARCHAR (50)
     );
 
+INSERT INTO category (categoryName)
+VALUES('All Gifts', 'Coffee', 'Kitchen', 'Games');
+
 CREATE TABLE
     product (
         product_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
