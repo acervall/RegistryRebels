@@ -32,12 +32,12 @@ CREATE TABLE
     );
 
 CREATE TABLE
-    productGuest (
-        productGuest_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        productGuestP_Id INT,
-        productGuestG_Id INT,
-        FOREIGN KEY (productGuestP_Id) REFERENCES product(product_Id),
-        FOREIGN KEY (productGuestG_Id) REFERENCES guest(guest_Id)
+    productListGuest (
+        productListGuest_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        productListGuestP_Id INT,
+        productListGuestG_Id INT,
+        FOREIGN KEY (productListGuestP_Id) REFERENCES productList(productList_Id),
+        FOREIGN KEY (productListGuestG_Id) REFERENCES guest(guest_Id)
     );
 
 SHOW TABLES;
