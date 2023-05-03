@@ -65,6 +65,14 @@ VALUES ("Cards Against Humanity", 379, "https://www.spelexperten.com/bilder/arti
 SELECT * FROM product;
 
 
+    CREATE TABLE UserProductList (
+    userProductList_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    userProductListP_Id INT,
+    userProductListU_Id INT,
+    FOREIGN KEY (userProductListP_Id) REFERENCES Product (product_Id),
+    FOREIGN KEY (userProductListU_Id) REFERENCES User (user_Id)
+);
+
 SHOW TABLES;
 
 SELECT * FROM category;
