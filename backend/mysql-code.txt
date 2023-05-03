@@ -11,12 +11,8 @@ CREATE TABLE
         product_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         productName VARCHAR(50),
         productPrice INT,
-        productAmount INT,
-        productPurchased INT,
         productImg VARCHAR(500),
         productURL VARCHAR(50),
-        productFavorite BOOLEAN,
-        productPriority INT,
         productCategory_Id INT,
         FOREIGN KEY (productCategory_Id) REFERENCES category(category_Id)
     );
