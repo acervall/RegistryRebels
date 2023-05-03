@@ -27,7 +27,7 @@ CREATE TABLE
     guest (
         guest_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         guestName VARCHAR(50),
-        guestEmail VARCHAR(50),
+        guestProduct_id INT,
         guestGreeting VARCHAR(250)
     );
 
