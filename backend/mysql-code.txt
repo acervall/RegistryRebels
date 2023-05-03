@@ -15,11 +15,7 @@ CREATE TABLE
         productName VARCHAR(50) UNIQE INDEX,
         productPrice INT,
         productImg VARCHAR(500),
-<<<<<<< HEAD
         productURL VARCHAR(500),
-=======
-        productURL VARCHAR(50),
->>>>>>> 81f08dec66cf8de0b18ebbbf1a6f871a43031867
         productCategory_Id INT,
         FOREIGN KEY (productCategory_Id) REFERENCES category(category_Id)
     );
@@ -53,7 +49,7 @@ CREATE TABLE
         FOREIGN KEY (productListGuestP_Id) REFERENCES productList(productList_Id),
         FOREIGN KEY (productListGuestG_Id) REFERENCES guest(guest_Id)
     );
-    
+
 CREATE TABLE
     user (
         user_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -62,6 +58,14 @@ CREATE TABLE
         userPassword VARCHAR(50),
         userProductList_Id INT
     );
+
+    CREATE TABLE UserProductList (
+    userProductList_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    userProductListP_Id INT,
+    userProductListU_Id INT,
+    FOREIGN KEY (userProductListP_Id) REFERENCES Product (product_Id),
+    FOREIGN KEY (userProductListU_Id) REFERENCES User (user_Id)
+);
 
 SHOW TABLES;
 
