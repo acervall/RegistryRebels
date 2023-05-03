@@ -42,7 +42,17 @@ CREATE TABLE
         userEmail VARCHAR (50),
         userPassword VARCHAR(50),
         userProductList_Id INT
-    );    
+    );  
+
+
+CREATE TABLE 
+    UserProductList (
+        userProductList_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        userProductListP_Id INT,
+        userProductListU_Id INT,
+        FOREIGN KEY (userProductListP_Id) REFERENCES Product (product_Id),
+        FOREIGN KEY (userProductListU_Id) REFERENCES User (user_Id)
+);
 
 
 
@@ -63,15 +73,6 @@ VALUES ("Cards Against Humanity", 379, "https://www.spelexperten.com/bilder/arti
 ("Chemex Classic kaffebryggare - 10 koppar", 669, "https://www.cremashop.se/media/cache/gallery_image…ntent/products/chemex/classic-coffeemaker/886.jpg", "https://www.cremashop.se/sv/products/chemex/classic-coffeemaker/886", 9);
 
 SELECT * FROM product;
-
-
-    CREATE TABLE UserProductList (
-    userProductList_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    userProductListP_Id INT,
-    userProductListU_Id INT,
-    FOREIGN KEY (userProductListP_Id) REFERENCES Product (product_Id),
-    FOREIGN KEY (userProductListU_Id) REFERENCES User (user_Id)
-);
 
 SHOW TABLES;
 
