@@ -30,7 +30,7 @@ CREATE TABLE
     guest (
         guest_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         guestName VARCHAR(50),
-        guestProduct_id INT,
+        guestEmail VARCHAR(50),
         guestGreeting VARCHAR(250)
     );
 
@@ -41,6 +41,15 @@ CREATE TABLE
         productListGuestG_Id INT,
         FOREIGN KEY (productListGuestP_Id) REFERENCES productList(productList_Id),
         FOREIGN KEY (productListGuestG_Id) REFERENCES guest(guest_Id)
+    );
+    
+CREATE TABLE
+    user (
+        user_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        userName VARCHAR (50),
+        userEmail VARCHAR (50),
+        userPassword VARCHAR(50),
+        userProductList_Id INT
     );
 
 SHOW TABLES;
