@@ -19,14 +19,14 @@ CREATE TABLE
     );
 
 CREATE TABLE
-    ProductList (
+    productList (
       productList_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       products_Id INT,
       productPriority INT,
       productFavorite BOOLEAN,
       productPurchased INT,
       productAmount INT,
-      FOREIGN KEY (products_Id) REFERENCES Products(productId)
+      FOREIGN KEY (products_Id) REFERENCES product (product_Id)
 );
 
 CREATE TABLE
