@@ -15,7 +15,19 @@ CREATE TABLE
         productURL VARCHAR(500),
         productCategory_Id INT,
         FOREIGN KEY (productCategory_Id) REFERENCES category(category_Id)
+        UNIQUE (productName)
     );
+
+CREATE TABLE
+    ProductList (
+      productList_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      products_Id INT,
+      productPriority INT,
+      productFavorite BOOLEAN,
+      productPurchased INT,
+      productAmount INT,
+      FOREIGN KEY (products_Id) REFERENCES Products(productId)
+);
 
 CREATE TABLE
     guest (
@@ -34,7 +46,7 @@ CREATE TABLE
         FOREIGN KEY (productListGuestG_Id) REFERENCES guest(guest_Id)
     );
 
-    
+
 CREATE TABLE
     user (
         user_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -42,10 +54,10 @@ CREATE TABLE
         userEmail VARCHAR (50),
         userPassword VARCHAR(50),
         userProductList_Id INT
-    );  
+    );
 
 
-CREATE TABLE 
+CREATE TABLE
     UserProductList (
         userProductList_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         userProductListP_Id INT,
