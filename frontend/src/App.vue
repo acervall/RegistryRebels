@@ -1,19 +1,35 @@
 <script>
-  /*  import CitiesList from './components/CitiesList.vue'
-  import CounterButton from './components/CounterButton.vue'
-  import HelloWorld from './components/HelloWorld.vue'*/
-
+  // TODO bryt till page/component
   export default {
+    created() {
+      this.getProducts()
+    },
     components: {
       /*      CitiesList,
       CounterButton,
       HelloWorld*/
     },
+    data() {
+      return {
+        productList: [],
+      }
+    },
+    methods: {
+      async getProducts() {
+        const data = await fetch('http://localhost:3000/api/product')
+        this.productList = await data.json()
+      },
+    },
   }
 </script>
 
 <template>
-  <nav>
+  <ul>
+    <li v-for="product in productList" :key="product.product_Id">
+      {{ product.productName }}
+    </li>
+  </ul>
+  <!-- <nav>
     <ul>
       <li>
         <RouterLink to="/">Hem</RouterLink>
@@ -31,5 +47,5 @@
   <CounterButton />
   <main>
     <RouterView />
-  </main>
+  </main> -->
 </template>
