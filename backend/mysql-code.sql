@@ -1,5 +1,7 @@
 CREATE DATABASE RegistryRebels DEFAULT CHARACTER SET = 'utf8mb4';
 
+-- Categories
+
 CREATE TABLE
     category (
         category_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -75,8 +77,7 @@ CREATE TABLE
 
 INSERT INTO
     category (categoryName)
-VALUES
-('All Gifts'), ('Coffee'), ('Kitchen'), ('Games');
+VALUES ('All Gifts'), ('Coffee'), ('Kitchen'), ('Games');
 
 INSERT INTO
     product (
