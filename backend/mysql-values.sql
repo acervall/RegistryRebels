@@ -91,7 +91,7 @@ VALUES (
     );
 
 INSERT INTO
-    selectedproduct (
+    selectedProduct (
         selectedProductPriority,
         selectedProductFavorite,
         selectedProductPurchased,
