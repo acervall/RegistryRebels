@@ -4,7 +4,7 @@ SELECT * FROM category;
 
 SELECT * FROM guest;
 
-SELECT * FROM guestselectedProduct;
+SELECT * FROM guestSelectedProduct;
 
 SELECT * FROM list;
 
