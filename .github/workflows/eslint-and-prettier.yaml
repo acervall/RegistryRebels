@@ -10,14 +10,14 @@ jobs:
         working-directory: frontend
     steps:
       - name: Checks out the latest Git commit
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Sets up a Node.js environment
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
       - run: npm ci
       - run: npx eslint --ext .js,.vue --max-warnings 0 .
       - run: npx prettier --config .prettierrc.json -l "**/*.{js,vue}"
       - name: 'Sets up a Node.js environment'
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
       - run: |
           npm ci
           npx eslint --ext .js --max-warnings 0 .
