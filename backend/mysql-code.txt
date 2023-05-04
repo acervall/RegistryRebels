@@ -33,7 +33,6 @@ CREATE TABLE
     guest (
         guest_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         guestName VARCHAR(50),
-        guestEmail VARCHAR(50),
         guestGreeting VARCHAR(250)
     );
 
@@ -58,12 +57,12 @@ CREATE TABLE
 
 
 CREATE TABLE
-    UserProductList (
+    userProductList (
         userProductList_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         userProductListP_Id INT,
         userProductListU_Id INT,
-        FOREIGN KEY (userProductListP_Id) REFERENCES Product (product_Id),
-        FOREIGN KEY (userProductListU_Id) REFERENCES User (user_Id)
+        FOREIGN KEY (userProductListP_Id) REFERENCES product (product_Id),
+        FOREIGN KEY (userProductListU_Id) REFERENCES user (user_Id)
 );
 
 

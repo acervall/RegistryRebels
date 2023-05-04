@@ -2,8 +2,27 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 
+// Routes
 const product = require('./routes/product')
 app.use(product)
+
+const category = require('./routes/category')
+app.use(category)
+
+const productList = require('./routes/product-list')
+app.use(productList)
+
+const productListGuest = require('./routes/product-list-guest')
+app.use(productListGuest)
+
+const userProductList = require('./routes/user-product-list')
+app.use(userProductList)
+
+const guest = require('./routes/guest')
+app.use(guest)
+
+const user = require('./routes/user')
+app.use(user)
 
 const bodyParser = require('body-parser')
 
