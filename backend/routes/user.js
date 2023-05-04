@@ -10,6 +10,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(cors());
 const port= 3000;
 
+// GET all users
 router.get('/api/user', async (req, res) => {
   const sql = 'SELECT * FROM user'
   try {
@@ -27,6 +28,26 @@ router.get('/api/user', async (req, res) => {
   }
 });
 
+// GET a single user by id
+router.get("/api/user/:id", async (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM user WHERE user_Id = ?";
+  try {
+    await connection.query(sql, [id], (error, results) => {
+      if (error) {
+        console.error(error.sqlMessage);
+      } else {
+        res.json(results);
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error,
+    });
+  }
+});
+
+// ADD a user
 router.post('/api/user', async(req, res) => {
   const sql = 'INSERT INTO user (userName, userEmail, userPassword, userProductList_Id) VALUES (?,?,?,?)';
   const params = [req.body.userName, req.body.userEmail, req.body.userPassword, req.body.userProductList_Id]
@@ -50,6 +71,7 @@ router.post('/api/user', async(req, res) => {
   }
 });
 
+// CHANGE user info
  router.put('/api/user', async(req, res) => {  
   const sql ='UPDATE user SET userName = ?, userEmail = ?, userPassword = ?, userProductList_Id = ? WHERE user_Id = ?'
   const params =[req.body.userName, req.body.userEmail, req.body.userPassword, req.body.userProductList_Id, req.body.user_Id]
@@ -71,8 +93,9 @@ router.post('/api/user', async(req, res) => {
           error: error.message,
       })
   }
-})
+});
 
+// DELETE user
 router.delete('/api/user', async(req, res) => {
   console.log(req.body)
   let sql = 'DELETE FROM user WHERE user_Id = ?'
