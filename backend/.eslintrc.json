@@ -11,6 +11,6 @@
   },
   "plugins": ["node"],
   "rules": {
-    "node/no-unpublished-require": "allow"
+    "node/no-unpublished-require": 0
   }
 }
