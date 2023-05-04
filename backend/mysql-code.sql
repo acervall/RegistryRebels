@@ -98,19 +98,19 @@ VALUES (
         295,
         'https://www.spelexperten.com/bilder/artiklar/700444.jpg?m=1637241131',
         'https://www.spelexperten.com/sallskapsspel/festspel/mig-0-100-vit.html',
-        1
+        2
     ), (
         'Unstable Unicorns (Swe)',
         249,
         'https://www.spelexperten.com/bilder/artiklar/TEEUU01SCAN.jpg?m=1653896630',
         'https://www.spelexperten.com/sallskapsspel/festspel/unstable-unicorns-swe.html',
-        1
+        3
     ), (
         'Duellen',
         99,
         'https://www.spelexperten.com/bilder/artiklar/zoom/9789188987242_1.jpg?m=1637219326',
         'https://www.spelexperten.com/sallskapsspel/festspel/duellen-2.html',
-        1
+        4
     ), (
         'Med Andra Ord - Harry Potter',
         275,
@@ -122,19 +122,19 @@ VALUES (
         914,
         'https://kitchentime.cdn.storm.io/96bdb35d-d8dc-40f7-b043-7f43fbbe2c31.jpg?preset=66&f=webp',
         'https://www.kitchentime.se/p/versatile-riskokare-angkokare',
-        1
+        2
     ), (
         'Vivid Senses Chardonnay Vitvinsglas 53 cl 2-pack',
         249,
         'https://cervera.cdn.storm.io/c2f2c4b3-53dd-457a-94…e=Pad&quality=75&format=webp&width=384&height=384',
         'https://www.cervera.se/produkt/zwiesel-homeb-vivid-senses-chardonnay-vitvinsglas-53-cl-2p',
-        1
+        3
     ), (
         'Carbonator Pro',
         3000,
         'https://www.aarke.com/media/catalog/product/cache/…256decccb90/c/a/carbonator_pro_matte_black_45.png',
         'https://www.aarke.com/se/carbonator-pro#93=5433',
-        1
+        4
     ), (
         'Chemex Classic kaffebryggare - 10 koppar',
         669,
@@ -142,6 +142,73 @@ VALUES (
         'https://www.cremashop.se/sv/products/chemex/classic-coffeemaker/886',
         1
     );
+
+INSERT INTO
+    productList(
+        productList_Id,
+        products_Id,
+        productPriority,
+        productFavorite,
+        productPurchased,
+        productAmount
+    )
+VALUES (1, 3, 1, false, 2, 4), (2, 2, 2, true, 0, 1);
+
+INSERT INTO
+    guest (
+        guestName,
+        guestEmail,
+        guestGreeting
+    )
+VALUES (
+        'Sandra Olsen',
+        'sandra.olsen@gmail.com',
+        'Nydelig!'
+    ), (
+        'Ole Larsson',
+        'Ole.Larsson@gmail.com',
+        'Super sexy!'
+    );
+
+INSERT INTO
+    productListGuest (
+        productListGuest_Id,
+        productListGuestP_Id,
+        productListGuestG_Id
+    )
+VALUES (1, 2, 3), (2, 1, 2);
+
+INSERT INTO
+    user (
+        userName,
+        userEmail,
+        userPassword,
+        userProductList_Id
+    )
+VALUES (
+        'Anna Andersson',
+        'anna.andersson@gmail.com',
+        'password123',
+        1
+    ), (
+        'Bengt Berg',
+        'bengt.berg@gmail.com',
+        'letmein456',
+        2
+    ), (
+        'Carolina Carlsson',
+        'carolina.carlsson@gmail.com',
+        'abc123xyz',
+        3
+    );
+
+INSERT INTO
+    UserProductList (
+        userProductList_Id,
+        userProductListP_Id,
+        userProductListU_Id
+    )
+VALUES (1, 2, 3), (2, 3, 1);
 
 SELECT * FROM product;
 
