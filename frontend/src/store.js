@@ -1,12 +1,8 @@
-// import { createStore } from 'vuex'
+import { createStore } from 'vuex'
 
-// const mutations = {
-//     increment(state) {
-//       state.counter += 1
-//     }
-//   },
-//   state = {
-//     counter: 0
-//   }
+const mutations = {
+  },
+  state = {
+  }
 
-// export default createStore({ mutations, state, strict: true })
+export default createStore({ mutations, state, strict: true })

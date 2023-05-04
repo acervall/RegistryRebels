@@ -73,19 +73,19 @@ VALUES (
     ), (
         'Vivid Senses Chardonnay Vitvinsglas 53 cl 2-pack',
         249,
-        'https://cervera.cdn.storm.io/c2f2c4b3-53dd-457a-94…e=Pad&quality=75&format=webp&width=384&height=384',
+        'https://cervera.cdn.storm.io/c2f2c4b3-53dd-457a-9418-6084c518ac7b?mode=Pad&quality=75&format=webp&width=828&height=828',
         'https://www.cervera.se/produkt/zwiesel-homeb-vivid-senses-chardonnay-vitvinsglas-53-cl-2p',
         3
     ), (
         'Carbonator Pro',
         3000,
-        'https://www.aarke.com/media/catalog/product/cache/…256decccb90/c/a/carbonator_pro_matte_black_45.png',
+        'https://www.aarke.com/media/catalog/product/cache/2a459b145037fde7a47e8e83f5b66ee1/c/a/carbonator_pro_matte_black_45.png',
         'https://www.aarke.com/se/carbonator-pro#93=5433',
         4
     ), (
         'Chemex Classic kaffebryggare - 10 koppar',
         669,
-        'https://www.cremashop.se/media/cache/gallery_image…ntent/products/chemex/classic-coffeemaker/886.jpg',
+        'https://www.cremashop.se/content/products/chemex/classic-coffeemaker/886.jpg',
         'https://www.cremashop.se/sv/products/chemex/classic-coffeemaker/886',
         1
     );
