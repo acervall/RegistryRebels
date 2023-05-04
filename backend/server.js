@@ -34,6 +34,9 @@ app.use(user)
 
 // app.use(express.static('public'))
 
+app.use(function (err, req, res, next) {
+  res.status(500).json(err.message);
+});
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 // app.get('/api/books', async (req, res) => {
