@@ -1,4 +1,6 @@
+DROP DATABASE IF EXISTS RegistryRebels;
 CREATE DATABASE RegistryRebels DEFAULT CHARACTER SET = 'utf8mb4';
+USE RegistryRebels;
 
 -- Categories
 
@@ -41,6 +43,7 @@ CREATE TABLE
     guest (
         guest_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         guestName VARCHAR(50),
+        guestEmail VARCHAR(50),
         guestGreeting VARCHAR(250)
     );
 
@@ -176,7 +179,7 @@ INSERT INTO
         productListGuestP_Id,
         productListGuestG_Id
     )
-VALUES (1, 2, 3), (2, 1, 2);
+VALUES (1, 2, 2), (2, 1, 2);
 
 INSERT INTO
     user (
@@ -203,12 +206,12 @@ VALUES (
     );
 
 INSERT INTO
-    UserProductList (
+    userProductList (
         userProductList_Id,
         userProductListP_Id,
         userProductListU_Id
     )
-VALUES (1, 2, 3), (2, 3, 1);
+VALUES (1, 1, 3), (2, 2, 1);
 
 SELECT * FROM product;
 
