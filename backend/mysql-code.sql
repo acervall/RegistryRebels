@@ -6,6 +6,7 @@ CREATE TABLE
         categoryName VARCHAR (50)
     );
 
+-- Alla produkter
 CREATE TABLE
     product (
         product_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -18,6 +19,7 @@ CREATE TABLE
         UNIQUE (productName)
     );
 
+-- Tabell för vilka produkter user har valt till sin specifika lista
 CREATE TABLE
     productList (
       productList_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -36,6 +38,7 @@ CREATE TABLE
         guestGreeting VARCHAR(250)
     );
 
+-- Tabell för vilka produkter guest har "valt"
 CREATE TABLE
     productListGuest (
         productListGuest_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -55,7 +58,7 @@ CREATE TABLE
         userProductList_Id INT
     );
 
-
+-- Tabell för flera olika listor, exempelvis en för bröllop, en för födelsedag osv
 CREATE TABLE
     userProductList (
         userProductList_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -69,7 +72,6 @@ CREATE TABLE
 
 INSERT INTO category (categoryName)
 VALUES('All Gifts'), ('Coffee'), ('Kitchen'), ('Games');
-
 
 
 INSERT INTO product (productName, productPrice, productImg, productURL, productCategory_Id)
