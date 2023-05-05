@@ -3,6 +3,7 @@
   import ProductSection from '../components/ProductSection.vue'
   import UserListSection from '../components/UserListSection.vue'
   import NavBar from '../components/NavBar.vue'
+  import AddProduct from '../components/AddProduct.vue'
 
   export default {
     components: {
@@ -10,6 +11,7 @@
       UserListSection,
       CategorySelection,
       NavBar,
+      AddProduct,
     },
   }
 </script>
@@ -21,5 +23,6 @@
     <ProductSection />
     <UserListSection />
     <ProductSection />
+    <AddProduct />
   </div>
 </template>
