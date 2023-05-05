@@ -1,30 +1,64 @@
 <script>
+import GreetingMessage from '../components/GreetingMessage.vue'
+
   export default {
+    components: {
+      GreetingMessage,
+    },
     created() {
       this.getProducts()
     },
     data() {
       return {
         productList: [],
+        amountItems: 0,
+        itemAdd: false,
+        greetingsWindow: false
       }
+    },
+    computed: {
+    greetingWindowActive() {
+      return {
+        opacity: this.greetingsWindow ? 0.3 : 1,
+        position: this.greetingsWindow ? 'fixed' : 'static'
+      };
+    }
     },
     methods: {
       async getProducts() {
         const data = await fetch('http://localhost:3000/api/products')
         this.productList = await data.json()
-        console.log(this.productList)
       },
+
+      updateGreetingsWindow() {
+      this.greetingsWindow = false;
+      },
+
+      addAmount(productId) {
+        const productIndex = this.productList.findIndex(span => span.product_Id === productId);
+        console.log(productIndex)
+        console.log(productId)
+      },
+      subtractAmount(productId) {
+        const productIndex = this.productList.findIndex(span => span.product_Id === productId);
+        this.productList[productIndex].amountItems = (this.amountItems - 1)
+},
+      itemAdded(productId) {
+        const productIndex = this.productList.findIndex(p => p.product_Id === productId);
+        this.productList[productIndex].itemAdd = true;
+        this.greetingsWindow = true
+    }
     },
   }
 </script>
 
 <template>
-  <div id="main-container">
+  <div :style="greetingWindowActive" id="main-container">
     <div id="products-container" v-for="product in productList" :key="product.product_Id">
       <img :src="product.productImg" alt="product image" />
       <div id="product-info-container">
         <div class="title-price-container">
-          <a :href="product.productURL" target="_blank">{{ product.productName }} -</a>
+          <a :href="product.productURL" target="_blank">{{ product.productName }}</a>
         </div>
         <div class="title-price-container">
           <p>{{ product.categoryName }}</p>
@@ -41,16 +75,20 @@
           <h4 style="margin-left: auto; font-weight: 400;">{{ product.productPrice }}:-</h4>
         </div>
         <div class="add-subtract-container">
-          <button class="subtract-btn">-</button>
-          <span class="counter-value">0</span>
-          <button class="add-btn">+</button>
+          <button class="subtract-btn" @click="subtractAmount(product.product_Id)">-</button>
+          <span class="counter-value"> {{ amountItems }} </span>
+          <button class="add-btn" @click="addAmount(product.product_Id)">+</button>
         </div>
         <div class="wish-amount-container">
-          <button class="select-btn">Select Item</button>
+          <button class="select-btn" @click="itemAdded(product.product_Id)">
+            <p v-if="!product.itemAdd">Select Item</p>
+            <p v-else>Added</p>
+          </button>
         </div>
       </div>
     </div>
   </div>
+  <GreetingMessage v-if="greetingsWindow" @submit-greeting="updateGreetingsWindow" />
 </template>
 
 <style scoped>
@@ -122,4 +160,5 @@ img {
 .add-subtract-container button:hover, .select-btn:hover {
   cursor: pointer;
 }
+
 </style>
