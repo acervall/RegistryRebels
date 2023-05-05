@@ -14,7 +14,7 @@
 </script>
 
 <template>
-  <div class="container navbar">
+  <div class="container">
     <div class="parent">
       <div class="menu" :class="{ 'menu-open': isMenuOpen }">
         <ul>

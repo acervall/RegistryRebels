@@ -20,7 +20,6 @@
     <CategorySelection />
     <ProductSection />
     <UserListSection />
-
     <ProductSection />
   </div>
 </template>
