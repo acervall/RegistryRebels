@@ -9,7 +9,7 @@
 </script>
 
 <template>
-   <main>
+  <main>
     <RouterView />
   </main>
 </template>
