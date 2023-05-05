@@ -3,6 +3,7 @@
     data() {
       return {
         productList: [],
+        userList: [],
       }
     },
   }
