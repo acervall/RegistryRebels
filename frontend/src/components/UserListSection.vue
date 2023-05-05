@@ -1,7 +1,7 @@
 <script>
- export default {
+  export default {
     created() {
-      this.getUserList()
+      this.getProducts()
     },
     data() {
       return {
@@ -10,7 +10,7 @@
     },
     methods: {
       async getProducts() {
-        const data = await fetch('http://localhost:3000//api/user-product-list')
+        const data = await fetch('http://localhost:3000/api/user-product-list')
         this.productList = await data.json()
         console.log(this.userList)
       },

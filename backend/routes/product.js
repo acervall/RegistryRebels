@@ -73,6 +73,37 @@ router.post('/api/products', async (req, res) => {
   }
 })
 
+router.post('/api/product/:id', async (req, res) => {
+  const sql = 'CALL addNewProduct(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+  const params = [
+    req.body.productName,
+    req.body.productPrice,
+    req.body.productImg,
+    req.body.productURL,
+    req.body.productCategory_Id,
+    req.body.selectedProductPriority,
+    req.body.selectedProductFavorite,
+    req.body.selectedProductPurchased,
+    req.body.selectedProductAmount,
+  ]
+
+  try {
+    await connection.query(sql, [...params, req.params.id], (error) => {
+      if (error) {
+        if (error) throw error
+      } else {
+        res.status(201).json({
+          success: true,
+          error: '',
+          message: 'Product has been added',
+        })
+      }
+    })
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+})
+
 // Change a current product. Target specific product ID
 router.put('/api/products', async (req, res) => {
   let sql =

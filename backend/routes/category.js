@@ -2,6 +2,7 @@ const express = require("express");
 const connection = require("../connection");
 const router = express.Router();
 
+// GET all category
 router.get("/api/category", async (req, res) => {
   const sql = "SELECT * FROM category";
   try {
