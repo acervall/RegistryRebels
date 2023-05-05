@@ -3,13 +3,14 @@
     data() {
       return {
         productList: [],
+        userList: [],
       }
     },
   }
 </script>
 
 <template>
-   <main>
+  <main>
     <RouterView />
   </main>
 </template>
