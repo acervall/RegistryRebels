@@ -12,7 +12,7 @@
       return {
         productList: [],
         itemAdd: false,
-        greetingsWindow: false
+        // greetingsWindow: false,
       }
     },
     // computed: {
@@ -47,12 +47,18 @@
       }
     },
       itemAdded(productId) {
+        this.loadingIcon = true
         const productIndex = this.productList.findIndex(p => p.product_Id === productId);
         this.productList[productIndex].itemAdd = true;
         this.greetingsWindow = true
+        const product = this.productList[productIndex];
 
         setTimeout(() => {
-        this.$router.push({ path: '/checkout' });
+        this.$router.push({ path: '/checkout', query: {
+        productId: productId,
+        amount: product.amount
+  }
+ });
         }, 1500);
     }
     },
@@ -172,7 +178,4 @@
     border: none;
   }
 
-.add-subtract-container button:hover, .select-btn:hover {
-  cursor: pointer;
-}
 </style>

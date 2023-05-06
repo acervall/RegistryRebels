@@ -2,21 +2,27 @@
   export default {
     data() {
       return {
-        productList: [],
+        productItem: null,
+        productId: null,
         amountGuests: 1,
+        amountItems: 0,
+        guestName: ""
       }
     },
     created() {
-      this.getProducts()
-      console.log(this.productList)
+      const productId = this.$route.query.productId;
+      const amount = this.$route.query.amount;
+      this.amountItems = amount;
+      this.productId = productId
+      this.getProduct()
     },
     methods: {
-      async getProducts() {
-      const data = await fetch('http://localhost:3000/api/products')
-      this.productList = await data.json()
-      this.productList.forEach(product => {
-        product.amount = 0
-      })
+      async getProduct() {
+      const data = await fetch('http://localhost:3000/api/products/' + this.productId)
+      this.productItem = await data.json()
+      // this.productList.forEach(product => {
+      //   product.amount = 0
+      // })
     },
     addAmount() {
       if (this.amountGuests < 20) {
@@ -33,7 +39,6 @@
 </script>
 
 <template>
-
   <!-- Test 1 -->
   <!-- <div id="greeting-container">
     <h2>Tack för ditt köp!</h2>
@@ -50,24 +55,33 @@
 
   <!-- Test 2 -->
   <div id="main-container-greeting">
-    <h1>Buy this</h1>
+    <div id="intro-container">
+      <router-link to="/">
+        <img
+            id="test"
+            src="/assets/left-arrow-7252.svg"
+            alt="left arrow"
+          />
+      </router-link>
+      <h1>Buy this</h1>
+    </div>
     <div class="product-bought-container">
-      <img :src="productList[4].productImg" alt="product image" />
+      <img :src="productItem[0].productImg" alt="product image" />
         <div class="product-details-container">
-          <h3>Lamp Something</h3>
+          <h3> {{ productItem[0].productName }} </h3>
           <p>From: Sandra Olsen</p>
           <p>Greeting: Nydelig!</p>
         </div>
         <div class="product-details-container" style="margin-left: auto; margin-top: 2px;">
           <p style="margin-top: 4px;">Wished: 4</p>
-          <p>Amount: 2</p>
+          <p>Amount: {{ amountItems }}</p>
         </div>
     </div>
   </div>
   <div id="input-container-greeting">
     <h3>Your Name</h3>
     <div id="name-input-container">
-      <input placeholder="Sandra Olsen" required type="text" v-model.number="guestName" />
+      <input placeholder="Sandra Olsen" required type="text" v-model="guestName" />
       <div class="add-subtract-container">
           <button class="subtract-btn" @click="subtractAmount">-</button>
           <span class="counter-value"> {{ amountGuests }} </span>
@@ -134,6 +148,25 @@
     border: none;
   } */
 
+  #intro-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    margin-left: 25px;
+  }
+
+  #intro-container img {
+    width: 100%;
+    height: 30px;
+  }
+
+  h1 {
+    text-align: center;
+
+    width: 82.5%;
+  }
+
   #main-container-greeting {
     display: flex;
     flex-direction: column;
@@ -161,11 +194,11 @@
     font-size: .85rem;
   }
 
-  img {
+  .product-bought-container img {
     width: 125px;
     height: 125px;
     border-radius: 50%;
-    margin-top: 0px;
+    margin-top: 15px;
   }
 
   #name-input-container {
