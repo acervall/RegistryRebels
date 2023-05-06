@@ -1,10 +1,10 @@
 <script>
-import GreetingMessage from '../components/GreetingMessage.vue'
+// import GreetingMessage from '../components/GreetingMessage.vue'
 
   export default {
-    components: {
-      GreetingMessage,
-    },
+    // components: {
+    //   GreetingMessage,
+    // },
     created() {
       this.getProducts()
     },
@@ -15,14 +15,14 @@ import GreetingMessage from '../components/GreetingMessage.vue'
         greetingsWindow: false
       }
     },
-    computed: {
-    greetingWindowActive() {
-      return {
-        opacity: this.greetingsWindow ? 0.3 : 1,
-        position: this.greetingsWindow ? 'fixed' : 'static'
-      };
-    }
-    },
+    // computed: {
+    // greetingWindowActive() {
+    //   return {
+    //     opacity: this.greetingsWindow ? 0.3 : 1,
+    //     position: this.greetingsWindow ? 'fixed' : 'static'
+    //   };
+    // }
+    // },
     methods: {
       async getProducts() {
       const data = await fetch('http://localhost:3000/api/products')
@@ -41,7 +41,7 @@ import GreetingMessage from '../components/GreetingMessage.vue'
         product.amount++
       }
     },
-    subtractAmount(product) {
+      subtractAmount(product) {
       if (product.amount > 0) {
         product.amount--
       }
@@ -50,6 +50,10 @@ import GreetingMessage from '../components/GreetingMessage.vue'
         const productIndex = this.productList.findIndex(p => p.product_Id === productId);
         this.productList[productIndex].itemAdd = true;
         this.greetingsWindow = true
+
+        setTimeout(() => {
+        this.$router.push({ path: '/checkout' });
+        }, 1500);
     }
     },
   }
@@ -93,10 +97,14 @@ import GreetingMessage from '../components/GreetingMessage.vue'
       </div>
     </div>
   </div>
-  <GreetingMessage v-if="greetingsWindow" @submit-greeting="updateGreetingsWindow" />
+  <!-- <GreetingMessage v-if="greetingsWindow" @submit-greeting="updateGreetingsWindow" /> -->
 </template>
 
 <style scoped>
+* {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+      sans-serif;
+}
   #products-container {
     width: 95%;
     display: flex;
@@ -142,15 +150,17 @@ import GreetingMessage from '../components/GreetingMessage.vue'
     width: 74px;
     border-radius: 2px;
     margin-left: auto;
+    display: flex;
   }
   .add-subtract-container span {
     padding: 0px 8px 2px 8px;
+    margin-top: 1px;
   }
 
   .add-subtract-container button {
     border: none;
     width: 25px;
-    height: 22px;
+    height: 100%;
     background-color: rgb(233, 232, 232);
   }
 
