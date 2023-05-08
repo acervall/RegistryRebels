@@ -5,7 +5,8 @@
         productItem: null,
         productId: null,
         amountItems: 0,
-        guestName: ""
+        guestName: "",
+        greetingMessage: ""
       }
     },
     created() {
@@ -60,14 +61,14 @@
             alt="left arrow"
           />
       </router-link>
-      <h1>Buy this</h1>
+      <h1>Gift this item</h1>
     </div>
     <div class="product-bought-container">
       <img :src="productItem[0].productImg" alt="product image" />
         <div class="product-details-container">
           <h3> {{ productItem[0].productName }} </h3>
           <p>From: Sandra Olsen</p>
-          <p>Greeting: Nydelig!</p>
+          <p style="word-break: break-all;">Greeting: {{ greetingMessage }}</p>
         </div>
         <div class="product-details-container" style="margin-left: auto; margin-top: 2px;">
           <p style="margin-top: 4px;">Wished: 4</p>
@@ -75,7 +76,7 @@
         </div>
     </div>
   </div>
-  <div id="input-container-greeting">
+  <div style=" margin-left: 10px;" id="input-container-greeting">
     <h3>Your Name</h3>
     <div id="name-input-container">
       <input placeholder="Sandra Olsen" required type="text" v-model="guestName" />
@@ -86,9 +87,9 @@
       </div>
     </div>
     <h3>Leave a greeting</h3>
-    <textarea id="greeting-input" placeholder="Nydelig!" name="greeting" rows="8" cols="42" />
+    <textarea id="greeting-input" placeholder="Nydelig!" name="greeting" rows="8" cols="42" v-model="greetingMessage"/>
     <div id="submit-btn-container">
-      <input id="submit-buy-btn" value="Save" />
+      <input id="submit-buy-btn" value="SAVE" />
     </div>
   </div>
 </template>
@@ -160,26 +161,26 @@
 
   h1 {
     text-align: center;
-
-    width: 82.5%;
+    width: 85%;
   }
 
   #main-container-greeting {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-left: 10px;
   }
   .product-bought-container {
     display: flex;
-    border-radius: 15px;
+    border-radius: 2px;
     box-shadow: 2px 3px 6px rgb(158, 158, 158);
     width: 100%;
-    margin-top: 20px;
+    margin-top: 40px;
   }
 
   .product-details-container {
     margin-top: 0px;
-    padding: 12px ;
+    padding: 12px;
   }
 
   .product-details-container h3 {
@@ -189,6 +190,7 @@
   .product-details-container p {
     color: rgb(182, 182, 182);
     font-size: .85rem;
+    width: 150px;
   }
 
   .product-bought-container img {

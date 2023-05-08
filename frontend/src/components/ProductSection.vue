@@ -128,7 +128,9 @@
       v-for="product in productList"
       :key="product.product_Id"
     >
-      <img :src="product.productImg" alt="product image" />
+      <div class="product-image-container">
+        <img :src="product.productImg" alt="product image" />
+      </div>
       <div id="product-info-container">
         <div class="title-price-container">
           <a :href="product.productURL" target="_blank">{{
@@ -138,8 +140,8 @@
         <div class="title-price-container">
           <p>{{ product.categoryName }}</p>
         </div>
-        <div class="wish-amount-container">
-          <p style="font-weight: 600">{{ product.productPrice }}:-</p>
+        <div class="price-amount-container">
+          <p>{{ product.productPrice }}:-</p>
         </div>
       </div>
       <div
@@ -151,7 +153,7 @@
         </div>
         <div class="wish-amount-container">
           <button class="select-btn" @click="itemAdded(product.product_Id)">
-            <p v-if="!product.itemAdd">Buy This</p>
+            <p v-if="!product.itemAdd">SELECT</p>
             <p v-else>Added</p>
           </button>
         </div>
@@ -167,14 +169,14 @@
       sans-serif;
   }
   #products-container {
-    width: 95%;
+    width: 97.5%;
     display: flex;
-    box-shadow: 1px 1px 4px rgb(143, 143, 143);
-    margin: 25px 15px;
+    background-color: #ffffff;
+    margin: 25px 5px;
   }
 
   #product-info-container {
-    margin: 8px 8px 15px 0px;
+    margin: 8px 18px 15px 15px;
     display: flex;
     flex-direction: column;
   }
@@ -182,6 +184,12 @@
   .title-price-container {
     display: flex;
     margin: 4px 0px;
+  }
+
+  .title-price-container a {
+    text-decoration: none;
+    color: #212121;
+    font-weight: 600;
   }
 
   .title-price-container p {
@@ -193,6 +201,13 @@
     width: 100%;
   }
 
+  .price-amount-container p {
+    font-size: 21px;
+    font-family: Libre Caslon Display;
+    font-weight: 500;
+    letter-spacing: -1px;
+  }
+
   p,
   a,
   h4 {
@@ -200,43 +215,36 @@
     padding: 0px;
   }
 
-  img {
-    width: 125px;
-    height: 125px;
+  .product-image-container {
     align-self: center;
+    margin-left: 5px;
+    border-radius: 100%;
+  }
+  img {
+    width: 96px;
+    height: 96px;
+    align-self: center;
+    /* border-radius: 50%; */
+    /* object-fit: cover; */
   }
 
-  .add-subtract-container {
-    border: 1px solid rgb(161, 160, 160);
-    width: 74px;
-    border-radius: 2px;
-    margin-left: auto;
-    display: flex;
-  }
-  .add-subtract-container span {
-    padding: 0px 8px 2px 8px;
-    margin-top: 1px;
-  }
-
-  .add-subtract-container button {
-    border: none;
-    width: 25px;
-    height: 100%;
-    background-color: rgb(233, 232, 232);
-  }
 
   .select-btn {
-    width: 85px;
-    height: 35px;
-    background-color: #828576;
-    border-radius: 5px;
+    width: 76px;
+    height: 32px;
+    background-color: rgb(49, 16, 16);
+    border-radius: 0px;
     border: none;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .select-btn p {
-    color: rgb(238, 238, 238);
-    font-size: 0.9rem;
+    color: #b8b6b3;
+    font-size: 0.85rem;
+    font-family: Libre Caslon Display;
+    margin-top: 4px;
   }
   .categoryContainer {
     display: flex;
