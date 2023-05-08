@@ -18,3 +18,8 @@ SELECT *
 FROM selectedProduct
     INNER JOIN product ON product.product_Id = selectedProduct.selectedProductP_Id
     INNER JOIN list ON list.list_Id = selectedProduct.selectedProductList_Id;
+
+SELECT p.*, c.categoryName
+FROM product p
+JOIN category c ON productCategory_Id = c.category_Id
+WHERE productCategory_Id = 2
