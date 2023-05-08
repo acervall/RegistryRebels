@@ -11,7 +11,6 @@ import GreetingMessage from '../components/GreetingMessage.vue'
     data() {
       return {
         productList: [],
-        amountItems: 0,
         itemAdd: false,
         greetingsWindow: false
       }
@@ -26,23 +25,27 @@ import GreetingMessage from '../components/GreetingMessage.vue'
     },
     methods: {
       async getProducts() {
-        const data = await fetch('http://localhost:3000/api/products')
-        this.productList = await data.json()
-      },
+      const data = await fetch('http://localhost:3000/api/products')
+      this.productList = await data.json()
+      this.productList.forEach(product => {
+        product.amount = 0
+      })
+    },
 
       updateGreetingsWindow() {
       this.greetingsWindow = false;
       },
 
-      addAmount(productId) {
-        const productIndex = this.productList.findIndex(span => span.product_Id === productId);
-        console.log(productIndex)
-        console.log(productId)
-      },
-      subtractAmount(productId) {
-        const productIndex = this.productList.findIndex(span => span.product_Id === productId);
-        this.productList[productIndex].amountItems = (this.amountItems - 1)
-},
+      addAmount(product) {
+        if (product.amount < 9) {
+        product.amount++
+      }
+    },
+    subtractAmount(product) {
+      if (product.amount > 0) {
+        product.amount--
+      }
+    },
       itemAdded(productId) {
         const productIndex = this.productList.findIndex(p => p.product_Id === productId);
         this.productList[productIndex].itemAdd = true;
@@ -58,7 +61,7 @@ import GreetingMessage from '../components/GreetingMessage.vue'
       <img :src="product.productImg" alt="product image" />
       <div id="product-info-container">
         <div class="title-price-container">
-          <a :href="product.productURL" target="_blank">{{ product.productName }} -</a>
+          <a :href="product.productURL" target="_blank">{{ product.productName }}</a>
         </div>
         <div class="title-price-container">
           <p>{{ product.categoryName }}</p>
@@ -70,16 +73,16 @@ import GreetingMessage from '../components/GreetingMessage.vue'
           <p>Bought amount: 0</p>
         </div>
       </div>
-      <div id="product-info-container" style="justify-content: space-around">
+      <div id="product-info-container" style="justify-content: space-around; margin-left: auto;">
         <div class="title-price-container">
           <h4 style="margin-left: auto; font-weight: 400">
             {{ product.productPrice }}:-
           </h4>
         </div>
         <div class="add-subtract-container">
-          <button class="subtract-btn" @click="subtractAmount(product.product_Id)">-</button>
-          <span class="counter-value"> {{ amountItems }} </span>
-          <button class="add-btn" @click="addAmount(product.product_Id)">+</button>
+          <button class="subtract-btn" @click="subtractAmount(product)">-</button>
+          <span class="counter-value"> {{ product.amount }} </span>
+          <button class="add-btn" @click="addAmount(product)">+</button>
         </div>
         <div class="wish-amount-container">
           <button class="select-btn" @click="itemAdded(product.product_Id)">

@@ -1,7 +1,7 @@
 <script>
- export default {
+  export default {
     created() {
-      this.getUserList()
+      this.getProducts()
     },
     data() {
       return {
