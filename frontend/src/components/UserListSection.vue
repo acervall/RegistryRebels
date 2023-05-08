@@ -105,7 +105,6 @@
       <form v-on:submit="addList">
         <label for="listName">Namn på listan :</label>
         <input type="text" id="listName" v-model="listName" />
-        <input type="text" id="listName" v-model="listName" />
         <label for="listU_Id">Skriv in id: </label>
         <input type="number" id="listU_Id" name="listU_Id" v-model="listU_Id" />
         <input type="submit" value="Save list" />
