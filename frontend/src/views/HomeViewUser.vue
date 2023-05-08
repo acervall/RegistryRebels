@@ -50,10 +50,14 @@
       </div>
     </div>
   </div>
-  <GreetingMessage v-if="greetingsWindow" @submit-greeting="updateGreetingsWindow" />
+  <!-- <GreetingMessage v-if="greetingsWindow" @submit-greeting="updateGreetingsWindow" /> -->
 </template>
 
 <style scoped>
+* {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+      sans-serif;
+}
   #products-container {
     width: 95%;
     display: flex;
