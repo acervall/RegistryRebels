@@ -32,31 +32,21 @@
       })
     },
 
-      updateGreetingsWindow() {
-      this.greetingsWindow = false;
-      },
+      // updateGreetingsWindow() {
+      // this.greetingsWindow = false;
+      // },
 
-      addAmount(product) {
-        if (product.amount < 9) {
-        product.amount++
-      }
-    },
-      subtractAmount(product) {
-      if (product.amount > 0) {
-        product.amount--
-      }
-    },
       itemAdded(productId) {
         this.loadingIcon = true
         const productIndex = this.productList.findIndex(p => p.product_Id === productId);
         this.productList[productIndex].itemAdd = true;
         this.greetingsWindow = true
-        const product = this.productList[productIndex];
+        // const product = this.productList[productIndex];
 
         setTimeout(() => {
         this.$router.push({ path: '/checkout', query: {
         productId: productId,
-        amount: product.amount
+        // amount: product.amount
   }
  });
         }, 1500);
@@ -77,26 +67,16 @@
           <p>{{ product.categoryName }}</p>
         </div>
         <div class="wish-amount-container">
-          <p>Wished amount: 0</p>
-        </div>
-        <div class="wish-amount-container">
-          <p>Bought amount: 0</p>
+          <p style="font-weight: 600;">{{ product.productPrice }}:-</p>
         </div>
       </div>
       <div id="product-info-container" style="justify-content: space-around; margin-left: auto;">
         <div class="title-price-container">
-          <h4 style="margin-left: auto; font-weight: 400">
-            {{ product.productPrice }}:-
-          </h4>
-        </div>
-        <div class="add-subtract-container">
-          <button class="subtract-btn" @click="subtractAmount(product)">-</button>
-          <span class="counter-value"> {{ product.amount }} </span>
-          <button class="add-btn" @click="addAmount(product)">+</button>
+          <p style="margin-left: auto;">Qty: 4</p>
         </div>
         <div class="wish-amount-container">
           <button class="select-btn" @click="itemAdded(product.product_Id)">
-            <p v-if="!product.itemAdd">Select Item</p>
+            <p v-if="!product.itemAdd">Buy This</p>
             <p v-else>Added</p>
           </button>
         </div>
@@ -172,10 +152,16 @@
 
   .select-btn {
     width: 85px;
-    height: 25px;
+    height: 35px;
     background-color: #828576;
     border-radius: 5px;
     border: none;
+    text-align: center;
+  }
+
+  .select-btn p {
+    color: rgb(238, 238, 238);
+    font-size: .9rem;
   }
 
 </style>

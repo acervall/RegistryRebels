@@ -1,7 +1,7 @@
 <script>
   export default {
     created() {
-      this.getProducts()
+      this.getUserList()
     },
     data() {
       return {
@@ -26,14 +26,14 @@
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-        
+
             listName: this.listName,
             listU_Id: this.listU_Id
-        })    
+        })
     })
-  
+
     const data = await send.json()
-        console.log("Svar från backend: ", data) 
+        console.log("Svar från backend: ", data)
       }
     },
   }
@@ -44,22 +44,23 @@
   <h1>Create Wislist</h1>
     <div>
         <!-- Formulär -->
-    <form v-on:submit="submitForm">
+    <form @submit="submitForm">
         <label for="listName">Namn på listan :</label>
-        <input type="text" id="listName" v-model="listName">
+        <input type="text" id="listName" v-model="listName" />
         <label for="listU_Id">Skriv in id: </label>
-        <input type="number" id="listU_Id" name="listU_Id" v-model="listU_Id">
-        <input type="submit" value="Save list">
+        <input type="number" id="listU_Id" name="listU_Id" v-model="listU_Id" />
+        <input type="submit" value="Save list" />
     </form>
     </div>
 
     <!-- Lista på alla listor -->
     <h3>All wishlist</h3>
-    <div id="userList-container"
+    <div
+id="userList-container"
     v-for="user in userList"
     :key="user.list_Id">
     <p>{{ user.listName }} {{ user.listU_Id }}</p>
-    
+
     </div>
 </div>
 </template>

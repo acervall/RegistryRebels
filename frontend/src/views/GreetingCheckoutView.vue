@@ -4,15 +4,12 @@
       return {
         productItem: null,
         productId: null,
-        amountGuests: 1,
         amountItems: 0,
         guestName: ""
       }
     },
     created() {
       const productId = this.$route.query.productId;
-      const amount = this.$route.query.amount;
-      this.amountItems = amount;
       this.productId = productId
       this.getProduct()
     },
@@ -25,13 +22,13 @@
       // })
     },
     addAmount() {
-      if (this.amountGuests < 20) {
-        this.amountGuests++
+      if (this.amountItems < 9) {
+        this.amountItems++
       }
     },
     subtractAmount() {
-      if (this.amountGuests > 1) {
-        this.amountGuests--
+      if (this.amountItems > 0) {
+        this.amountItems--
       }
     },
   }
@@ -84,7 +81,7 @@
       <input placeholder="Sandra Olsen" required type="text" v-model="guestName" />
       <div class="add-subtract-container">
           <button class="subtract-btn" @click="subtractAmount">-</button>
-          <span class="counter-value"> {{ amountGuests }} </span>
+          <span class="counter-value"> {{ amountItems }} </span>
           <button class="add-btn" @click="addAmount">+</button>
       </div>
     </div>
