@@ -9,7 +9,9 @@
         listName: '',
         listU_Id: '',
         list_Id: '',
-        showChangeList: false,
+        changedListClicked: false,
+        // removeBtnClicked: false,
+        // deleteList: false,
       }
     },
     methods: {
@@ -42,14 +44,14 @@
         const data = await send.json()
         console.log('Svar från backend: ', data)
       },
+      // toggleIconChangeClicked() {
+      //   this.changedListClicked = !this.changedListClicked
+      //   console.log('Du har klickat på change')
+      // },
 
-      toggleChangeList() {
-        this.showChangeList = !this.showChangeList
-        console.log('Klickar på ändra-ikonen')
-      },
-
-      // SKA ändra och skicka listan till databasen
       async changeList(list_Id) {
+        console.log('Du har klickat på changeList')
+        // SKA ändra och skicka listan till databasen
         // this.listU_Id,
         console.log('Innan send', this.listName, this.list_Id)
         const send = await fetch(
@@ -61,6 +63,7 @@
             },
             body: JSON.stringify({
               listName: this.listName,
+              // listU_Id: this.listU_Id,
               list_Id: this.list_Id,
             }),
           },
@@ -70,7 +73,6 @@
         console.log('Svar från backend: ', data)
       },
 
-      // Tar bort en lista när jag klickar på trashcan
       async deleteList(list_Id) {
         // Skickar lista till databasen
         console.log('Innan send', list_Id)
@@ -91,7 +93,7 @@
 
         const data = await send.json()
         console.log('Svar från backend: ', data)
-        // console.log('Efter send', list_Id)
+        console.log('Efter send', list_Id)
       },
     },
   }
@@ -119,6 +121,7 @@
           <li>{{ user.listName }} {{ user.listU_Id }}</li>
         </ul>
       </div>
+
       <div id="vsg-container">
         <div id="change-btn">
           <svg
@@ -131,7 +134,7 @@
             height="15px"
             viewBox="0 0 494.936 494.936"
             xml:space="preserve"
-            @click="toggleChangeList"
+            @click="changeList(user.list_Id)"
           >
             <g>
               <g>
@@ -152,40 +155,43 @@
               </g>
             </g>
           </svg>
-
-          <div id="trash-btn">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-trash"
-              viewBox="0 0 16 16"
-              @click="deleteList(user.list_Id)"
-            >
-              <path
-                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
-              />
-              <path
-                fill-rule="evenodd"
-                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-              />
-            </svg>
-          </div>
+          <!-- Formulär för att ändra en lista -->
+          <form v-on:submit="changeList">
+            <label v-if="changedListClicked" for="changeName"
+              >Ändra namn på listan:
+            </label>
+            <input v-if="changedListClicked" type="text" />
+            <!-- <label v-if="changedListClicked" for="list-user-Id"
+              >Användar-Id:
+            </label>
+            <input v-if="changedListClicked" type="number" /> -->
+            <label v-if="changedListClicked" for="list-Id">List-Id: </label>
+            <input v-if="changedListClicked" type="number" />
+            <input v-if="changedListClicked" type="submit" value="Save list" />
+          </form>
         </div>
 
-        <!-- Formulär för att ändra en lista -->
-        <form v-if="showChangeList" v-on:submit="changeList">
-          <label for="changeName">Ändra namn på listan: </label>
-          <input type="text" v-model="listName" />
-
-          <label for="list-Id">List-Id: </label>
-          <input type="number" v-model="list_Id" />
-          <input type="submit" value="Save list" />
-        </form>
+        <!-- Trash -->
+        <div id="trash-btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-trash"
+            viewBox="0 0 16 16"
+            @click="deleteList(user.list_Id)"
+          >
+            <path
+              d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+            />
+          </svg>
+        </div>
       </div>
-
-      <!-- Trash -->
     </div>
   </div>
 </template>

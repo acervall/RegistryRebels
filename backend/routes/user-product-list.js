@@ -114,7 +114,7 @@ router.delete('/api/user-product-list', async(req, res) => {
   }
 });
 
-// SKA JAG KOPPLA IHOP SELECTEDPRODUCT OCH USER? AMELIE?
+
 
 
 
