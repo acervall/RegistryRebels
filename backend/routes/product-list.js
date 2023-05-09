@@ -39,8 +39,17 @@ router.get('/api/selectedProduct/:id', async (req, res) => {
   INNER JOIN category c on p.productCategory_Id = c.category_Id
   WHERE sP.selectedProductList_Id = ?`
 
+  let searchTerm = req.body?.searchTerm
+  if (searchTerm) {
+    sql += ` AND p.productName LIKE ?;`
+    searchTerm = `%${searchTerm}%`
+  }
+  const params = [req.params.id, searchTerm].filter((value) => value)
+
+  console.log('SQL: ', sql, ' PARAMS: ', params)
+
   try {
-    await connection.query(sql, [req.params.id], function (error, results) {
+    await connection.query(sql, params, function (error, results) {
       if (error) {
         if (error) throw error
       }
