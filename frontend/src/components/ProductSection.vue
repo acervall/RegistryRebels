@@ -39,12 +39,18 @@
       async getCategoryProducts(categoryId) {
         console.log('Getting products for categoryId', categoryId)
         try {
-          const response = await fetch(
-            `http://localhost:3000/api/category/${categoryId}/products`,
-          )
+          let response
+          if (categoryId === 1) {
+            // If category is 'all gifts', retrieve all products
+            response = await fetch(`http://localhost:3000/api/products`)
+          } else {
+            // If category is not 'all gifts', retrieve products associated with category
+            response = await fetch(
+              `http://localhost:3000/api/category/${categoryId}/products`,
+            )
+          }
           const data = await response.json()
           console.log('Received', data.length, 'products:', data)
-
           this.productList = data
         } catch (error) {
           console.error(error)
@@ -227,7 +233,6 @@
     /* border-radius: 50%; */
     /* object-fit: cover; */
   }
-
 
   .select-btn {
     width: 76px;

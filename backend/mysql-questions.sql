@@ -22,4 +22,4 @@ FROM selectedProduct
 SELECT p.*, c.categoryName
 FROM product p
 JOIN category c ON productCategory_Id = c.category_Id
-WHERE productCategory_Id = 2
+WHERE productCategory_Id = ?
