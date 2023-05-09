@@ -28,6 +28,22 @@ app.get('/api/party', async (req, res) => {
   }
 })
 
+app.post('/api/party', async (req, res) => {
+  const group = req.body?.group
+  console.log('HEJ: ', group)
+  try {
+    const newGroup = new PartyModel({ group })
+    const insertedGroup = await newGroup.save()
+    return res.status(201).json(insertedGroup)
+    // const party = await PartyModel.find()
+    // return res.status(200).json(party)
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    })
+  }
+})
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())

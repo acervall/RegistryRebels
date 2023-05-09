@@ -11,7 +11,7 @@ const RsvpSchema = new mongoose.Schema({
               required: true,
             },
             foodChoice: {
-              type: [String], // Ersätt `Array` med `[String]` för att ange att foodChoice-fältet ska vara en array av strängar.
+              type: [String],
             },
           },
           attending: {
