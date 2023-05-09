@@ -7,9 +7,9 @@ function append(parent, el) {
 }
 
 const ul = document.getElementById('bok')
-const url = 'http://localhost:3000/api/product'
+const url = 'http://localhost:3000'
 //const url = 'data/data.json';
-fetch(url)
+fetch(url + "/api/product")
   .then((resp) => resp.json())
   .then(function (data) {
     console.log(data)

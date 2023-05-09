@@ -5,5 +5,14 @@
     "express": "^4.18.2",
     "mongoose": "^7.1.0",
     "mysql": "^2.18.1"
+  },
+  "scripts": {
+    "start": "nodemon server.js",
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore public"
+  },
+  "devDependencies": {
+    "eslint": "^8.39.0",
+    "eslint-config-eslint": "^7.0.0",
+    "eslint-plugin-node": "^11.1.0"
   }
 }
