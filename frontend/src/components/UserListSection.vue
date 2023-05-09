@@ -38,7 +38,6 @@
         )
         // uppdaterar listan på listorna när du tar bort en lista
         this.getUserList()
-
         const data = await send.json()
         console.log('Svar från backend: ', data)
       },
@@ -186,6 +185,7 @@
       </div>
 
       <!-- Trash -->
+      <p>{{ user.listName }} {{ user.listU_Id }}</p>
     </div>
   </div>
 </template>

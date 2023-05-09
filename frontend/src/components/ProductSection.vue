@@ -63,7 +63,6 @@
           product.amount = 0
         })
       },
-
       updateGreetingsWindow() {
         this.greetingsWindow = false
       },

@@ -74,23 +74,29 @@ router.post('/api/products', async (req, res) => {
 })
 
 router.post('/api/product/:id', async (req, res) => {
-  const sql = 'CALL addNewProduct(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+  const sql = 'CALL addNewProduct(?, ?, ?, ?, ?, ?, ?, ?, ?)'
   const params = [
     req.body.productName,
     req.body.productPrice,
     req.body.productImg,
     req.body.productURL,
     req.body.productCategory_Id,
-    req.body.selectedProductPriority,
     req.body.selectedProductFavorite,
     req.body.selectedProductPurchased,
     req.body.selectedProductAmount,
   ]
+  console.log(params, '\n SQL: ', sql)
 
   try {
     await connection.query(sql, [...params, req.params.id], (error) => {
-      if (error) {
-        if (error) throw error
+      if (error?.code === 'ER_DUP_ENTRY') {
+        res.status(409).json({
+          success: false,
+          error: error,
+          message: 'Product name already exists',
+        })
+      } else if (error) {
+        throw error
       } else {
         res.status(201).json({
           success: true,
