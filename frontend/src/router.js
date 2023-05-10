@@ -3,7 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from './views/HomeView.vue'
 import HomeViewUser from './views/HomeViewUser.vue'
 import GreetingCheckoutView from './views/GreetingCheckoutView.vue'
-
+import RsvpView from './views/RsvpView.vue'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -19,6 +19,10 @@ export default createRouter({
     {
       component: GreetingCheckoutView,
       path: '/checkout',
+    },
+    {
+      component: RsvpView,
+      path: '/rsvp',
     },
   ],
 })
