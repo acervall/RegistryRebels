@@ -171,7 +171,7 @@ app.put('/api/party', async (req, res) => {
 app.delete('/api/party-user', async (req, res) => {
   const participantId = req.body.participants[0]._id
   try {
-    const updatedParty = await PartyModel.updateOne(
+    const updatedParty = await PartyModel.deleteOne(
       {},
       { $pull: { participants: { _id: participantId } } },
     )
