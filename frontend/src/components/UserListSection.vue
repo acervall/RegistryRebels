@@ -173,19 +173,17 @@
             </svg>
           </div>
         </div>
-
-        <!-- Formulär för att ändra en lista -->
-        <form v-if="showChangeList" v-on:submit="changeList">
-          <label for="changeName">Ändra namn på listan: </label>
-          <input type="text" v-model="listName" />
-
-          <label for="list-Id">List-Id: </label>
-          <input type="number" v-model="list_Id" />
-          <input type="submit" value="Save list" />
-        </form>
       </div>
 
-      <!-- Trash -->
+      <!-- Formulär för att ändra en lista -->
+      <form v-if="showChangeList" v-on:submit="changeList">
+        <label for="changeName">Ändra namn på listan: </label>
+        <input type="text" v-model="listName" />
+
+        <label for="list-Id">List-Id: </label>
+        <input type="number" v-model="list_Id" />
+        <input type="submit" value="Save list" />
+      </form>
     </div>
   </div>
 </template>
@@ -193,5 +191,24 @@
 <style scoped>
   ul {
     list-style: none;
+  }
+
+  li {
+    font-weight: 700;
+  }
+
+  #vsg-container {
+    display: flex;
+    /* flex-direction: row; */
+  }
+
+  #change-btn {
+    margin-left: 15%;
+    display: flex;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
   }
 </style>
