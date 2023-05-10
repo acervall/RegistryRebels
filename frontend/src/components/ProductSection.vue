@@ -14,8 +14,8 @@
         productList: [],
         itemAdd: false,
         categories: [],
-        selectedCategory: 1,
-        sortOption: 'default',
+        showCategoryDropdown: false,
+        showSortDropdown: false,
 
         // greetingsWindow: false,
       }
@@ -29,6 +29,15 @@
     // }
     // },
     methods: {
+      toggleDropdown(type) {
+        if (type === 'category') {
+          this.showCategoryDropdown = !this.showCategoryDropdown
+          this.showSortDropdown = false
+        } else if (type === 'sort') {
+          this.showSortDropdown = !this.showSortDropdown
+          this.showCategoryDropdown = false
+        }
+      },
       async getCategories() {
         try {
           const response = await fetch('http://localhost:3000/api/category')
@@ -65,15 +74,25 @@
           product.amount = 0
         })
       },
-      sortProductList() {
-        if (this.sortOption === 'price') {
-          this.productList.sort((a, b) => a.productPrice - b.productPrice)
-        } else if (this.sortOption === 'name') {
-          this.productList.sort((a, b) =>
-            a.productName.localeCompare(b.productName),
-          )
+      sortProductList(sortOption) {
+        if (sortOption === this.sortOption) {
+          this.productList.reverse()
+        } else {
+          this.productList.sort((a, b) => {
+            if (sortOption === 'price') {
+              return a.productPrice - b.productPrice
+            } else if (sortOption === 'name') {
+              return a.productName.localeCompare(b.productName)
+            } else if (sortOption === 'alphabet') {
+              return a.productName.localeCompare(b.productName, undefined, {
+                sensitivity: 'base',
+              })
+            }
+          })
+          this.sortOption = sortOption
         }
       },
+
       updateGreetingsWindow() {
         this.greetingsWindow = false
       },
@@ -114,112 +133,53 @@
 <template>
   <div id="main-container">
     <div class="filterContainer">
-      <select
-        class="filterBox button"
-        v-model="selectedCategory"
-        @change="getCategoryProducts(selectedCategory)"
-      >
-        <option
-          class="option"
-          v-for="category in categories"
-          :key="category.category_Id"
-          :value="category.category_Id"
-        >
-          {{ category.categoryName }}
-        </option>
-      </select>
-      <select
-        class="filterBox button"
-        v-model="sortOption"
-        @change="sortProductList()"
-      >
-        <option class="option" value="default">Sort</option>
-        <option class="option" value="name">Name</option>
-        <option class="option" value="price">Price</option>
-      </select>
-    </div>
-    <!-- <div
-      id="products-container"
-      v-for="product in sortedProductList"
-      :key="product.product_Id"
-    >
-      <div class="product-image-container">
-        <img :src="product.productImg" alt="product image" />
-      </div>
-      <div id="product-info-container">
-        <div class="title-price-container">
-          <a :href="product.productURL" target="_blank">{{
-            product.productName
-          }}</a>
+      <div class="categoryContainerBox">
+        <div class="sortContainerBox">
+          <button
+            class="categoryButton filterButton"
+            @click="toggleDropdown('category')"
+          >
+            Categories
+          </button>
+          <button
+            class="sortButton filterButton"
+            @click="toggleDropdown('sort')"
+          >
+            Sort <BiChevronCompactDown />
+          </button>
         </div>
-        <div class="title-price-container">
-          <p>{{ product.categoryName }}</p>
-        </div>
-        <div class="price-amount-container">
-          <p>{{ product.productPrice }}:-</p>
+        <div v-show="showCategoryDropdown" class="categoryList">
+          <button
+            class="button"
+            v-for="category in categories"
+            :key="category.category_Id"
+            :class="{ active: category.category_Id === selectedCategory }"
+            @click="getCategoryProducts(category.category_Id)"
+          >
+            {{ category.categoryName }}
+          </button>
         </div>
       </div>
-      <div
-        id="product-info-container"
-        style="justify-content: space-around; margin-left: auto"
-      >
-        <div class="title-price-container">
-          <p style="margin-left: auto">Qty: 4</p>
-        </div>
-        <div class="wish-amount-container">
-          <button class="select-btn" @click="itemAdded(product.product_Id)">
-            <p v-if="!product.itemAdd">SELECT</p>
-            <p v-else>Added</p>
+      <div class="sortContainerBox">
+        <div v-show="showSortDropdown" class="sortOptions">
+          <button
+            class="button"
+            :class="{ active: sortOption === 'name' }"
+            @click="sortProductList('name')"
+          >
+            Name
+          </button>
+          <button
+            class="button"
+            :class="{ active: sortOption === 'price' }"
+            @click="sortProductList('price')"
+          >
+            Price
           </button>
         </div>
       </div>
     </div>
-    <div
-      id="products-container"
-      v-for="product in productList"
-      :key="product.product_Id"
-    >
-      <div class="product-image-container">
-        <img :src="product.productImg" alt="product image" />
-      </div>
-      <div id="product-info-container">
-        <div class="title-price-container">
-          <a :href="product.productURL" target="_blank">{{
-            product.productName
-          }}</a>
-        </div>
-        <div class="title-price-container">
-          <p>{{ product.categoryName }}</p>
-        </div>
-        <div class="price-amount-container">
-          <p>{{ product.productPrice }}:-</p>
-        </div>
-      </div>
-      <div
-        id="product-info-container"
-        style="justify-content: space-around; margin-left: auto"
-      >
-        <div class="title-price-container">
-          <p style="margin-left: auto">Qty: 4</p>
-        </div>
-        <div class="wish-amount-container">
-          <button class="select-btn" @click="itemAdded(product.product_Id)">
-            <p v-if="!product.itemAdd">SELECT</p>
-            <p v-else>Added</p>
-          </button>
-        </div>
-      </div>
-    </div>
-     <div class="categoryContainer">
-      <button
-        class="categoryBox button"
-        v-for="category in categories"
-        :key="category.category_Id"
-        @click="getCategoryProducts(category.category_Id)"
-      >
-        {{ category.categoryName }}
-      </button>
-    </div>-->
+
     <div
       id="products-container"
       v-for="product in productList"
@@ -261,6 +221,9 @@
 </template>
 
 <style scoped>
+  @import url('https://fonts.cdnfonts.com/css/lindsey');
+  @import url('https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@300;400&display=swap');
+
   * {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
       sans-serif;
@@ -346,41 +309,67 @@
     display: flex;
     flex-direction: row;
   }
-  .categoryBox {
-    display: flex;
-    flex-grow: 1;
-    align-items: center;
-    justify-content: center;
-    margin: 0.5rem;
-    padding: 0.5rem;
-    color: grey;
-    background-color: white;
-    border: 1px solid rgb(123, 123, 123);
-    border-radius: 0.25rem;
-  }
 
-  .categoryBox:hover {
-    border: 1.5px solid #212121;
-    color: rgb(17, 17, 17);
-  }
   .filterContainer {
     display: flex;
-    background-color: black;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .categoryContainerBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .categoryList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .sortOptions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .sortButton {
+    display: flex;
+    background-color: #cbbaa4;
+    border: none;
+    height: 3rem;
+    width: 100%;
     justify-content: center;
     align-items: center;
   }
-  .filterBox {
+  .sortContainerBox {
     display: flex;
-    background-color: #c8b6a6;
-    border: none;
-    flex-grow: 1;
-    height: 2.5rem;
-    font-family: fantasy;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
-  .select option {
-    background-color: #601919;
-  }
-  #mySelect .v-select .dropdown-toggle {
+  .filterButton {
+    display: flex;
+    background-color: #cbbaa4;
     border: none;
+    height: 3rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Lindsey', sans-serif;
+  }
+  .button {
+    display: flex;
+    background-color: #cbbaa49f;
+    font-size: 0.75rem;
+    font-family: Sen;
+    color: black;
+    text-align: left;
+    text-transform: capitalize;
+    width: 100%;
+  }
+  .categoryButton {
+    padding: none;
   }
 </style>
