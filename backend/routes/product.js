@@ -42,6 +42,33 @@ router.get('/api/products/:id', async (req, res) => {
   }
 })
 
+router.get('/api/product/:searchTerm', async (req, res) => {
+  // Visar alla produkter i list (med id)
+  let sql = `
+  SELECT * FROM product as p
+  INNER JOIN category c on p.productCategory_Id = c.category_Id
+  WHERE p.productName LIKE ?`
+
+  let searchTerm = '%' + req.params.searchTerm + '%'
+
+  const params = [searchTerm].filter((value) => value)
+
+  try {
+    await connection.query(sql, params, function (error, results) {
+      if (error) {
+        if (error) throw error
+      }
+      res.json(results)
+    })
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: error,
+      message: error.message,
+    })
+  }
+})
+
 //Add a new product
 router.post('/api/products', async (req, res) => {
   let sql =
@@ -73,6 +100,7 @@ router.post('/api/products', async (req, res) => {
   }
 })
 
+// Lägger till en produkt i både product & selectedProduct
 router.post('/api/product/:id', async (req, res) => {
   const sql = 'CALL addNewProduct(?, ?, ?, ?, ?, ?, ?, ?, ?)'
   const params = [
@@ -85,7 +113,6 @@ router.post('/api/product/:id', async (req, res) => {
     req.body.selectedProductPurchased,
     req.body.selectedProductAmount,
   ]
-  console.log(params, '\n SQL: ', sql)
 
   try {
     await connection.query(sql, [...params, req.params.id], (error) => {

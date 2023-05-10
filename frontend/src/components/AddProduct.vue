@@ -17,25 +17,37 @@
         selectedCategory: null,
         url: '',
         validated: false,
+        listId: 1,
+        productList: [],
+        searchTerm: null,
+        addCategoryOpen: false,
       }
     },
     methods: {
       addCategory() {
-        const options = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            categoryName: this.newCategoryName,
-          }),
+        if (
+          !this.categories
+            .map((cat) => cat.categoryName.toLowerCase())
+            .includes(this.newCategoryName.toLowerCase())
+        ) {
+          console.log(this.categories)
+          const options = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              categoryName: this.newCategoryName,
+            }),
+          }
+          fetch('http://localhost:3000/api/category', options)
+            .then((res) => res.json())
+            .then(() => {
+              this.getCategories()
+              this.newCategoryName = ''
+              this.addCategoryOpen = false
+            })
         }
-        fetch('http://localhost:3000/api/category', options)
-          .then((res) => res.json())
-          .then(() => {
-            this.getCategories()
-            this.newCategoryName = ''
-          })
       },
       async addProduct() {
         const options = {
@@ -81,8 +93,21 @@
         const data = await fetch('http://localhost:3000/api/category')
         this.categories = await data.json()
       },
+      openAddNewCategory() {
+        this.selectedCategory = null
+        this.addCategoryOpen = true
+      },
       selectCategory(id) {
         this.selectedCategory = id
+      },
+      selectProduct(product) {
+        // console.log(product)
+        this.imgSrc = product.productImg
+        this.name = product.productName
+        this.searchTerm = product.productName
+        this.price = product.productPrice
+        this.selectedCategory = product.category_Id
+        this.url = product.productURL
       },
       validateData() {
         if (
@@ -96,16 +121,24 @@
           this.url.length >= 1
         ) {
           this.validated = true
+        } else {
+          this.validated = false
         }
       },
     },
     watch: {
-      name(updatedName) {
-        searchProduct(updatedName).then((res) => console.log(res))
-        if (updatedName.length >= 3) {
-          this.classAddTo('name')
-        } else {
-          this.classRemoveFrom('name')
+      addConfirmation(isActive) {
+        if (isActive) {
+          setTimeout(() => {
+            this.addConfirmation = false
+          }, 2000)
+        }
+      },
+      searchTerm(updatedSearchTerm) {
+        if (updatedSearchTerm.length > 0) {
+          searchProduct(updatedSearchTerm).then(
+            (res) => (this.productList = res),
+          )
         }
       },
       url(updatedUrl) {
@@ -143,11 +176,22 @@
 <template>
   <form>
     <div class="add-new-header">
-      FAVORIT-IKON
+      <v-icon
+        @click="favorite = !favorite"
+        class="favorite favorite-icon"
+        v-show="favorite"
+        name="bi-star-fill"
+      />
+      <v-icon
+        @click="favorite = !favorite"
+        class="favorite-icon"
+        v-show="!favorite"
+        name="co-star"
+      />
       <h3>Add new item</h3>
       <span @click.prevent="addProduct" class="btn">
         Save
-        <Transition name="addConfirmation">
+        <Transition name="first-render">
           <svg
             v-if="addConfirmation"
             xmlns="http://www.w3.org/2000/svg"
@@ -164,66 +208,129 @@
         </Transition>
       </span>
     </div>
-    <!-- <label for="categories">Category</label> -->
+    <label for="search">Search product</label>
+    <div class="input-container margin-bottom">
+      <input
+        id="search"
+        placeholder="Kaffebryggare"
+        type="text"
+        v-model.trim="searchTerm"
+      />
+      <v-icon
+        @click="searchTerm = ''"
+        class="close-icon"
+        name="io-close-circle-outline"
+      />
+    </div>
+    <Transition name="first-render">
+      <TransitionGroup
+        class="product-list"
+        v-show="
+          this.productList.length > 0 &&
+          this.searchTerm.length > 0 &&
+          (this.name !== this.productList[0]?.productName ||
+            this.searchTerm !== this.name)
+        "
+        name="list"
+        tag="ul"
+      >
+        <li
+          @click="selectProduct(product)"
+          @keyup.enter="selectProduct(product)"
+          :key="product.product_Id"
+          class="product"
+          v-for="product in productList"
+          tabindex="0"
+        >
+          <!-- <pre>{{ product }}</pre> -->
+          <img
+            class="search-list-img"
+            :src="product.productImg"
+            alt="product.productName"
+          />
 
-    <!-- <input class="btn category-btn" type="button" value="+ Add new" /> -->
+          <p v-shortText="{ text: product.productName, chars: 30 }"></p>
+        </li>
+      </TransitionGroup>
+    </Transition>
+    <label for="name">{{
+      `${
+        searchTerm === name && searchTerm.length > 0
+          ? 'Product name'
+          : 'or create a new one'
+      }`
+    }}</label>
+    <div class="input-container margin-bottom">
+      <input id="name" ref="name" type="text" v-model.trim="name" />
+      <v-icon
+        @click="name = ''"
+        class="close-icon"
+        name="io-close-circle-outline"
+      />
+    </div>
+    <TransitionGroup class="category-container" name="list" tag="ul">
+      <li
+        @click="selectCategory(category.category_Id)"
+        :key="category.category_Id"
+        v-for="category in categories"
+      >
+        <input
+          :class="`category-box btn ${
+            selectedCategory === category.category_Id ? 'selected' : ''
+          }`"
+          type="button"
+          :value="category.categoryName"
+        />
+      </li>
+      <li @click="openAddNewCategory">
+        <input class="category-box btn" type="button" value="+" />
+      </li>
+    </TransitionGroup>
 
-    <!-- Kommer behöva välja kategori här också, men kanske går att använda kategori-komponent? -->
-    <label for="name">Name</label>
-    <input
-      placeholder="Kaffebryggare "
-      ref="name"
-      required
-      type="text"
-      v-model.trim="name"
-    />
-    <input
-      @click="selectCategory(category.category_Id)"
-      class="category-btn"
-      :key="category.category_Id"
-      type="button"
-      :value="category.categoryName"
-      v-for="category in categories"
-    />
-    <label for="newCategory"></label>
-    <input
-      @keyup.enter="addCategory"
-      @submit.prevent=""
-      id="newCategory"
-      placeholder="Star wars"
-      type="text"
-      v-model.trim="newCategoryName"
-    />
+    <!-- TODO borde vara en ikon istället för + -->
+    <Transition name="first-render">
+      <div class="margin-bottom" v-if="addCategoryOpen">
+        <label for="newCategory">Add new category</label>
+        <input
+          @keyup.enter="addCategory"
+          id="newCategory"
+          placeholder="Star wars"
+          type="text"
+          v-model.trim="newCategoryName"
+        />
+      </div>
+    </Transition>
     <label for="url">URL</label>
     <input
+      class="margin-bottom"
       placeholder="http://ithsdistans.se"
       ref="url"
       required
       type="text"
       v-model.trim="url"
     />
-
     <label for="imgSrc">Image URL</label>
     <input
+      class="margin-bottom"
       placeholder="http://ithsdistans.se/img.jpg"
       ref="imgSrc"
       required
       type="text"
       v-model.trim="imgSrc"
     />
-
     <label for="price">Price</label>
     <input
+      class="margin-bottom"
       placeholder="110"
       ref="price"
       required
       type="number"
       v-model.number="price"
     />
-
     <label for="amount">Amount</label>
     <input
-      placeholder="2"
+      class="margin-bottom"
+      placeholder="1"
       ref="amount"
       required
       type="number"
@@ -233,35 +340,160 @@
 </template>
 
 <style lang="scss" scoped>
-  .add-new-header {
-    display: flex;
-    flex-direction: row;
+  form {
+    padding: 32px 16px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
   }
-  .btn.category-btn {
-    min-width: 64px;
-    padding: 6px 8px;
-  }
-
-  .btn {
-    cursor: pointer;
-    padding: 6px 8px;
-    svg {
-      height: 1rem;
-      margin: 0 8px 0 16px;
+  ul.category-container {
+    padding: 0;
+    li {
+      list-style-type: none;
+      width: min-content;
     }
   }
 
   input:not([type='button']) {
-    width: 100%;
+    background-color: #efefef;
+    border: 1px solid #cecece;
+    font-size: 1rem;
+    height: 2.4rem;
     outline: none;
-    height: 2.2rem;
+    padding: 8px;
+    width: 100%;
   }
-  /* TEMP - antar det ska ha annan styling men just nu så
-            har jag det så jag vet den lägget till rätt klasser */
+
+  .add-new-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    h3 {
+      flex-grow: 1;
+      text-align: center;
+    }
+  }
+  .btn {
+    cursor: pointer;
+    padding: 0.5rem;
+    min-width: 25px;
+    svg {
+      height: 1rem;
+    }
+  }
+
+  .category-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .category-box {
+    margin: 0.5rem;
+    color: grey;
+    background-color: white;
+    border: 1px solid rgb(123, 123, 123);
+    border-radius: 0.25rem;
+    min-width: 34px;
+    &:hover {
+      border: 1.5px solid #212121;
+      color: rgb(17, 17, 17);
+    }
+  }
+
+  .category-box.selected {
+    border: 1px solid #212121;
+  }
+
+  .favorite {
+    color: rgb(240, 243, 53);
+  }
+
+  .favorite-icon {
+    cursor: pointer;
+  }
+
+  .product-list {
+    list-style: none;
+    margin: 0 0 16px 0;
+    padding: 0;
+
+    .product {
+      background-color: #efefef;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 0;
+      cursor: pointer;
+      img {
+        height: 48px;
+        width: 48px;
+        display: inline;
+        margin-right: 8px;
+        padding: 4px 0;
+      }
+      p {
+        display: inline;
+        margin: 0;
+        padding: 4px 0;
+      }
+
+      &:nth-child(even) {
+        background-color: #cecece;
+      }
+      &:focus {
+        outline: none;
+        border: 1px solid black;
+        img {
+          height: 46px;
+          width: 46px;
+        }
+      }
+    }
+  }
+
+  .input-container {
+    position: relative;
+    .close-icon {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto 8px auto 0;
+      cursor: pointer;
+    }
+    input {
+      padding-right: 30px;
+    }
+  }
+
+  .margin-bottom {
+    margin-bottom: 16px;
+  }
+
+  // Transitions
   .input-accepted {
     border-color: green;
   }
   .input-declined {
     border-color: red;
+  }
+
+  .list-enter-active,
+  .list-leave-active {
+    transition: all 0.2s ease;
+  }
+  .list-enter-from,
+  .list-leave-to {
+    opacity: 0;
+    transform: translateY(48px);
+  }
+
+  .first-render-enter-active,
+  .first-render-leave-active {
+    transition: all 0.3s ease-in;
+  }
+  .first-render-enter-from,
+  .first-render-leave-to {
+    opacity: 0;
+    transform: translateY(-16px);
   }
 </style>
