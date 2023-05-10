@@ -14,6 +14,8 @@
         productList: [],
         itemAdd: false,
         categories: [],
+        selectedCategory: 1,
+        sortOption: 'default',
 
         // greetingsWindow: false,
       }
@@ -63,6 +65,15 @@
           product.amount = 0
         })
       },
+      sortProductList() {
+        if (this.sortOption === 'price') {
+          this.productList.sort((a, b) => a.productPrice - b.productPrice)
+        } else if (this.sortOption === 'name') {
+          this.productList.sort((a, b) =>
+            a.productName.localeCompare(b.productName),
+          )
+        }
+      },
       updateGreetingsWindow() {
         this.greetingsWindow = false
       },
@@ -102,7 +113,104 @@
 
 <template>
   <div id="main-container">
-    <div class="categoryContainer">
+    <div class="filterContainer">
+      <select
+        class="filterBox button"
+        v-model="selectedCategory"
+        @change="getCategoryProducts(selectedCategory)"
+      >
+        <option
+          class="option"
+          v-for="category in categories"
+          :key="category.category_Id"
+          :value="category.category_Id"
+        >
+          {{ category.categoryName }}
+        </option>
+      </select>
+      <select
+        class="filterBox button"
+        v-model="sortOption"
+        @change="sortProductList()"
+      >
+        <option class="option" value="default">Sort</option>
+        <option class="option" value="name">Name</option>
+        <option class="option" value="price">Price</option>
+      </select>
+    </div>
+    <!-- <div
+      id="products-container"
+      v-for="product in sortedProductList"
+      :key="product.product_Id"
+    >
+      <div class="product-image-container">
+        <img :src="product.productImg" alt="product image" />
+      </div>
+      <div id="product-info-container">
+        <div class="title-price-container">
+          <a :href="product.productURL" target="_blank">{{
+            product.productName
+          }}</a>
+        </div>
+        <div class="title-price-container">
+          <p>{{ product.categoryName }}</p>
+        </div>
+        <div class="price-amount-container">
+          <p>{{ product.productPrice }}:-</p>
+        </div>
+      </div>
+      <div
+        id="product-info-container"
+        style="justify-content: space-around; margin-left: auto"
+      >
+        <div class="title-price-container">
+          <p style="margin-left: auto">Qty: 4</p>
+        </div>
+        <div class="wish-amount-container">
+          <button class="select-btn" @click="itemAdded(product.product_Id)">
+            <p v-if="!product.itemAdd">SELECT</p>
+            <p v-else>Added</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      id="products-container"
+      v-for="product in productList"
+      :key="product.product_Id"
+    >
+      <div class="product-image-container">
+        <img :src="product.productImg" alt="product image" />
+      </div>
+      <div id="product-info-container">
+        <div class="title-price-container">
+          <a :href="product.productURL" target="_blank">{{
+            product.productName
+          }}</a>
+        </div>
+        <div class="title-price-container">
+          <p>{{ product.categoryName }}</p>
+        </div>
+        <div class="price-amount-container">
+          <p>{{ product.productPrice }}:-</p>
+        </div>
+      </div>
+      <div
+        id="product-info-container"
+        style="justify-content: space-around; margin-left: auto"
+      >
+        <div class="title-price-container">
+          <p style="margin-left: auto">Qty: 4</p>
+        </div>
+        <div class="wish-amount-container">
+          <button class="select-btn" @click="itemAdded(product.product_Id)">
+            <p v-if="!product.itemAdd">SELECT</p>
+            <p v-else>Added</p>
+          </button>
+        </div>
+      </div>
+    </div>
+     <div class="categoryContainer">
       <button
         class="categoryBox button"
         v-for="category in categories"
@@ -111,23 +219,7 @@
       >
         {{ category.categoryName }}
       </button>
-      <div class="products">
-        <div
-          class="product"
-          v-for="product in filteredProducts"
-          :key="product.product_Id"
-        >
-          <div class="product-image">
-            <img :src="product.productImg" alt="" />
-          </div>
-          <div class="product-info">
-            <h4>{{ product.productName }}</h4>
-            <p>{{ product.productPrice }} SEK</p>
-            <a :href="product.productURL" target="_blank">View Product</a>
-          </div>
-        </div>
-      </div>
-    </div>
+    </div>-->
     <div
       id="products-container"
       v-for="product in productList"
@@ -270,5 +362,25 @@
   .categoryBox:hover {
     border: 1.5px solid #212121;
     color: rgb(17, 17, 17);
+  }
+  .filterContainer {
+    display: flex;
+    background-color: black;
+    justify-content: center;
+    align-items: center;
+  }
+  .filterBox {
+    display: flex;
+    background-color: #c8b6a6;
+    border: none;
+    flex-grow: 1;
+    height: 2.5rem;
+    font-family: fantasy;
+  }
+  .select option {
+    background-color: #601919;
+  }
+  #mySelect .v-select .dropdown-toggle {
+    border: none;
   }
 </style>

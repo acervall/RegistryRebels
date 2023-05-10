@@ -1,8 +1,97 @@
 <template>
   <div />
 </template>
-
 <!--<template>
+  <div class="categoryContainer">
+    <div class="dropdowns">
+      <select v-model="selectedCategory">
+        <option v-for="category in categories" :value="category.category_Id">
+          {{ category.categoryName }}
+        </option>
+      </select>
+      <select v-model="selectedFilter">
+        <option value="price">Price</option>
+        <option value="alphabet">Alphabet</option>
+      </select>
+    </div>
+    <div class="products">
+      <div
+        class="product"
+        v-for="product in filteredProducts"
+        :key="product.product_Id"
+      >
+        <div class="product-image">
+          <img :src="product.productImg" alt="" />
+        </div>
+        <div class="product-info">
+          <h4>{{ product.productName }}</h4>
+          <p>{{ product.productPrice }} SEK</p>
+          <a :href="product.productURL" target="_blank">View Product</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        categories: [],
+        productList: [],
+        selectedCategory: null,
+        selectedFilter: null,
+      }
+    },
+    created() {
+      this.getCategories()
+    },
+    computed: {
+      filteredProducts() {
+        let products = this.productList
+        if (this.selectedFilter === 'price') {
+          products.sort((a, b) => a.productPrice - b.productPrice)
+        } else if (this.selectedFilter === 'alphabet') {
+          products.sort((a, b) => a.productName.localeCompare(b.productName))
+        }
+        return products
+      },
+    },
+    watch: {
+      selectedCategory(value) {
+        this.getProducts(value)
+      },
+    },
+    methods: {
+      async getCategories() {
+        try {
+          const response = await fetch('http://localhost:3000/api/category')
+          const data = await response.json()
+          this.categories = data
+        } catch (error) {
+          console.error(error)
+        }
+      },
+      async getProducts(categoryId) {
+        console.log('Getting products for categoryId', categoryId)
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/category/${categoryId}/products`,
+          )
+          const data = await response.json()
+          console.log('Received', data.length, 'products:', data)
+
+          this.productList = data
+        } catch (error) {
+          console.error(error)
+        }
+      },
+    },
+  }
+</script>
+
+
+<template>
   <div class="categoryContainer">
     <button
       class="categoryBox button"
@@ -69,7 +158,8 @@
     },
   }
 </script>
-
+-->
+<!---
 <template>
   <div class="categoryContainer">
     <button
@@ -104,7 +194,6 @@
     </div>
   </div>
 </template>
-
 <script>
   export default {
     data() {
@@ -148,7 +237,7 @@
   }
 </script>
 
- <template>
+<template>
   <div class="categoryContainer">
     <button
       class="categoryBox button"
@@ -227,4 +316,4 @@
     color: rgb(17, 17, 17);
   }
 </style>
--->
+--> */
