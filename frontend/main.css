@@ -16,6 +16,32 @@ h3 {
   font-family: 'Libre Caslon Display', serif;
 }
 
+h1 {
+  font-size: 3rem;
+}
 p {
   font-family: 'Sen', sans-serif;
+}
+
+.loginform {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Sen', sans-serif;
+}
+
+.button {
+  font-family: 'Libre Caslon Display', serif;
+  text-transform: uppercase;
+  width: max-content;
+  padding: 2%;
+  border-radius: 0;
+  border: hidden;
+  background-color: black;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.button:hover {
+  background-color: rgb(52, 52, 52);
+  cursor: pointer;
 }

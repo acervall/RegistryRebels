@@ -7,11 +7,17 @@
 <template>
   <div>
     <h1>Registry Rebels</h1>
-    <form action="">
+    <form action="" class="loginform">
       <label for="name">Name</label>
       <input type="text" />
 
-      <input type="email" name="" id="" />
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" />
+
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" />
+
+      <input class="button" type="submit" value="Sign up" />
     </form>
   </div>
 </template>
