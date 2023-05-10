@@ -9,12 +9,14 @@
   <div class="container">
     <form action="" class="loginform">
       <label id="lab-email" for="email">Email</label>
-      <input type="text" />
+      <input id="input-email" type="text" />
       <label id="lab-password" for="password">Password</label>
-      <input type="password" />
+      <input id="input-passw" type="password" />
 
       <div id="btn-div">
-        <button type="submit"><p id="singin-btn">Sign in</p></button>
+        <button type="submit">
+          <p id="singin-btn">Sign in</p>
+        </button>
       </div>
 
       <div id="para-and-link">
@@ -44,22 +46,34 @@
   }
 
   #lab-email {
-    margin-right: 70%;
+    margin-right: 110%;
+    margin-bottom: 10px;
   }
 
   #lab-password {
-    margin-top: 5%;
-    margin-right: 60%;
+    margin-top: 10%;
+    margin-right: 100%;
   }
 
   input {
     height: 100%;
     width: 250px;
+    height: 40px;
+  }
+
+  #input-email {
+    margin-top: 10px;
+  }
+
+  #input-passw {
+    margin-top: 10px;
   }
 
   button {
     margin-top: 50%;
     background-color: black;
+    width: 100px;
+    height: 40px;
   }
 
   #singin-btn {
