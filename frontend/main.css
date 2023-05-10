@@ -5,9 +5,17 @@ h1 - Display
 p - Plain
   font-family: 'Sen', sans-serif;
 
-fancy - 
+fancy - Lindsey Signature
+  font-family: 'Lindsey Signature';
+
    */
 
-h1 {
+h1,
+h2,
+h3 {
   font-family: 'Libre Caslon Display', serif;
+}
+
+p {
+  font-family: 'Sen', sans-serif;
 }
