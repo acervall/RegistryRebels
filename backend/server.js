@@ -35,8 +35,7 @@ app.use(category)
 const productList = require('./routes/product-list')
 app.use(productList)
 
-const productListGuest = require('./routes/product-list-guest')
-app.use(productListGuest)
+
 
 const userProductList = require('./routes/user-product-list')
 app.use(userProductList)
