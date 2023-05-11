@@ -51,7 +51,7 @@
           } else {
             // If category is not 'all gifts', retrieve products associated with category
             response = await fetch(
-              `http://localhost:3000/api/category/${categoryId}/products`,
+              `http://localhost:3000/api/selectedProduct/${this.listId}/${categoryId}`,
             )
           }
           const data = await response.json()
