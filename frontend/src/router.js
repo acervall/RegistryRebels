@@ -53,7 +53,7 @@ export default createRouter({
     },
     {
       component: UserListView,
-      path: '/userlist',
+      path: '/userlist/:id',
     },
     {
       component: UserGuestOverView,
