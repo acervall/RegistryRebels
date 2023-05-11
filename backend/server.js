@@ -35,16 +35,17 @@ app.use(category)
 const productList = require('./routes/product-list')
 app.use(productList)
 
-
-
-const userProductList = require('./routes/user-product-list')
-app.use(userProductList)
+//const userProductList = require('./routes/user-product-list')
+//app.use(userProductList)
 
 const guest = require('./routes/guest')
 app.use(guest)
 
 const user = require('./routes/user')
 app.use(user)
+
+const userSelectedProduct = require('./routes/guest-selected-product')
+app.use(userSelectedProduct)
 
 // app.use(function (err, req, res) {
 //   res.status(500).json(err.message)
@@ -138,6 +139,19 @@ app.post('/api/party', async (req, res) => {
 })
 
 //Ändra en specifik deltagare (Ej allergier)
+
+// JSON-kodexempel som kan köras i Insomnia:
+// {
+//   "participants": [
+//     {
+//       "_id": "645cba2ffa2c32ea421edf56",
+//       "attending": false
+//     }
+//   ]
+// }
+
+// "attending" är bara ett exempel. Går att ändra grupp, namn osv men inte foodchoices
+
 app.put('/api/party', async (req, res) => {
   let participantId = req.body.participants[0]._id
   let participantName = req.body.participants[0].name
@@ -167,11 +181,23 @@ app.put('/api/party', async (req, res) => {
 })
 
 // Deleta en användare
+
+// JSON-kodexempel som kan köras i Insomnia:
+// {
+//   "partyId": "ID'et för specifika participants-arrayen",
+//   "participants": [
+//     {
+//       "_id": "ID'et för den specifika deltagaren som ska tas bort"
+//     }
+//   ]
+// }
+
 app.delete('/api/party-user', async (req, res) => {
+  const partyId = req.body.partyId
   const participantId = req.body.participants[0]._id
   try {
-    const updatedParty = await PartyModel.deleteOne(
-      {},
+    const updatedParty = await PartyModel.updateOne(
+      { _id: partyId },
       { $pull: { participants: { _id: participantId } } },
     )
     return res.status(200).json(updatedParty)
@@ -183,6 +209,11 @@ app.delete('/api/party-user', async (req, res) => {
 })
 
 // Deleta en hel grupp
+
+// JSON-kodexempel som kan köras i Insomnia:
+// {
+//   "_id": "Skriv in ID för det specifika participants id'et"
+// }
 app.delete('/api/party', async (req, res) => {
   let partyId = req.body._id
   try {
