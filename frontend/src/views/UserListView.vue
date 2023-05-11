@@ -126,9 +126,10 @@
               />
             </svg>
           </button>
-          <div class="plusSign" @click="showAddProduct = !showAddProduct">
+          <button class="plusSign" @click="toggleDropdown('add')">
+            <!--@click="showAddProduct = !showAddProduct"-->
             <svg
-              class="plusSign"
+              class="plusSignIcon"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"
             >
@@ -137,7 +138,7 @@
                 d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
               />
             </svg>
-          </div>
+          </button>
         </div>
         <div v-show="showCategoryDropdown" class="categoryList">
           <button
@@ -215,17 +216,20 @@
 
 <style lang="scss" scoped>
   .plusSign {
+    background-color: #cbbaa4;
     display: flex;
-    justify-content: flex-end;
+    border: none;
+    height: 3rem;
+    width: 100%;
+    justify-content: center;
     align-items: center;
+  }
+  .plusSignIcon {
     height: 0.75rem;
-    margin: 1rem;
   }
   .ListTitle {
     margin-top: 2.5rem;
     margin-left: 1rem;
-  }
-  .UserListContainer {
   }
 
   #products-container {
@@ -289,7 +293,6 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    background-color: #cbbaa4;
   }
   .categoryList {
     display: flex;
@@ -319,7 +322,6 @@
   }
   .filterButton {
     display: flex;
-    background-color: #cbbaa4;
     border: none;
     height: 3rem;
     width: 100%;
@@ -339,6 +341,7 @@
   }
   .categoryButton {
     padding: none;
+    background-color: #cbbaa4;
   }
   .chevronDown {
     height: 0.75rem;
