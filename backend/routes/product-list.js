@@ -64,6 +64,43 @@ router.get('/api/selectedProduct/:id', async (req, res) => {
   }
 })
 
+router.get('/api/selectedProduct/:listId/:categoryId', async (req, res) => {
+  // Visar alla produkter i list (med id)
+  let sql = `
+  SELECT * FROM selectedProduct as sP
+  INNER JOIN list l on sP.selectedProductList_Id = l.list_Id
+  INNER JOIN product p on sP.selectedProductP_Id = p.product_Id
+  INNER JOIN category c on p.productCategory_Id = c.category_Id
+  WHERE sP.selectedProductList_Id = ?
+  AND c.category_Id = ?`
+
+  // let searchTerm = req.body?.searchTerm
+  // if (searchTerm) {
+  //   sql += ` AND p.productName LIKE ?;`
+  //   searchTerm = `%${searchTerm}%`
+  // }
+  const params = [req.params.listId, req.params.categoryId].filter(
+    (value) => value,
+  )
+
+  console.log('SQL: ', sql, ' PARAMS: ', params)
+
+  try {
+    await connection.query(sql, params, function (error, results) {
+      if (error) {
+        if (error) throw error
+      }
+      res.json(results)
+    })
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: error,
+      message: error.message,
+    })
+  }
+})
+
 router.post('/api/selectedProduct/:id', async (req, res) => {
   // Skapar en selectedProduct och kopplar till list (med id)
   const params = Object.entries({
