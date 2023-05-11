@@ -179,22 +179,31 @@ app.put('/api/party', async (req, res) => {
 
 // Deleta en användare
 
-// Strular lite för tillfället, ska åtgärda
+// JSON-kodexempel som kan köras i Insomnia:
+// {
+//   "partyId": "ID'et för specifika participants-arrayen",
+//   "participants": [
+//     {
+//       "_id": "ID'et för den specifika deltagaren som ska tas bort"
+//     }
+//   ]
+// }
 
-// app.delete('/api/party-user', async (req, res) => {
-//   const participantId = req.body.participants[0]._id
-//   try {
-//     const updatedParty = await PartyModel.deleteOne(
-//       {},
-//       { $pull: { participants: { _id: participantId } } },
-//     )
-//     return res.status(200).json(updatedParty)
-//   } catch (error) {
-//     return res.status(500).json({
-//       error: error.message,
-//     })
-//   }
-// })
+app.delete('/api/party-user', async (req, res) => {
+  const partyId = req.body.partyId
+  const participantId = req.body.participants[0]._id
+  try {
+    const updatedParty = await PartyModel.updateOne(
+      { _id: partyId },
+      { $pull: { participants: { _id: participantId } } },
+    )
+    return res.status(200).json(updatedParty)
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    })
+  }
+})
 
 // Deleta en hel grupp
 
