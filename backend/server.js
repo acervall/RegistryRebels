@@ -35,8 +35,6 @@ app.use(category)
 const productList = require('./routes/product-list')
 app.use(productList)
 
-
-
 const userProductList = require('./routes/user-product-list')
 app.use(userProductList)
 
@@ -138,6 +136,19 @@ app.post('/api/party', async (req, res) => {
 })
 
 //Ändra en specifik deltagare (Ej allergier)
+
+// JSON-kodexempel som kan köras i Insomnia:
+// {
+//   "participants": [
+//     {
+//       "_id": "645cba2ffa2c32ea421edf56",
+//       "attending": false
+//     }
+//   ]
+// }
+
+// "attending" är bara ett exempel. Går att ändra grupp, namn osv men inte foodchoices
+
 app.put('/api/party', async (req, res) => {
   let participantId = req.body.participants[0]._id
   let participantName = req.body.participants[0].name
@@ -167,22 +178,30 @@ app.put('/api/party', async (req, res) => {
 })
 
 // Deleta en användare
-app.delete('/api/party-user', async (req, res) => {
-  const participantId = req.body.participants[0]._id
-  try {
-    const updatedParty = await PartyModel.deleteOne(
-      {},
-      { $pull: { participants: { _id: participantId } } },
-    )
-    return res.status(200).json(updatedParty)
-  } catch (error) {
-    return res.status(500).json({
-      error: error.message,
-    })
-  }
-})
+
+// Strular lite för tillfället, ska åtgärda
+
+// app.delete('/api/party-user', async (req, res) => {
+//   const participantId = req.body.participants[0]._id
+//   try {
+//     const updatedParty = await PartyModel.deleteOne(
+//       {},
+//       { $pull: { participants: { _id: participantId } } },
+//     )
+//     return res.status(200).json(updatedParty)
+//   } catch (error) {
+//     return res.status(500).json({
+//       error: error.message,
+//     })
+//   }
+// })
 
 // Deleta en hel grupp
+
+// JSON-kodexempel som kan köras i Insomnia:
+// {
+//   "_id": "Skriv in ID för det specifika participants id'et"
+// }
 app.delete('/api/party', async (req, res) => {
   let partyId = req.body._id
   try {
