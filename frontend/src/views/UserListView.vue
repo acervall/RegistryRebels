@@ -70,9 +70,15 @@
         if (type === 'category') {
           this.showCategoryDropdown = !this.showCategoryDropdown
           this.showSortDropdown = false
+          this.showAddProduct = false
         } else if (type === 'sort') {
           this.showSortDropdown = !this.showSortDropdown
           this.showCategoryDropdown = false
+          this.showAddProduct = false
+        } else if (type === 'add') {
+          this.showAddProduct = !this.showAddProduct
+          this.showCategoryDropdown = false
+          this.showSortDropdown = false
         }
       },
       async getProducts() {
@@ -86,18 +92,7 @@
 <template>
   <div class="UserListContainer">
     <h1 class="ListTitle">Wedding</h1>
-    <div class="plusSign" @click="showAddProduct = !showAddProduct">
-      <svg
-        class="plusSign"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 448 512"
-      >
-        <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-        <path
-          d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
-        />
-      </svg>
-    </div>
+
     <div class="filterContainer">
       <div class="categoryContainerBox">
         <div class="sortContainerBox">
@@ -131,6 +126,18 @@
               />
             </svg>
           </button>
+          <div class="plusSign" @click="showAddProduct = !showAddProduct">
+            <svg
+              class="plusSign"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+            >
+              <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+              <path
+                d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
+              />
+            </svg>
+          </div>
         </div>
         <div v-show="showCategoryDropdown" class="categoryList">
           <button
@@ -210,8 +217,8 @@
   .plusSign {
     display: flex;
     justify-content: flex-end;
-    align-items: flex-end;
-    height: 1rem;
+    align-items: center;
+    height: 0.75rem;
     margin: 1rem;
   }
   .ListTitle {
@@ -282,6 +289,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    background-color: #cbbaa4;
   }
   .categoryList {
     display: flex;
