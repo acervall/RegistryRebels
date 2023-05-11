@@ -12,9 +12,12 @@
         categories: [],
         showCategoryDropdown: false,
         showSortDropdown: false,
+        listId: 0,
       }
     },
     created() {
+      const listId = this.$route.query.listId
+      this.listId = listId
       this.getProducts()
       this.getCategories()
     },
@@ -82,7 +85,9 @@
         }
       },
       async getProducts() {
-        const data = await fetch('http://localhost:3000/api/products')
+        const data = await fetch(
+          'http://localhost:3000/api/selectedProduct/' + this.listId,
+        )
         this.productList = await data.json()
       },
     },
