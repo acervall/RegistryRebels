@@ -356,6 +356,7 @@
   form {
     padding: 32px 16px;
     font-family: Sen;
+    font-size: 0.75rem;
   }
   ul.category-container {
     padding: 0;
@@ -368,7 +369,7 @@
   input:not([type='button']) {
     background-color: #efefef;
     border: 1px solid #cecece;
-    font-size: 1rem;
+    font-size: 0.75rem;
     height: 2.4rem;
     outline: none;
     padding: 8px;
