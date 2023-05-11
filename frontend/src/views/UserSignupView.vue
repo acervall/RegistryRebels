@@ -9,13 +9,13 @@
     <h1>Registry Rebels</h1>
     <form action="" class="loginform">
       <label for="name">Name</label>
-      <input type="text" />
+      <input class="txt-input" type="text" />
 
       <label for="email">Email</label>
-      <input type="email" name="email" id="email" />
+      <input class="txt-input" type="email" name="email" id="email" />
 
       <label for="password">Password</label>
-      <input type="password" name="password" id="password" />
+      <input class="txt-input" type="password" name="password" id="password" />
 
       <input class="button" type="submit" value="Sign up" />
     </form>
