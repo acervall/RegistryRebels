@@ -10,6 +10,7 @@ import UserHomeView from './views/UserHomeView.vue'
 import UserListView from './views/UserListView.vue'
 import UserListsOverView from './views/UserListsOverView.vue'
 import UserGuestOverView from './views/UserGuestOverView.vue'
+import UserGuestFoodView from './views/UserGuestFoodView.vue'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -56,6 +57,10 @@ export default createRouter({
     {
       component: UserGuestOverView,
       path: '/UserGuestOverView',
+    },
+    {
+      component: UserGuestFoodView,
+      path: '/UserGuestFoodView',
     },
   ],
 })

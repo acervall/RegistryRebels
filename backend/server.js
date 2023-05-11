@@ -44,6 +44,9 @@ app.use(guest)
 const user = require('./routes/user')
 app.use(user)
 
+const userSelectedProduct = require('./routes/guest-selected-product')
+app.use(userSelectedProduct)
+
 // app.use(function (err, req, res) {
 //   res.status(500).json(err.message)
 // })
