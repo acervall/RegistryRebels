@@ -1,13 +1,11 @@
 <script>
   import CategorySelection from '../components/CategorySelection.vue'
   import ProductSection from '../components/ProductSection.vue'
-  import UserListSection from '../components/UserListSection.vue'
   import NavBar from '../components/NavBar.vue'
 
   export default {
     components: {
       ProductSection,
-      UserListSection,
       CategorySelection,
       NavBar,
     },
@@ -20,8 +18,6 @@
     <NavBar />
     <CategorySelection />
     <ProductSection />
-    <!--<ProductSectionUser />-->
-    <UserListSection />
   </div>
 </template>
 
