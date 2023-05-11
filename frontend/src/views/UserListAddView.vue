@@ -178,7 +178,11 @@
       :key="user.list_Id"
     >
       <div id="userlist-box">
-        <img class="list-images-display" :src="user.listImage" alt="test" />
+        <img
+          class="list-images-display"
+          :src="user.listImage"
+          alt="list image"
+        />
         <div class="align-list-info">
           <h3>{{ user.listName }}</h3>
           <p>Specifika user id: {{ user.listU_Id }}</p>

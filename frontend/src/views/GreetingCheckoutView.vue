@@ -22,9 +22,6 @@
           'http://localhost:3000/api/products/' + this.productId,
         )
         this.productItem = await data.json()
-        // this.productList.forEach(product => {
-        //   product.amount = 0
-        // })
       },
       addAmount() {
         if (this.amountItems < this.wishedAmount) {
@@ -64,21 +61,6 @@
 </script>
 
 <template>
-  <!-- Test 1 -->
-  <!-- <div id="greeting-container">
-    <h2>Tack för ditt köp!</h2>
-    <h4>Lämna gärna en hälsning </h4>
-    <form action="">
-      <textarea id="greeting-input" name="greeting" rows="8" cols="40" />
-      <br />
-      <div id="btn-container">
-        <input id="submit-greeting-btn" type="submit" value="Submit" @click="$emit('submit-greeting')" />
-        <input id="cancel-greeting-btn" value="Cancel" @click="$emit('submit-greeting')" />
-      </div>
-    </form>
-  </div> -->
-
-  <!-- Test 2 -->
   <div id="main-container-greeting">
     <div id="intro-container">
       <h1>Gift this item</h1>

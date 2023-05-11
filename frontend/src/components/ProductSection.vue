@@ -1,10 +1,5 @@
 <script>
-  // import GreetingMessage from '../components/GreetingMessage.vue'
-
   export default {
-    // components: {
-    //   GreetingMessage,
-    // },
     created() {
       this.getProducts()
       this.getCategories()
@@ -16,18 +11,8 @@
         categories: [],
         showCategoryDropdown: false,
         showSortDropdown: false,
-
-        // greetingsWindow: false,
       }
     },
-    // computed: {
-    // greetingWindowActive() {
-    //   return {
-    //     opacity: this.greetingsWindow ? 0.3 : 1,
-    //     position: this.greetingsWindow ? 'fixed' : 'static'
-    //   };
-    // }
-    // },
     methods: {
       toggleDropdown(type) {
         if (type === 'category') {
@@ -93,10 +78,6 @@
         }
       },
 
-      updateGreetingsWindow() {
-        this.greetingsWindow = false
-      },
-
       addAmount(product) {
         if (product.amount < 9) {
           product.amount++
@@ -116,15 +97,13 @@
         this.greetingsWindow = true
         const product = this.productList[productIndex]
 
-        setTimeout(() => {
-          this.$router.push({
-            path: '/checkout',
-            query: {
-              productId: productId,
-              amount: product.amount,
-            },
-          })
-        }, 1500)
+        this.$router.push({
+          path: '/checkout',
+          query: {
+            productId: productId,
+            amount: product.amount,
+          },
+        })
       },
     },
   }
@@ -225,7 +204,6 @@
       </div>
     </div>
   </div>
-  <!-- <GreetingMessage v-if="greetingsWindow" @submit-greeting="updateGreetingsWindow" /> -->
 </template>
 
 <style scoped>

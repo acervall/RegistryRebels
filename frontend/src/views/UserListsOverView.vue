@@ -66,7 +66,7 @@
       id="list-container"
     >
       <div class="list-box-container" :class="{ open: list.openItems }">
-        <img :src="list.listImage" alt="test" />
+        <img :src="list.listImage" alt="list image" />
         <div class="align-info-box">
           <h3>{{ list.listName }}</h3>
           <p class="date-text">{{ currentDate }}</p>
