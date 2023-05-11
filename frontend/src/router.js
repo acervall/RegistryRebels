@@ -4,10 +4,12 @@ import HomeView from './views/HomeView.vue'
 import HomeViewUser from './views/HomeViewUser.vue'
 import GreetingCheckoutView from './views/GreetingCheckoutView.vue'
 import RsvpView from './views/RsvpView.vue'
-import SignupView from './views/SignupView.vue'
-import SigninView from './views/SigninView.vue'
+import UserSignupView from './views/UserSignupView.vue'
+import UserSigninView from './views/UserSigninView.vue'
 import UserHomeView from './views/UserHomeView.vue'
 import UserListView from './views/UserListView.vue'
+import UserListsOverView from './views/UserListsOverView.vue'
+import UserGuestOverView from './views/UserGuestOverView.vue'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -16,10 +18,12 @@ export default createRouter({
       component: HomeView,
       path: '/',
     },
+    /* SKA BORT */
     {
       component: HomeViewUser,
       path: '/home/user',
     },
+    /*  */
     {
       component: GreetingCheckoutView,
       path: '/checkout',
@@ -29,20 +33,29 @@ export default createRouter({
       path: '/rsvp',
     },
     {
-      component: SignupView,
+      component: UserSignupView,
       path: '/signup',
     },
     {
-      component: SigninView,
+      component: UserSigninView,
       path: '/signin',
     },
     {
       component: UserHomeView,
       path: '/userhome',
     },
+
+    {
+      component: UserListsOverView,
+      path: '/userlistsoverview',
+    },
     {
       component: UserListView,
       path: '/userlist',
+    },
+    {
+      component: UserGuestOverView,
+      path: '/UserGuestOverView',
     },
   ],
 })
