@@ -28,5 +28,7 @@
     left: 0;
     z-index: -1;
     width: 100vw;
+    background-color: #ffffff;
+    opacity: 75%;
   }
 </style>

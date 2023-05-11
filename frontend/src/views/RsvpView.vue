@@ -278,7 +278,7 @@
 
     <div id="btn-container">
       <input
-        class="button"
+        class="button-dark"
         id="send-application-btn"
         type="button"
         value="Skicka"

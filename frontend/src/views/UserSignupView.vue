@@ -69,7 +69,7 @@
           v-model="userPassword"
         />
 
-        <input class="button" type="submit" value="Sign up" />
+        <input class="button-dark" type="submit" value="Sign up" />
       </form>
 
       <div>

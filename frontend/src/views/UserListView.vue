@@ -102,7 +102,7 @@
       <div class="categoryContainerBox">
         <div class="sortContainerBox">
           <button
-            class="categoryButton filterButton"
+            class="categoryButton filterButton fancy-font"
             @click="toggleDropdown('category')"
           >
             Categories
@@ -117,7 +117,7 @@
             </svg>
           </button>
           <button
-            class="sortButton filterButton"
+            class="sortButton filterButton fancy-font"
             @click="toggleDropdown('sort')"
           >
             Sort
@@ -145,7 +145,7 @@
         </div>
         <div v-show="showCategoryDropdown" class="categoryList">
           <button
-            class="button"
+            class="button-dark"
             v-for="category in categories"
             :key="category.category_Id"
             :class="{ active: category.category_Id === selectedCategory }"
@@ -158,14 +158,14 @@
       <div class="sortContainerBox">
         <div v-show="showSortDropdown" class="sortOptions">
           <button
-            class="button"
+            class="button-dark"
             :class="{ active: sortOption === 'name' }"
             @click="sortProductList('name')"
           >
             Name
           </button>
           <button
-            class="button"
+            class="button-dark"
             :class="{ active: sortOption === 'price' }"
             @click="sortProductList('price')"
           >
@@ -329,8 +329,7 @@
     height: 3rem;
     width: 100%;
     justify-content: center;
-    align-items: center;
-    font-family: 'Lindsey', sans-serif;
+    align-items: baseline;
   }
   .button {
     display: flex;
