@@ -288,10 +288,11 @@
   </main>
 </template>
 
-<style>
-  body {
+<style scoped>
+  main {
     background-color: #cbbaa4;
   }
+
   #intro-text-container {
     border-bottom: 1px solid rgb(233, 233, 233);
   }
@@ -405,7 +406,7 @@
     display: block;
     width: 4px;
     height: 8px;
-    border: solid rgb(2, 2, 2);
+    border: solid rgb(0, 0, 0);
     border-width: 0 2px 2px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);

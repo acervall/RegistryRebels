@@ -4,6 +4,16 @@
     created() {
       this.getCategories()
     },
+    computed: {
+      showProducts() {
+        return (
+          this.productList.length > 0 &&
+          this.searchTerm.length > 0 &&
+          (this.name !== this.productList[0]?.productName ||
+            this.searchTerm !== this.name)
+        )
+      },
+    },
     data() {
       return {
         addConfirmation: false,
@@ -209,7 +219,7 @@
       </span>
     </div>
     <label for="search">Search product</label>
-    <div class="input-container margin-bottom">
+    <div :class="`input-container ${!showProducts ? 'margin-bottom' : ''}`">
       <input
         id="search"
         placeholder="Kaffebryggare"
@@ -218,19 +228,14 @@
       />
       <v-icon
         @click="searchTerm = ''"
-        class="close-icon"
+        class="icon"
         name="io-close-circle-outline"
       />
     </div>
     <Transition name="first-render">
       <TransitionGroup
         class="product-list"
-        v-show="
-          this.productList.length > 0 &&
-          this.searchTerm.length > 0 &&
-          (this.name !== this.productList[0]?.productName ||
-            this.searchTerm !== this.name)
-        "
+        v-show="showProducts"
         name="list"
         tag="ul"
       >
@@ -247,9 +252,12 @@
             class="search-list-img"
             :src="product.productImg"
             alt="product.productName"
+            :key="'img' + product.product_Id"
           />
-
-          <p v-shortText="{ text: product.productName, chars: 30 }"></p>
+          <p
+            :key="'text' + product.product_Id"
+            v-shortText="{ text: product.productName, chars: 30 }"
+          />
         </li>
       </TransitionGroup>
     </Transition>
@@ -262,11 +270,7 @@
     }}</label>
     <div class="input-container margin-bottom">
       <input id="name" ref="name" type="text" v-model.trim="name" />
-      <v-icon
-        @click="name = ''"
-        class="close-icon"
-        name="io-close-circle-outline"
-      />
+      <v-icon @click="name = ''" class="icon" name="io-close-circle-outline" />
     </div>
     <TransitionGroup class="category-container" name="list" tag="ul">
       <li
@@ -279,10 +283,11 @@
             selectedCategory === category.category_Id ? 'selected' : ''
           }`"
           type="button"
+          :key="'input' + category.category_Id"
           :value="category.categoryName"
         />
       </li>
-      <li @click="openAddNewCategory">
+      <li @click="openAddNewCategory" key="li2">
         <input class="category-box btn" type="button" value="+" />
       </li>
     </TransitionGroup>
@@ -291,13 +296,20 @@
     <Transition name="first-render">
       <div class="margin-bottom" v-if="addCategoryOpen">
         <label for="newCategory">Add new category</label>
-        <input
-          @keyup.enter="addCategory"
-          id="newCategory"
-          placeholder="Star wars"
-          type="text"
-          v-model.trim="newCategoryName"
-        />
+        <div class="input-container">
+          <input
+            @keyup.enter="addCategory"
+            id="newCategory"
+            placeholder="Star wars"
+            type="text"
+            v-model.trim="newCategoryName"
+          />
+          <v-icon
+            class="icon"
+            name="io-add-circle-outline"
+            @click="addCategory"
+          />
+        </div>
       </div>
     </Transition>
     <label for="url">URL</label>
@@ -452,7 +464,7 @@
 
   .input-container {
     position: relative;
-    .close-icon {
+    .icon {
       position: absolute;
       right: 0;
       top: 0;
