@@ -5,20 +5,35 @@
 </script>
 
 <template>
-  <div>
+  <div id="signup">
     <h1>Registry Rebels</h1>
-    <form action="" class="loginform">
-      <label for="name">Name</label>
-      <input class="txt-input" type="text" />
 
-      <label for="email">Email</label>
-      <input class="txt-input" type="email" name="email" id="email" />
+    <div class="form-section">
+      <form action="" class="loginform">
+        <label for="name">Name</label>
+        <input class="txt-input" type="text" />
 
-      <label for="password">Password</label>
-      <input class="txt-input" type="password" name="password" id="password" />
+        <label for="email">Email</label>
+        <input class="txt-input" type="email" name="email" id="email" />
 
-      <input class="button" type="submit" value="Sign up" />
-    </form>
+        <label for="password">Password</label>
+        <input
+          class="txt-input"
+          type="password"
+          name="password"
+          id="password"
+        />
+
+        <input class="button" type="submit" value="Sign up" />
+      </form>
+
+      <div id="para-and-link">
+        <p>
+          or
+          <a href="/#/signin"> sign in</a>
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
