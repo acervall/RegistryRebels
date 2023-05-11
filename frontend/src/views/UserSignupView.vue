@@ -1,6 +1,44 @@
 <script>
   export default {
     name: 'SignupView',
+
+    data() {
+      return {
+        url: 'http://localhost:3000/',
+        userName: null,
+        userEmail: null,
+        userPassword: null,
+      }
+    },
+
+    methods: {
+      async createNewUser() {
+        if (
+          this.userName != null ||
+          this.userEmail != null ||
+          this.userPassword != null
+        ) {
+          const createUser = await fetch(`${this.url}api/user`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userName: this.userName,
+              userEmail: this.userEmail,
+              userPassword: this.userPassword,
+            }),
+          })
+          const data = await createUser.json()
+          if (data.success) {
+            localStorage.setItem('User', this.userName)
+            this.$router.push({ path: '/userhome' })
+          }
+        } else {
+          console.log('Du måste fylla i alla fält')
+        }
+      },
+    },
   }
 </script>
 
@@ -9,12 +47,18 @@
     <h1>Registry Rebels</h1>
 
     <div class="form-section">
-      <form action="" class="loginform">
+      <form @submit.prevent="createNewUser()" class="loginform">
         <label for="name">Name</label>
-        <input class="txt-input" type="text" />
+        <input class="txt-input" type="text" v-model="userName" />
 
         <label for="email">Email</label>
-        <input class="txt-input" type="email" name="email" id="email" />
+        <input
+          class="txt-input"
+          type="email"
+          name="email"
+          id="email"
+          v-model="userEmail"
+        />
 
         <label for="password">Password</label>
         <input
@@ -22,12 +66,13 @@
           type="password"
           name="password"
           id="password"
+          v-model="userPassword"
         />
 
         <input class="button" type="submit" value="Sign up" />
       </form>
 
-      <div id="para-and-link">
+      <div>
         <p>
           or
           <a href="/#/signin"> sign in</a>

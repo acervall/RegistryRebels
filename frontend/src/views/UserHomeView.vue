@@ -1,11 +1,21 @@
 <script>
+  import SignOut from '../components/SignOut.vue'
   export default {
     name: 'UserHomeView',
+    components: {
+      SignOut,
+    },
+
+    data() {
+      return {
+        user: localStorage.User,
+      }
+    },
   }
 </script>
 
 <template>
-  <h1>Home</h1>
+  <h1>Home {{ this.user }}</h1>
   <div id="btn-container" class="button:hover">
     <router-link to="/userlistsoverview">
       <input id="list-btn" class="button" type="submit" value="LISTS" />
@@ -15,6 +25,7 @@
       <input id="guest-btn" class="button" type="submit" value="GUESTS" />
     </router-link>
   </div>
+  <SignOut />
 </template>
 
 <style lang="scss" scoped>

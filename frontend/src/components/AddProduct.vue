@@ -184,7 +184,7 @@
 </script>
 
 <template>
-  <form>
+  <form class="containerForm">
     <div class="add-new-header">
       <v-icon
         @click="favorite = !favorite"
@@ -352,9 +352,11 @@
 </template>
 
 <style lang="scss" scoped>
+  @import url('https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@300;400&display=swap');
   form {
     padding: 32px 16px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: Sen;
+    font-size: 0.75rem;
   }
   ul.category-container {
     padding: 0;
@@ -367,7 +369,7 @@
   input:not([type='button']) {
     background-color: #efefef;
     border: 1px solid #cecece;
-    font-size: 1rem;
+    font-size: 0.75rem;
     height: 2.4rem;
     outline: none;
     padding: 8px;
@@ -507,5 +509,8 @@
   .first-render-leave-to {
     opacity: 0;
     transform: translateY(-16px);
+  }
+  .containerForm {
+    background-color: #cbbaa49f;
   }
 </style>

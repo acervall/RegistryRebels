@@ -1,18 +1,52 @@
 <script>
   export default {
     name: 'SigninView',
+
+    data() {
+      return {
+        url: 'http://localhost:3000/',
+        userEmail: null,
+        userPassword: null,
+      }
+    },
+
+    methods: {
+      async userSignIn() {
+        console.log('hejsh')
+        if (this.userEmail != null || this.userPassword != null) {
+          const createUser = await fetch(`${this.url}api/user/login`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userEmail: this.userEmail,
+              userPassword: this.userPassword,
+            }),
+          })
+          const data = await createUser.json()
+          if (data.length === 1) {
+            localStorage.setItem('User', data[0].userName)
+            console.log(localStorage)
+            this.$router.push({ path: '/userhome' })
+          } else {
+            console.log('Fel lösenord eller användarnamn')
+          }
+        }
+      },
+    },
   }
 </script>
 
 <template>
   <h1>Registry Rebels</h1>
   <div class="container">
-    <form action="" class="loginform">
+    <form @submit.prevent="userSignIn()" class="loginform">
       <label id="lab-email" for="email">Email</label>
-      <input id="input-email" type="text" />
+      <input id="input-email" type="text" v-model="userEmail" />
       <label id="lab-password" for="password">Password</label>
-      <input id="input-passw" type="password" />
-      <input class="button" type="submit" value="Sign up" />
+      <input id="input-passw" type="password" v-model="userPassword" />
+      <input class="button" type="submit" value="Sign in" />
 
       <div id="para-and-link">
         <p>or</p>
