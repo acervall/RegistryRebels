@@ -13,6 +13,7 @@
         list_Id: '',
         changeListName: '',
         showChangeList: false,
+        changeListId: null,
       }
     },
     methods: {
@@ -91,12 +92,16 @@
         )
       },
 
-      toggleChangeList() {
-        if (this.showChangeList) {
+      toggleChangeList(index) {
+        // Om den visar
+        if (this.changeListId !== index) {
+          this.showChangeList = true
+        } else if (this.showChangeList) {
           this.showChangeList = false
         } else if (!this.showChangeList) {
           this.showChangeList = true
         }
+        this.changeListId = index
       },
 
       // Tar bort en lista när jag klickar på trashcan
@@ -167,7 +172,11 @@
 
     <!-- Lista på alla listor -->
     <h3>All wishlist</h3>
-    <div id="userList-container" v-for="user in userList" :key="user.list_Id">
+    <div
+      id="userList-container"
+      v-for="(user, index) in userList"
+      :key="user.list_Id"
+    >
       <div id="userlist-box">
         <img class="list-images-display" :src="user.listImage" alt="test" />
         <div class="align-list-info">
@@ -186,7 +195,7 @@
               height="22px"
               viewBox="0 0 494.936 494.936"
               xml:space="preserve"
-              @click="toggleChangeList(user)"
+              @click="toggleChangeList(index)"
             >
               <g>
                 <g>
@@ -233,7 +242,7 @@
         <!-- Formulär för att ändra en lista -->
       </div>
       <form
-        v-if="showChangeList"
+        v-if="showChangeList && changeListId === index"
         @submit="changeList(user.listU_Id, user.list_Id)"
       >
         <label for="changeName">Ändra namn på listan: </label>
