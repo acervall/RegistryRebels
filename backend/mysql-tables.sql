@@ -4,6 +4,14 @@ CREATE DATABASE RegistryRebels DEFAULT CHARACTER SET = 'utf8mb4';
 
 USE RegistryRebels;
 
+DROP TABLE guestSelectedProduct;
+DROP TABLE guest;
+DROP TABLE selectedProduct;
+DROP TABLE list;
+DROP TABLE user;
+DROP TABLE product;
+DROP TABLE category;
+
 -- Categories
 
 CREATE TABLE
@@ -49,6 +57,7 @@ CREATE TABLE
     list (
         list_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         listName VARCHAR(50),
+        listImage VARCHAR(500),
         listU_Id INT,
         FOREIGN KEY (listU_Id) REFERENCES user (user_Id)
     );

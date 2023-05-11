@@ -23,8 +23,9 @@ VALUES (
     );
 
 INSERT INTO
-    list (listName, listU_Id)
-VALUES ('Bröllop', 1), ('30-fest', 2);
+    list (listName, listImage, listU_Id)
+VALUES ('Bröllop', 'https://images.pexels.com/photos/2788488/pexels-photo-2788488.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 1),
+       ('30-fest', 'https://images.unsplash.com/photo-1527540306398-8b8794516f95?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1110&q=80', 2);
 
 INSERT INTO
     product (

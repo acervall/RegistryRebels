@@ -11,6 +11,7 @@ import UserListView from './views/UserListView.vue'
 import UserListsOverView from './views/UserListsOverView.vue'
 import UserGuestOverView from './views/UserGuestOverView.vue'
 import UserGuestFoodView from './views/UserGuestFoodView.vue'
+import UserListAddView from './views/UserListAddView.vue'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -61,6 +62,10 @@ export default createRouter({
     {
       component: UserGuestFoodView,
       path: '/UserGuestFoodView',
+    },
+    {
+      component: UserListAddView,
+      path: '/userlistadd',
     },
   ],
 })

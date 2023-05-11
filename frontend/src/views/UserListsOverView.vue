@@ -64,7 +64,7 @@
       id="list-container"
     >
       <div class="list-box-container" :class="{ open: list.openItems }">
-        <img src="/assets/bg-image-wishlist.png" alt="test" />
+        <img :src="list.listImage" alt="test" />
         <div class="align-info-box">
           <h3>{{ list.listName }}</h3>
           <p class="date-text">{{ currentDate }}</p>
@@ -109,7 +109,7 @@
   .list-box-container {
     display: flex;
     align-items: center;
-    margin-top: 30px;
+    margin-top: 0px;
   }
   .list-box-container img {
     width: 110px;
