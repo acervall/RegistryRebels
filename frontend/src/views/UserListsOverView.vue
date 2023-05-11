@@ -57,7 +57,9 @@
 <template>
   <main>
     <h1>My lists</h1>
-    <input id="new-list-btn" type="button" value="Create new list" />
+    <router-link to="/userlistadd">
+      <input id="new-list-btn" type="button" value="Create new list" />
+    </router-link>
     <div
       v-for="(list, index) in userList"
       :key="list.list_Id"
@@ -98,6 +100,7 @@
   #new-list-btn {
     border: none;
     height: 36px;
+    width: 100%;
     border-radius: 25px;
     background-color: rgb(209, 209, 208);
   }
