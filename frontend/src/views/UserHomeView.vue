@@ -7,25 +7,25 @@
 <template>
   <h1>Home</h1>
   <div id="btn-container" class="button:hover">
-    <input id="list-btn" class="button" type="submit" value="LISTS" />
-    <input id="guest-btn" class="button" type="submit" value="GUESTS" />
+    <router-link to="/userlistsoverview">
+      <input id="list-btn" class="button" type="submit" value="LISTS" />
+    </router-link>
+
+    <router-link to="/UserGuestOverView">
+      <input id="guest-btn" class="button" type="submit" value="GUESTS" />
+    </router-link>
   </div>
 </template>
 
 <style lang="scss" scoped>
   #list-btn {
-    width: 60%;
-    margin-bottom: 10%;
-  }
-
-  #guest-btn {
-    width: 60%;
+    margin-bottom: 20%;
   }
 
   #btn-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 70%;
+    margin-top: 60%;
   }
 </style>
