@@ -99,3 +99,49 @@ a {
   font-size: 0.9rem;
   color: #696969;
 }
+
+.button {
+  display: flex;
+  background-color: #cbbaa49f;
+  font-size: 0.75rem;
+  font-family: Sen;
+  color: black;
+  text-align: left;
+  text-transform: capitalize;
+  width: 100%;
+}
+
+.filterButton {
+  display: flex;
+  background-color: #cbbaa4;
+  border: none;
+  height: 3rem;
+  width: 100%;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.sortButton {
+  display: flex;
+  background-color: #cbbaa4;
+  border: none;
+  height: 3rem;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.sortContainerBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.categoryButton {
+  padding: none;
+}
+.chevronDown {
+  height: 0.75rem;
+  margin-left: 0.25rem;
+}

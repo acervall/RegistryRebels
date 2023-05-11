@@ -51,7 +51,7 @@
           } else {
             // If category is not 'all gifts', retrieve products associated with category
             response = await fetch(
-              `http://localhost:3000/api/category/${categoryId}/products`,
+              `http://localhost:3000/api/selectedProduct/${this.listId}/${categoryId}`,
             )
           }
           const data = await response.json()
@@ -147,7 +147,7 @@
         </div>
         <div v-show="showCategoryDropdown" class="categoryList">
           <button
-            class="button-dark"
+            class="button button-dark"
             v-for="category in categories"
             :key="category.category_Id"
             :class="{ active: category.category_Id === selectedCategory }"
@@ -160,14 +160,14 @@
       <div class="sortContainerBox">
         <div v-show="showSortDropdown" class="sortOptions">
           <button
-            class="button-dark"
+            class="button button-dark"
             :class="{ active: sortOption === 'name' }"
             @click="sortProductList('name')"
           >
             Name
           </button>
           <button
-            class="button-dark"
+            class="button button-dark"
             :class="{ active: sortOption === 'price' }"
             @click="sortProductList('price')"
           >
