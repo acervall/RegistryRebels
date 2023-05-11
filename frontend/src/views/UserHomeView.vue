@@ -5,7 +5,27 @@
 </script>
 
 <template>
-  <h1>UserHomeView</h1>
+  <h1>Home</h1>
+  <div id="btn-container" class="button:hover">
+    <input id="list-btn" class="button" type="submit" value="LISTS" />
+    <input id="guest-btn" class="button" type="submit" value="GUESTS" />
+  </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  #list-btn {
+    width: 60%;
+    margin-bottom: 10%;
+  }
+
+  #guest-btn {
+    width: 60%;
+  }
+
+  #btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 70%;
+  }
+</style>
