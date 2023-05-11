@@ -12,16 +12,17 @@
       <input id="input-email" type="text" />
       <label id="lab-password" for="password">Password</label>
       <input id="input-passw" type="password" />
+      <input class="button" type="submit" value="Sign up" />
 
-      <div id="btn-div">
+      <!-- <div id="btn-div">
         <button type="submit">
-          <p id="singin-btn">Sign in</p>
+          <h3 id="singin-btn-h3">Sign in</h3>
         </button>
-      </div>
+      </div> -->
 
       <div id="para-and-link">
         <p>or</p>
-        <a href="länk fråga amelie"> sign up</a>
+        <a href="/#/signup"> sign up</a>
       </div>
     </form>
   </div>
@@ -45,40 +46,44 @@
     margin-top: 20%;
   }
 
-  #lab-email {
-    margin-right: 110%;
-    margin-bottom: 10px;
-  }
+  // #lab-email {
+  //   margin-right: 110%;
+  //   margin-bottom: 10px;
+  // }
 
-  #lab-password {
-    margin-top: 10%;
-    margin-right: 100%;
-  }
+  // #lab-password {
+  //   margin-top: 10%;
+  //   margin-right: 100%;
+  // }
 
-  input {
-    height: 100%;
-    width: 250px;
-    height: 40px;
-  }
+  // input {
+  //   height: 100%;
+  //   width: 250px;
+  //   height: 40px;
+  // }
 
-  #input-email {
-    margin-top: 10px;
-  }
+  // #input-email {
+  //   margin-top: 10px;
+  // }
 
-  #input-passw {
-    margin-top: 10px;
-  }
+  // #input-passw {
+  //   margin-top: 10px;
+  // }
 
-  button {
-    margin-top: 50%;
-    background-color: black;
-    width: 100px;
-    height: 40px;
-  }
+  // button {
+  //   margin-top: 50%;
+  //   background-color: black;
+  //   width: 100px;
+  //   height: 37px;
+  // }
 
-  #singin-btn {
-    color: white;
-  }
+  // #singin-btn-h3 {
+  //   color: white;
+  //   font-weight: 400;
+  //   font-size: 18px;
+  //   line-height: 22.25px;
+  //   text-align: center;
+  // }
 
   a {
     color: grey;
