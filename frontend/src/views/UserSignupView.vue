@@ -31,6 +31,7 @@
           })
           const data = await createUser.json()
           if (data.success) {
+            localStorage.setItem('User', this.userName)
             this.$router.push({ path: '/userhome' })
           }
         } else {
