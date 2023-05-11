@@ -48,7 +48,7 @@
 <template>
   <h1>Guests</h1>
   <div class="summary-container">
-    <p>Food: {{ totalFood }}</p>
+    <p><a href="/#/UserGuestFoodView">Food:</a> {{ totalFood }}</p>
     <p>Invited: {{ totalGuests }}</p>
     <p>Attending: {{ totalAttending }}</p>
   </div>
