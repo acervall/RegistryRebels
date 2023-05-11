@@ -7,6 +7,8 @@
       return {
         userList: [],
         listName: '',
+        listImg: '',
+        listDate: '',
         listU_Id: '',
         list_Id: '',
         showChangeList: false,
@@ -32,6 +34,8 @@
             },
             body: JSON.stringify({
               listName: this.listName,
+              listDate: this.listDate,
+              listImage: this.listImg,
               listU_Id: this.listU_Id,
             }),
           },
@@ -124,25 +128,51 @@
 
 <template>
   <div id="main-container">
-    <h1>Create Wislist</h1>
+    <div id="intro-container">
+      <h1>Add new List</h1>
+      <div @click="addList" id="save-container">
+        <p>Save</p>
+      </div>
+    </div>
     <div>
-      <!-- Formulär -->
-      <form v-on:submit="addList">
-        <label for="listName">Namn på listan :</label>
-        <input type="text" id="listName" v-model="listName" />
-        <label for="listU_Id">Skriv in id: </label>
-        <input type="number" id="listU_Id" name="listU_Id" v-model="listU_Id" />
-        <input type="submit" value="Save list" />
-      </form>
+      <label for="listName">Name</label>
+      <input
+        class="input-text-placeholder"
+        type="text"
+        id="listName"
+        v-model="listName"
+      />
+      <label for="listDate">Date of event</label>
+      <input
+        class="input-text-placeholder"
+        type="text"
+        id="listDate"
+        v-model="listDate"
+      />
+      <label for="listUrl">Image URL</label>
+      <input
+        class="input-text-placeholder"
+        type="text"
+        id="listUrl"
+        v-model="listImg"
+      />
+      <label for="listU_Id">Skriv in id (Ska tas bort)</label>
+      <input
+        class="input-text-placeholder"
+        type="number"
+        id="listU_Id"
+        name="listU_Id"
+        v-model="listU_Id"
+      />
     </div>
 
     <!-- Lista på alla listor -->
     <h3>All wishlist</h3>
     <div id="userList-container" v-for="user in userList" :key="user.list_Id">
-      <div id=" list-of-lists">
-        <ul>
-          <li>{{ user.listName }} {{ user.listU_Id }}</li>
-        </ul>
+      <img class="list-images-display" :src="user.listImage" alt="test" />
+      <div class="align-list-info">
+        <h3>{{ user.listName }}</h3>
+        <p>Specifika user id: {{ user.listU_Id }}</p>
       </div>
       <div id="vsg-container">
         <div id="change-btn">
@@ -152,8 +182,8 @@
             id="Capa_1"
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
-            width="15px"
-            height="15px"
+            width="22px"
+            height="22px"
             viewBox="0 0 494.936 494.936"
             xml:space="preserve"
             @click="toggleChangeList"
@@ -181,8 +211,8 @@
           <div id="trash-btn">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="22px"
+              height="22px"
               fill="currentColor"
               class="bi bi-trash"
               viewBox="0 0 16 16"
@@ -203,7 +233,7 @@
       <!-- Formulär för att ändra en lista -->
       <form
         v-if="showChangeList"
-        v-on:submit="changeList(user.listU_Id, user.list_Id)"
+        @submit="changeList(user.listU_Id, user.list_Id)"
       >
         <label for="changeName">Ändra namn på listan: </label>
         <input type="text" v-model="listName" />
@@ -216,6 +246,48 @@
 </template>
 
 <style scoped>
+  h1 {
+    font-size: 1.5rem;
+    margin: 0 0 0 55px;
+    width: 100%;
+    text-align: center;
+  }
+
+  #intro-container {
+    display: flex;
+    align-items: center;
+    margin: 30px 0px 50px 0px;
+  }
+
+  #intro-container p {
+    margin-left: auto;
+    margin-right: 15px;
+  }
+
+  .input-text-placeholder {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border: 1px solid black;
+    border-radius: 3px;
+  }
+
+  #userList-container {
+    display: flex;
+    margin-bottom: 20px;
+  }
+
+  .align-list-info {
+    margin-left: 15px;
+  }
+
+  .list-images-display {
+    width: 110px;
+    height: 110px;
+    border-radius: 10px;
+  }
+
   ul {
     list-style: none;
   }
@@ -226,12 +298,18 @@
 
   #vsg-container {
     display: flex;
-    /* flex-direction: row; */
+    margin-left: auto;
+    margin-right: 20px;
   }
 
-  #change-btn {
-    margin-left: 15%;
+  #change-btn,
+  #trash-btn {
     display: flex;
+    align-items: center;
+  }
+
+  #Capa_1 {
+    margin-right: 8px;
   }
 
   form {

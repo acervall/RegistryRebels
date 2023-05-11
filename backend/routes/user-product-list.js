@@ -44,8 +44,8 @@ router.get("/api/user-product-list/:id", async (req, res) => {
 
 // ADD a list
 router.post('/api/user-product-list', async(req, res) => {
-  const sql = 'INSERT INTO list (listName, listU_Id) VALUES (?,?)';
-  const params = [req.body.listName, req.body.listU_Id]
+  const sql = 'INSERT INTO list (listName, listImage, listDate, listU_Id) VALUES (?,?,?,?)';
+  const params = [req.body.listName, req.body.listImage, req.body.listDate, req.body.listU_Id]
 
   try{
       await connection.query(sql, params, function (error, results, fields) {
@@ -67,7 +67,7 @@ router.post('/api/user-product-list', async(req, res) => {
 });
 
 // CHANGE list
-router.put('/api/user-product-list', async(req, res) => {  
+router.put('/api/user-product-list', async(req, res) => {
   const sql ='UPDATE list SET listName = ?, listU_Id = ? WHERE list_Id = ?'
   const params =[req.body.listName, req.body.listU_Id, req.body.list_Id]
 
