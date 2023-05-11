@@ -35,9 +35,6 @@ app.use(category)
 const productList = require('./routes/product-list')
 app.use(productList)
 
-const productListGuest = require('./routes/product-list-guest')
-app.use(productListGuest)
-
 const userProductList = require('./routes/user-product-list')
 app.use(userProductList)
 
@@ -46,6 +43,9 @@ app.use(guest)
 
 const user = require('./routes/user')
 app.use(user)
+
+const userSelectedProduct = require('./routes/guest-selected-product')
+app.use(userSelectedProduct)
 
 // app.use(function (err, req, res) {
 //   res.status(500).json(err.message)

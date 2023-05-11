@@ -4,7 +4,7 @@ const router = express.Router()
 
 
 // Get all guestselectedproduct
-router.get('/api/guest-selected-products', async (req, res) => {
+router.get('/api/guestSelectedProducts', async (req, res) => {
   const sql = 'SELECT * FROM guestSelectedProduct';
   try {
     await connection.query(sql, (error, results) => {
@@ -22,7 +22,7 @@ router.get('/api/guest-selected-products', async (req, res) => {
 });
 
 // Get a single product by id
-router.get('/api/guest-selected-products/:id', async (req, res) => {
+router.get('/api/guestSelectedProducts/:id', async (req, res) => {
   const { id } = req.params;
   const sql = 'SELECT * FROM guestSelectedProduct WHERE guestSelectedProduct_Id = ?';
   try {
@@ -44,8 +44,8 @@ router.get('/api/guest-selected-products/:id', async (req, res) => {
 });
 
 
-// CREATE - Add a new guestselectedproduct
-router.post('/api/guest-selected-products', async (req, res) => {
+// Add a new guestselectedproduct
+router.post('/api/guestSelectedProducts', async (req, res) => {
   const { guestSelectedProductS_Id, guestSelectedProductG_Id, productPurchased } = req.body;
   const sql = 'INSERT INTO guestSelectedProduct (guestSelectedProductS_Id, guestSelectedProductG_Id, productPurchased) VALUES (?, ?, ?)';
   try {
@@ -62,8 +62,8 @@ router.post('/api/guest-selected-products', async (req, res) => {
   }
 });
 
-// UPDATE - Update a guestselectedproduct by id
-router.put('/api/guest-selected-products/:id', async (req, res) => {
+// Update a guestselectedproduct by id
+router.put('/api/guestSelectedProducts/:id', async (req, res) => {
   const { id } = req.params;
   const { guestSelectedProductS_Id, guestSelectedProductG_Id, productPurchased } = req.body;
   const sql = 'UPDATE guestSelectedProduct SET guestSelectedProductS_Id = ?, guestSelectedProductG_Id = ?, productPurchased = ? WHERE guestSelectedProduct_Id = ?';
@@ -81,8 +81,8 @@ router.put('/api/guest-selected-products/:id', async (req, res) => {
   }
 });
 
-// DELETE - Delete a guestselectedproduct by id
-router.delete('/api/guest-selected-products/:id', async (req, res) => {
+// Delete a guestselectedproduct by id
+router.delete('/api/guestSelectedProducts/:id', async (req, res) => {
   const { id } = req.params;
   const sql = 'DELETE FROM guestSelectedProduct WHERE guestSelectedProduct_Id = ?';
   try {
