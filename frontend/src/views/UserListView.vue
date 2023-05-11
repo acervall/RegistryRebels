@@ -12,12 +12,11 @@
         categories: [],
         showCategoryDropdown: false,
         showSortDropdown: false,
-        listId: 0,
+        listId: null,
       }
     },
     created() {
-      const listId = this.$route.query.listId
-      this.listId = listId
+      this.listId = this.$route.params.id
       this.getProducts()
       this.getCategories()
     },
@@ -46,7 +45,9 @@
           let response
           if (categoryId === 1) {
             // If category is 'all gifts', retrieve all products
-            response = await fetch(`http://localhost:3000/api/products`)
+            response = await fetch(
+              `http://localhost:3000/api/selectedProduct/${this.listId}`,
+            )
           } else {
             // If category is not 'all gifts', retrieve products associated with category
             response = await fetch(
@@ -86,9 +87,10 @@
       },
       async getProducts() {
         const data = await fetch(
-          'http://localhost:3000/api/selectedProduct/' + this.listId,
+          `http://localhost:3000/api/selectedProduct/${this.listId}`,
         )
         this.productList = await data.json()
+        console.log(this.productList, ' id: ', this.listId)
       },
     },
   }

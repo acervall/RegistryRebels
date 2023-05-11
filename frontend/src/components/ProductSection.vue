@@ -242,12 +242,16 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin: 0 0 20px 0;
+    margin: 0 15px 20px 0;
     align-items: end;
   }
 
   .product-info {
     width: 45vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 1rem;
   }
 
   .product-image-container {
