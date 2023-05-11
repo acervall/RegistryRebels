@@ -1,6 +1,10 @@
 <script>
+  import SignOut from '../components/SignOut.vue'
   export default {
     name: 'UserHomeView',
+    components: {
+      SignOut,
+    },
   }
 </script>
 
@@ -10,6 +14,7 @@
     <input id="list-btn" class="button" type="submit" value="LISTS" />
     <input id="guest-btn" class="button" type="submit" value="GUESTS" />
   </div>
+  <SignOut />
 </template>
 
 <style lang="scss" scoped>
