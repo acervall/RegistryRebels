@@ -46,7 +46,7 @@
       <input id="input-email" type="text" v-model="userEmail" />
       <label id="lab-password" for="password">Password</label>
       <input id="input-passw" type="password" v-model="userPassword" />
-      <input class="button" type="submit" value="Sign in" />
+      <input class="button-dark" type="submit" value="Sign in" />
 
       <div id="para-and-link">
         <p>or</p>

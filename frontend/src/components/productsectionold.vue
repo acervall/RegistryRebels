@@ -199,29 +199,39 @@
     </div>
 
     <div
-      class="product-container"
+      id="products-container"
       v-for="product in productList"
       :key="product.product_Id"
     >
       <div class="product-image-container">
         <img :src="product.productImg" alt="product image" />
       </div>
-      <div class="product-info">
-        <a :href="product.productURL" target="_blank" class="product-title">{{
-          product.productName
-        }}</a>
-        <p class="smaller-gray">{{ product.categoryName }}</p>
-        <p class="product-price">{{ product.productPrice }}:-</p>
+      <div id="product-info-container">
+        <div class="title-price-container">
+          <a :href="product.productURL" target="_blank">{{
+            product.productName
+          }}</a>
+        </div>
+        <div class="title-price-container">
+          <p>{{ product.categoryName }}</p>
+        </div>
+        <div class="price-amount-container">
+          <p>{{ product.productPrice }}:-</p>
+        </div>
       </div>
-      <div>
-        <p class="smaller-gray">Qty: 4</p>
-        <button
-          class="select-btn button-dark"
-          @click="itemAdded(product.product_Id)"
-        >
-          <p v-if="!product.itemAdd">Select</p>
-          <p v-else>Added</p>
-        </button>
+      <div
+        id="product-info-container"
+        style="justify-content: space-around; margin-left: auto"
+      >
+        <div class="title-price-container">
+          <p style="margin-left: auto">Qty: 4</p>
+        </div>
+        <div class="wish-amount-container">
+          <button class="select-btn" @click="itemAdded(product.product_Id)">
+            <p v-if="!product.itemAdd">Select</p>
+            <p v-else>Added</p>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -229,25 +239,58 @@
 </template>
 
 <style scoped>
-  .product-container {
-    width: 95vw;
+  @import url('https://fonts.cdnfonts.com/css/lindsey');
+  @import url('https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@300;400&display=swap');
+
+  /*  * {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+      sans-serif;
+  }*/
+  #products-container {
+    width: 97.5%;
     display: flex;
     background-color: #ffffff;
     margin: 25px 5px;
-    padding: 5px;
-    height: max-content;
   }
 
-  .product-container div:last-child {
+  #product-info-container {
+    margin: 8px 18px 15px 15px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    margin: 0 0 20px 0;
-    align-items: end;
   }
 
-  .product-info {
-    width: 45vw;
+  .title-price-container {
+    display: flex;
+    margin: 4px 0px;
+  }
+
+  .title-price-container a {
+    text-decoration: none;
+    color: #212121;
+    font-weight: 600;
+  }
+
+  .title-price-container p {
+    color: grey;
+  }
+
+  .wish-amount-container {
+    margin-top: 3px;
+    width: 100%;
+  }
+
+  .price-amount-container p {
+    font-size: 21px;
+    font-family: Libre Caslon Display;
+    font-weight: 500;
+    letter-spacing: -1px;
+  }
+
+  p,
+  a,
+  h4 {
+    margin: 3px;
+    padding: 0px;
   }
 
   .product-image-container {
@@ -258,29 +301,42 @@
     margin: 1rem;
   }
   img {
+    /*    width: 96px;
+    height: 96px;*/
     max-height: 25vw;
     max-width: 25vw;
     align-self: center;
+
+    /* border-radius: 50%; */
+    /* object-fit: cover; */
   }
 
   .select-btn {
     width: 76px;
     height: 32px;
+    background-color: rgb(44, 31, 28);
     border-radius: 0px;
     border: none;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-transform: uppercase;
   }
-
-  .button-dark p {
-    background-color: rgb(44, 31, 28);
-  }
-  .button-dark:disabled p {
+  .select-btn:disabled {
     background-color: #cbbaa4;
   }
 
-  /* FILTRERING */
+  .select-btn p {
+    color: white;
+    font-size: 0.85rem;
+    font-family: Libre Caslon Display;
+    margin-top: 4px;
+  }
+  .categoryContainer {
+    display: flex;
+    flex-direction: row;
+  }
+
   .filterContainer {
     display: flex;
     justify-content: center;

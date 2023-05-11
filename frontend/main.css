@@ -24,6 +24,11 @@ p {
   font-family: 'Sen', sans-serif;
 }
 
+.fancy-font {
+  font-family: 'Lindsey Signature';
+  font-size: 1.75rem;
+}
+
 .form-section {
   text-align: center;
   display: flex;
@@ -42,7 +47,8 @@ p {
   font-family: 'Sen', sans-serif;
 }
 
-.button {
+.button-dark,
+.button-dark p {
   font-family: 'Libre Caslon Display', serif;
   text-transform: uppercase;
   width: max-content;
@@ -77,4 +83,19 @@ a {
   color: grey;
   text-decoration: none;
   font-family: 'Sen', sans-serif;
+}
+
+.product-title {
+  font-size: 1.2rem;
+  color: black;
+}
+
+.product-price {
+  font-family: 'Libre Caslon Display', serif;
+  font-size: 1rem;
+}
+
+.smaller-gray {
+  font-size: 0.9rem;
+  color: #696969;
 }
