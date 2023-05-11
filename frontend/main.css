@@ -1,4 +1,4 @@
-/* Font Families 
+/* Font Families
 h1 - Display
   font-family: 'Libre Caslon Display', serif;
 
@@ -44,4 +44,12 @@ p {
 .button:hover {
   background-color: rgb(52, 52, 52);
   cursor: pointer;
+}
+
+.input-text-placeholder {
+  width: 75%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 3px;
 }
