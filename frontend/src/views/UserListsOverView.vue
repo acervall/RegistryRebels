@@ -44,10 +44,7 @@
       triggerSpecificList(listId) {
         console.log(listId)
         this.$router.push({
-          path: '/userlist',
-          query: {
-            listId: listId,
-          },
+          path: `/userlist/${listId}`,
         })
       },
     },
