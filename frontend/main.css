@@ -61,6 +61,19 @@ p {
   align-self: center;
 }
 
+.button-lg {
+  background-color: #696969;
+  width: 50vw;
+  height: 10vh;
+  color: white;
+  font-family: 'Libre Caslon Display', serif;
+  text-transform: uppercase;
+  font-size: 2rem;
+  align-self: center;
+  border: hidden;
+
+}
+
 .button:hover {
   background-color: rgb(52, 52, 52);
   cursor: pointer;
@@ -145,3 +158,4 @@ a {
   height: 0.75rem;
   margin-left: 0.25rem;
 }
+
