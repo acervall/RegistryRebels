@@ -19,14 +19,29 @@
           0,
         )
       },
-      totalFood() {
-        const allGuests = this.allGuests
-        const total = allGuests.reduce(
-          (acc, curr) => acc + curr.foodChoice.length,
-          0,
-        )
-        return total
-      },
+      // foodCombinations() {
+      //   const allGuests = this.allGuests
+
+      //   const foodList = allGuests
+      //     .map((person) => person.foodChoice.sort().join(', '))
+      //     .map((item) => (item === '' ? 'Äter allt' : item))
+
+      //   const allFoodCombinations = []
+      //   foodList.forEach((foodStr) => {
+      //     const found = allFoodCombinations.find((food) => food.str === foodStr)
+      //     if (found) {
+      //       found.count++
+      //     } else {
+      //       allFoodCombinations.push({ str: foodStr, count: 1 })
+      //     }
+      //   })
+
+      //   return allFoodCombinations.sort((a, b) => {
+      //     if (a.count > b.count) return -1
+      //     if (a.count < b.count) return 1
+      //     return 0
+      //   })
+      // },
       totalGuests() {
         return this.allGuests.length
       },
@@ -48,16 +63,28 @@
 <template>
   <h1>Guests</h1>
   <div class="summary-container">
-    <p><a href="/#/UserGuestFoodView">Food:</a> {{ totalFood }}</p>
-    <p>Invited: {{ totalGuests }}</p>
-    <p>Attending: {{ totalAttending }}</p>
+    <div class="column">
+      <p><a href="/#/UserGuestFoodView">Food page</a></p>
+      <p>Invited: {{ totalGuests }}</p>
+      <p>Attending: {{ totalAttending }}</p>
+    </div>
+    <div class="column">
+      <!-- <p v-for="foodChoice in foodCombinations">
+        {{ foodChoice.str }}: {{ foodChoice.count }}
+      </p> -->
+    </div>
   </div>
   <div class="party-container" v-for="(party, index) in guestList">
     <div class="party-info">
-      <!-- <p>Party: {{ index + 1 }}</p> -->
       <p>People: {{ party.length }}</p>
       <p>
-        Food: {{ party.reduce((acc, curr) => acc + curr.foodChoice.length, 0) }}
+        Special food:
+        {{
+          party.reduce(
+            (acc, curr) => acc + (curr.foodChoice.length > 0 ? 1 : 0),
+            0,
+          )
+        }}
       </p>
     </div>
     <ul>
@@ -66,7 +93,6 @@
         <p>{{ person.foodChoice.join(', ') }}</p>
       </li>
     </ul>
-    <!-- <pre v-for="guest in participant">{{ guest }}</pre> -->
   </div>
 </template>
 
@@ -87,6 +113,19 @@
   .summary-container {
     background-color: #efefef;
     padding: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .column {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      max-width: 45%;
+    }
+
+    .column:last-of-type {
+      text-align: end;
+    }
   }
 
   .party-container {
@@ -95,9 +134,6 @@
     box-shadow: 0 0 3px #ccc;
     padding: 16px;
     margin: 24px 0;
-
-    // display: flex;
-    // flex-direction: column;
 
     .party-info {
       border-bottom: 1px solid #010101;
@@ -115,6 +151,9 @@
       justify-content: space-between;
       p {
         display: inline;
+      }
+      p:last-of-type {
+        text-align: end;
       }
     }
   }
