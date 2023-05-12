@@ -13,14 +13,30 @@
         showCategoryDropdown: false,
         showSortDropdown: false,
         listId: null,
+        listName: '',
       }
     },
     created() {
       this.listId = this.$route.params.id
       this.getProducts()
       this.getCategories()
+      this.getUserList()
     },
     methods: {
+      async getUserList() {
+        const data = await fetch('http://localhost:3000/api/user-product-list')
+        this.userList = await data.json()
+        const listId = parseInt(this.$route.params.id)
+        const matchingList = this.userList.find(
+          (list) => list.list_Id === listId,
+        )
+        if (matchingList) {
+          this.listName = matchingList.listName
+        } else {
+          this.listName = 'List not found'
+        }
+      },
+
       sortProductList(sortOption) {
         if (sortOption === this.sortOption) {
           this.productList.reverse()
@@ -44,12 +60,10 @@
         try {
           let response
           if (categoryId === 1) {
-            // If category is 'all gifts', retrieve all products
             response = await fetch(
               `http://localhost:3000/api/selectedProduct/${this.listId}`,
             )
           } else {
-            // If category is not 'all gifts', retrieve products associated with category
             response = await fetch(
               `http://localhost:3000/api/selectedProduct/${this.listId}/${categoryId}`,
             )
@@ -98,8 +112,7 @@
 
 <template>
   <div class="UserListContainer">
-    <h1 class="ListTitle">Wedding</h1>
-
+    <h1 class="ListTitle">{{ listName }}</h1>
     <div class="filterContainer">
       <div class="categoryContainerBox">
         <div class="sortContainerBox">

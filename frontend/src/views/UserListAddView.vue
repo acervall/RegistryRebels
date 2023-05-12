@@ -98,7 +98,6 @@
           this.list_Id,
         )
       },
-
       toggleChangeList(index) {
         // Om den visar
         if (this.changeListId !== index) {
@@ -256,13 +255,15 @@
         v-if="showChangeList && changeListId === index"
         @submit="changeList(user.listU_Id, user.list_Id)"
       >
-        <label for="changeName">Ändra namn på listan: </label>
+        <label class="labelChange" for="changeName"
+          >Ändra namn på listan:
+        </label>
         <input
           class="input-text-placeholder"
           type="text"
           v-model="changeListName"
         />
-        <label for="listU-id">User Id: </label>
+        <label class="labelChange" for="listU-id">User Id: </label>
         <input
           class="input-text-placeholder"
           type="number"
@@ -369,8 +370,11 @@
     border-radius: 25px;
     margin-top: 10px;
     background-color: rgb(209, 209, 208);
+    margin-bottom: 4rem;
   }
-
+  .labelChange {
+    font-size: 0.75rem;
+  }
   form {
     display: flex;
     flex-direction: column;
