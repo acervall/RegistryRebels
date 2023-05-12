@@ -18,11 +18,11 @@
   <h1>Home {{ this.user }}</h1>
   <div id="btn-container" class="button:hover">
     <router-link to="/userlistsoverview">
-      <input id="list-btn" class="button-dark" type="submit" value="LISTS" />
+      <input id="list-btn" class="button-lg" type="submit" value="LISTS" />
     </router-link>
 
     <router-link to="/UserGuestOverView">
-      <input id="guest-btn" class="button-dark" type="submit" value="GUESTS" />
+      <input id="guest-btn" class="button-lg" type="submit" value="GUESTS" />
     </router-link>
   </div>
   <SignOut />
@@ -37,6 +37,5 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 60%;
   }
 </style>
