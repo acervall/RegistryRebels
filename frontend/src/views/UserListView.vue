@@ -92,6 +92,13 @@
         )
         this.listStat = (await stat.json())[0]
       },
+      onClose() {
+        this.showAddProduct = false
+        this.getProducts()
+        this.getCategories()
+        this.getUserList()
+        this.getStatList()
+      },
       toggleDropdown(type) {
         if (type === 'category') {
           this.showCategoryDropdown = !this.showCategoryDropdown
@@ -210,11 +217,7 @@
         </div>
       </div>
     </div>
-    <AddProduct
-      v-if="showAddProduct"
-      @close="showAddProduct = false"
-      :list-id="listId"
-    />
+    <AddProduct v-if="showAddProduct" @close="onClose" :list-id="listId" />
     <div id="main-container">
       <div
         id="products-container"
