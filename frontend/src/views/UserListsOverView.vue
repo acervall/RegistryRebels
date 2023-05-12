@@ -6,8 +6,14 @@
       const options = { month: 'long', day: 'numeric', year: 'numeric' }
       this.currentDate = date.toLocaleDateString('sv-SE', options)
     },
+    computed: {
+      user_Id() {
+        return localStorage.getItem('user_Id')
+      },
+    },
     created() {
       this.getUserList()
+      this.lists()
       this.userList.forEach((list) => {
         this.$set(list, 'openItems', false)
       })
@@ -23,23 +29,23 @@
     },
     methods: {
       async getUserList() {
-        const data = await fetch('http://localhost:3000/api/user-product-list')
+        const data = await fetch(
+          `http://localhost:3000/api/user-product-list/user/${this.user_Id}`,
+        )
         this.userList = await data.json()
-        this.userListLength = this.userList.length
-        // console.log(this.userListLength)
+
         this.lists()
       },
       async lists() {
-        for (let i = 1; i < this.userListLength + 1; i++) {
+        for (let i = 0; i < this.userList.length; i++) {
           const data = await fetch(
-            'http://localhost:3000/api/selectedProduct/' + i,
+            'http://localhost:3000/api/selectedProduct/' +
+              this.userList[i].list_Id,
           )
           const listItems = await data.json()
           this.listItems.push(listItems) // Assign the fetched data to listItems
-          const itemsAmount = []
-          itemsAmount.push(listItems.length)
-          this.itemsAmount.push(itemsAmount)
         }
+        this.itemsAmount = this.listItems.map((list) => list.length)
       },
       triggerSpecificList(listId) {
         this.$router.push(`/userlist/${listId}`)
@@ -78,9 +84,7 @@
           <h3>{{ list.listName }}</h3>
           <p class="date-text">{{ currentDate }}</p>
           <div class="items-amount-box">
-            <p v-for="(amount, i) in itemsAmount[index]" :key="i">
-              {{ amount }} Items
-            </p>
+            <p>{{ itemsAmount[index] }} Items</p>
           </div>
         </div>
         <div class="burger-box" @click="triggerSpecificList(list.list_Id)">
