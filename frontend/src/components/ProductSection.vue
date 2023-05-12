@@ -252,8 +252,8 @@
     margin: 1rem;
   }
   img {
-    max-height: 25vh;
-    max-width: 25vh;
+    max-height: 15vh;
+    max-width: 15vh;
     align-self: center;
   }
 
