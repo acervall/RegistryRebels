@@ -75,7 +75,9 @@
       <div>
         <p>
           or
-          <a href="/#/signin"> sign in</a>
+          <router-link to="/">
+            <a> sign in</a>
+          </router-link>
         </p>
       </div>
     </div>
