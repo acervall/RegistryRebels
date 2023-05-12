@@ -72,24 +72,47 @@
 </script>
 
 <template>
+  <router-link to="/UserGuestOverView">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+      <path
+        style="fill: #767676"
+        d="M24 12.001H2.914l5.294-5.295-.707-.707L1 12.501l6.5 6.5.707-.707-5.293-5.293H24v-1z"
+        data-name="Left"
+      />
+    </svg>
+  </router-link>
+
   <h1>Food</h1>
-<div class="guest-container">
-  <h3>Antal gäster: {{ totalIDs }}</h3>
+  <div class="guest-container">
+    <h3>Antal gäster: {{ totalIDs }}</h3>
   </div>
   <div class="food-container">
     <ul>
-    <li><span class="styled-part">Vegetariskt:</span> {{ foodCounts.vegetarian }} st</li>
-    <li><span class="styled-part">Gluten:</span> {{ foodCounts.gluten }} st</li>
-    <li><span class="styled-part">Laktos:</span> {{ foodCounts.lactose }} st</li>
-    <li><span class="styled-part">Annat:</span> {{ foodCounts.other }} st</li>
-</ul>
-
-</div>
+      <li>
+        <span class="styled-part">Vegetariskt:</span>
+        {{ foodCounts.vegetarian }} st
+      </li>
+      <li>
+        <span class="styled-part">Gluten:</span> {{ foodCounts.gluten }} st
+      </li>
+      <li>
+        <span class="styled-part">Laktos:</span> {{ foodCounts.lactose }} st
+      </li>
+      <li><span class="styled-part">Annat:</span> {{ foodCounts.other }} st</li>
+    </ul>
+  </div>
   <!-- 1 räkna alla Id -->
   <!-- 2. räkna alla specialkost -->
 </template>
 
 <style lang="scss" scoped>
+  svg {
+    margin-left: 0.5rem;
+    margin-top: 2rem;
+    width: 1rem;
+    height: 1rem;
+  }
+
   ul {
     list-style: none;
     padding: 0;
@@ -99,7 +122,7 @@
   }
   h1 {
     padding: 0;
-    margin: 1rem
+    margin: 1rem;
   }
   .styled-part {
     font-weight: 700;
