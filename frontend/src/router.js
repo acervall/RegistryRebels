@@ -55,11 +55,12 @@ export default createRouter({
     },
     {
       component: UserGuestOverView,
-      path: '/UserGuestOverView',
+      path: '/userguestoverview',
     },
     {
       component: UserGuestFoodView,
-      path: '/UserGuestFoodView',
+      
+      path: '/userguestfoodview',
     },
     {
       component: UserListAddView,
