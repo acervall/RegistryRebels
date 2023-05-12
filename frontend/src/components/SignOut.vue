@@ -5,7 +5,7 @@
     methods: {
       signout() {
         localStorage.clear()
-        this.$router.push({ path: '/signin' })
+        this.$router.push({ path: '/' })
       },
     },
   }
