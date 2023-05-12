@@ -49,8 +49,9 @@
       <input class="button-dark" type="submit" value="Sign in" />
 
       <div id="para-and-link">
-        <p>or</p>
-        <a href="/#/signup"> sign up</a>
+        <router-link to="/signup">
+          <a> sign in</a>
+        </router-link>
       </div>
     </form>
   </div>

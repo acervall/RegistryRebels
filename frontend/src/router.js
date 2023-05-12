@@ -39,7 +39,7 @@ export default createRouter({
     },
     {
       component: UserSigninView,
-      path: '/signin',
+      path: '/',
     },
     {
       component: UserHomeView,
