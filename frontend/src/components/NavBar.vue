@@ -3,7 +3,7 @@
 <template>
   <div class="container">
     <!-- Make title dynamic -->
-    <h1 class="title">Wedding</h1>
+    
   </div>
 </template>
 

@@ -23,14 +23,8 @@ export default createRouter({
     },
     {
       component: HomeView,
-      path: '/',
+      path: '/:id',
     },
-    /* SKA BORT */
-    {
-      component: HomeViewUser,
-      path: '/home/user',
-    },
-    /*  */
     {
       component: GreetingCheckoutView,
       path: '/checkout',

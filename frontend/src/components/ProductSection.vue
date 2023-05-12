@@ -1,4 +1,6 @@
 <script>
+  import { routeLocationKey } from 'vue-router'
+
   export default {
     created() {
       this.getProducts()
@@ -11,6 +13,8 @@
         categories: [],
         showCategoryDropdown: false,
         showSortDropdown: false,
+        listId: this.$route.params.id,
+        listName: null,
       }
     },
     methods: {
@@ -38,11 +42,13 @@
           let response
           if (categoryId === 1) {
             // If category is 'all gifts', retrieve all products
-            response = await fetch(`http://localhost:3000/api/products`)
+            response = await fetch(
+              `http://localhost:3000/api/selectedProduct/${this.listId}`,
+            )
           } else {
             // If category is not 'all gifts', retrieve products associated with category
             response = await fetch(
-              `http://localhost:3000/api/category/${categoryId}/products`,
+              `http://localhost:3000/api/selectedProduct/${this.listId}/${categoryId}`,
             )
           }
           const data = await response.json()
@@ -53,11 +59,14 @@
         }
       },
       async getProducts() {
-        const data = await fetch('http://localhost:3000/api/products')
+        const data = await fetch(
+          `http://localhost:3000/api/selectedProduct/${this.listId}`,
+        )
         this.productList = await data.json()
         this.productList.forEach((product) => {
           product.amount = 0
         })
+        this.listName = this.productList[0].listName
       },
       sortProductList(sortOption) {
         if (sortOption === this.sortOption) {
@@ -110,6 +119,7 @@
 </script>
 
 <template>
+  <h1 class="title">{{ listName }}</h1>
   <div id="main-container">
     <div class="filterContainer">
       <div class="categoryContainerBox">
