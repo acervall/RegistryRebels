@@ -30,6 +30,23 @@ router.delete('/api/selectedProduct/:id', async (req, res) => {
   }
 })
 
+router.get('/api/selectedProduct/stat/:id', async (req, res) => {
+  const id = req.params.id
+  const sql = `
+  SELECT COUNT(*) as 'unique-products', SUM(sP.selectedProductAmount) as 'total-products' FROM selectedProduct as sP
+  WHERE sP.selectedProductList_Id = ?;`
+  try {
+    connection.query(sql, [id], (error, results) => {
+      if (error) {
+        throw error
+      }
+      res.json(results)
+    })
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 router.get('/api/selectedProduct/:id', async (req, res) => {
   // Visar alla produkter i list (med id)
   let sql = `

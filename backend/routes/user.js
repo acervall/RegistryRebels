@@ -52,7 +52,7 @@ router.get('/api/user/:id', async (req, res) => {
 router.post('/api/user/login', async (req, res) => {
   const password = req.body.userPassword
   const email = req.body.userEmail
-  const sql = `SELECT userName FROM user WHERE userEmail = '${email}' AND userPassword = '${password}';`
+  const sql = `SELECT * FROM user WHERE userEmail = '${email}' AND userPassword = '${password}';`
   /*`SELECT CASE WHEN EXISTS (SELECT * FROM user WHERE userEmail = '${email}' AND userPassword = '${password}') THEN TRUE ELSE FALSE END AS userExists;`*/
   try {
     await connection.query(sql, (error, results) => {
