@@ -14,6 +14,7 @@
         showSortDropdown: false,
         listId: null,
         listName: '',
+        listStat: {},
       }
     },
     created() {
@@ -21,6 +22,7 @@
       this.getProducts()
       this.getCategories()
       this.getUserList()
+      this.getStatList()
     },
     methods: {
       async getUserList() {
@@ -83,6 +85,12 @@
         } catch (error) {
           console.error(error)
         }
+      },
+      async getStatList() {
+        const stat = await fetch(
+          `http://localhost:3000/api/selectedProduct/stat/${this.listId}`,
+        )
+        this.listStat = (await stat.json())[0]
       },
       toggleDropdown(type) {
         if (type === 'category') {
@@ -253,6 +261,8 @@
         </div>
       </div>
     </div>
+    <p class="extra-stat">Unique products: {{ listStat['unique-products'] }}</p>
+    <p class="extra-stat">Total products: {{ listStat['total-products'] }}</p>
   </div>
 </template>
 
@@ -387,5 +397,9 @@
   .chevronDown {
     height: 0.75rem;
     margin-left: 0.25rem;
+  }
+
+  .extra-stat {
+    text-align: center;
   }
 </style>

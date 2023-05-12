@@ -1,5 +1,10 @@
 <script>
   export default {
+    computed: {
+      user_Id() {
+        return localStorage.getItem('user_Id')
+      },
+    },
     created() {
       this.getUserList()
     },
@@ -9,7 +14,6 @@
         listName: '',
         listImg: '',
         listDate: '',
-        listU_Id: '',
         list_Id: '',
         changeListName: '',
         showChangeList: false,
@@ -19,9 +23,10 @@
     methods: {
       // Hämtar alla listor från databasen
       async getUserList() {
-        const data = await fetch('http://localhost:3000/api/user-product-list')
+        const data = await fetch(
+          `http://localhost:3000/api/user-product-list/user/${this.user_Id}`,
+        )
         this.userList = await data.json()
-        console.log(this.userList)
       },
 
       async addList() {
@@ -41,7 +46,7 @@
               listName: this.listName,
               listDate: this.listDate,
               listImage: this.listImg,
-              listU_Id: this.listU_Id,
+              listU_Id: this.user_Id,
             }),
           },
         )
@@ -166,14 +171,14 @@
         id="listUrl"
         v-model="listImg"
       />
-      <label for="listU_Id">Skriv in id (Ska tas bort)</label>
+      <!-- <label for="listU_Id">Skriv in id (Ska tas bort)</label>
       <input
         class="input-text-placeholder"
         type="number"
         id="listU_Id"
         name="listU_Id"
         v-model="listU_Id"
-      />
+      /> -->
     </div>
 
     <!-- Lista på alla listor -->
@@ -253,7 +258,7 @@
       </div>
       <form
         v-if="showChangeList && changeListId === index"
-        @submit="changeList(user.listU_Id, user.list_Id)"
+        @submit="changeList(this.user_Id, user.list_Id)"
       >
         <label class="labelChange" for="changeName"
           >Ändra namn på listan:
