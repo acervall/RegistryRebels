@@ -42,10 +42,7 @@
         }
       },
       triggerSpecificList(listId) {
-        console.log(listId)
-        this.$router.push({
-          path: `/userlist/${listId}`,
-        })
+        this.$router.push(`/userlist/${listId}`)
       },
     },
   }

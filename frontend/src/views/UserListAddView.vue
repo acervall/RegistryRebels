@@ -27,6 +27,9 @@
       async addList() {
         // Skickar lista till databasen
         console.log('Innan send', this.listName, this.listU_Id)
+        if (this.listImg.trim() === '') {
+          this.listImg = 'https://pbs.twimg.com/media/B55yevQCUAEG2Z2.jpg'
+        }
         const send = await fetch(
           'http://localhost:3000/api/user-product-list',
           {
@@ -47,6 +50,10 @@
 
         const data = await send.json()
         console.log('Svar från backend: ', data)
+        this.listName = ''
+        this.listImg = ''
+        this.listDate = ''
+        this.listU_Id = ''
       },
 
       // toggleChangeList() {
@@ -138,7 +145,7 @@
         <p>Save</p>
       </div>
     </div>
-    <div>
+    <div class="inputContainer">
       <label for="listName">Name</label>
       <input
         class="input-text-placeholder"
@@ -149,7 +156,7 @@
       <label for="listDate">Date of event</label>
       <input
         class="input-text-placeholder"
-        type="text"
+        type="date"
         id="listDate"
         v-model="listDate"
       />
@@ -171,7 +178,7 @@
     </div>
 
     <!-- Lista på alla listor -->
-    <h3>All wishlist</h3>
+    <h3 class="h3Wishlist titleWishlist">All wishlist</h3>
     <div
       id="userList-container"
       v-for="(user, index) in userList"
@@ -184,8 +191,8 @@
           alt="list image"
         />
         <div class="align-list-info">
-          <h3>{{ user.listName }}</h3>
-          <p>Specifika user id: {{ user.listU_Id }}</p>
+          <h3 class="h3Wishlist">{{ user.listName }}</h3>
+          <p class="idInfo">Specifika user id: {{ user.listU_Id }}</p>
         </div>
         <div id="vsg-container">
           <div id="change-btn">
@@ -268,11 +275,19 @@
 </template>
 
 <style scoped>
+  @import url('https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@300;400&display=swap');
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     margin: 0 0 0 55px;
     width: 100%;
     text-align: center;
+    font-family: 'sen';
+    font-weight: 100;
+  }
+  .h3Wishlist {
+    font-family: 'sen';
+    font-weight: 200;
+    font-size: 1rem;
   }
 
   #intro-container {
@@ -285,12 +300,14 @@
     margin-left: auto;
     margin-right: 15px;
   }
+  .idInfo {
+    font-size: 0.5rem;
+  }
 
   .input-text-placeholder {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
-    margin-top: 10px;
     border: 1px solid black;
     border-radius: 3px;
   }
@@ -299,6 +316,7 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
+    font-family: 'sen';
   }
 
   #userlist-box {
@@ -333,11 +351,16 @@
   #change-btn,
   #trash-btn {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+  }
+
+  #trash-btn {
+    width: 15px;
   }
 
   #Capa_1 {
     margin-right: 8px;
+    width: 15px;
   }
   .change-info-btn {
     border: none;
@@ -351,5 +374,14 @@
   form {
     display: flex;
     flex-direction: column;
+  }
+  #main-container {
+    margin: 1rem;
+    font-family: 'Sen';
+    font-size: 1rem;
+  }
+  .inputContainer {
+    font-size: 0.75rem;
+    padding-bottom: 3rem;
   }
 </style>

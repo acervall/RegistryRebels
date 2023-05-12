@@ -176,7 +176,11 @@
         </div>
       </div>
     </div>
-    <AddProduct v-if="showAddProduct" @close="showAddProduct = false" />
+    <AddProduct
+      v-if="showAddProduct"
+      @close="showAddProduct = false"
+      :list-id="listId"
+    />
     <div id="main-container">
       <div
         id="products-container"
@@ -198,7 +202,7 @@
             <p>{{ product.categoryName }}</p>
           </div>
           <div style="margin-top: auto" class="wish-amount-container">
-            <p>Wished amount: 0</p>
+            <p>Wished amount: {{ product.selectedProductAmount }}</p>
           </div>
         </div>
         <div style="margin-left: auto" id="product-info-container">
