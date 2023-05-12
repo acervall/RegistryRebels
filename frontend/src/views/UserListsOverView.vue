@@ -46,6 +46,7 @@
           this.listItems.push(listItems) // Assign the fetched data to listItems
         }
         this.itemsAmount = this.listItems.map((list) => list.length)
+        console.log(this.listItems)
       },
       triggerSpecificList(listId) {
         this.$router.push(`/userlist/${listId}`)
@@ -81,7 +82,9 @@
       <div class="list-box-container" :class="{ open: list.openItems }">
         <img :src="list.listImage" alt="list image" />
         <div class="align-info-box">
-          <h3>{{ list.listName }}</h3>
+          <router-link :to="list.listUrl">
+            <h3>{{ list.listName }}</h3>
+          </router-link>
           <p class="date-text">{{ currentDate }}</p>
           <div class="items-amount-box">
             <p>{{ itemsAmount[index] }} Items</p>
@@ -140,6 +143,8 @@
   .align-info-box h3 {
     margin-bottom: 5px;
     margin-top: 0px;
+    margin-bottom: 10px;
+    color: #000000;
   }
 
   .date-text {

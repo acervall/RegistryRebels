@@ -33,7 +33,7 @@
           if (data.success) {
             localStorage.setItem('User', this.userName)
             localStorage.setItem('user_Id', this.user_Id)
-            this.$router.push({ path: '/userhome' })
+            this.$router.push({ path: '/' })
           }
         } else {
           console.log('Du måste fylla i alla fält')

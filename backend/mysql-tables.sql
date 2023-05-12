@@ -60,6 +60,7 @@ CREATE TABLE
         list_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         listName VARCHAR(50),
         listImage VARCHAR(500),
+        listUrl VARCHAR(100),
         listDate VARCHAR(50),
         listU_Id INT,
         FOREIGN KEY (listU_Id) REFERENCES user (user_Id)

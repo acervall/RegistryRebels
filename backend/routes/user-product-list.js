@@ -64,13 +64,33 @@ router.get('/api/user-product-list/:id', async (req, res) => {
   }
 })
 
+// Retrieve list from url
+router.get('/api/user-list/:url', async (req, res) => {
+  const url = req.params.url
+  const sql = 'SELECT * FROM list WHERE listUrl = ?'
+  try {
+    await connection.query(sql, [url], (error, results) => {
+      if (error) {
+        console.error(error.sqlMessage)
+      } else {
+        res.json(results)
+      }
+    })
+  } catch (error) {
+    return res.status(500).json({
+      error,
+    })
+  }
+})
+
 // ADD a list
 router.post('/api/user-product-list', async (req, res) => {
   const sql =
-    'INSERT INTO list (listName, listImage, listDate, listU_Id) VALUES (?,?,?,?)'
+    'INSERT INTO list (listName, listImage, listUrl, listDate, listU_Id) VALUES (?,?,?,?,?)'
   const params = [
     req.body.listName,
     req.body.listImage,
+    req.body.listUrl,
     req.body.listDate,
     req.body.listU_Id,
   ]

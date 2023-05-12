@@ -18,6 +18,7 @@
         changeListName: '',
         showChangeList: false,
         changeListId: null,
+        listUrl: '',
       }
     },
     methods: {
@@ -31,7 +32,7 @@
 
       async addList() {
         // Skickar lista till databasen
-        console.log('Innan send', this.listName, this.listU_Id)
+        console.log('Innan send', this.listName, this.listU_Id, this.listUrl)
         if (this.listImg.trim() === '') {
           this.listImg = 'https://pbs.twimg.com/media/B55yevQCUAEG2Z2.jpg'
         }
@@ -46,6 +47,7 @@
               listName: this.listName,
               listDate: this.listDate,
               listImage: this.listImg,
+              listUrl: this.listUrl,
               listU_Id: this.user_Id,
             }),
           },
@@ -58,6 +60,7 @@
         this.listName = ''
         this.listImg = ''
         this.listDate = ''
+        this.listUrl = ''
         this.listU_Id = ''
       },
 
@@ -171,14 +174,16 @@
         id="listUrl"
         v-model="listImg"
       />
-      <!-- <label for="listU_Id">Skriv in id (Ska tas bort)</label>
+      <label for="listUrl">URL</label>
       <input
         class="input-text-placeholder"
-        type="number"
-        id="listU_Id"
-        name="listU_Id"
-        v-model="listU_Id"
-      /> -->
+        type="text"
+        id="listUrl"
+        v-model="listUrl"
+      />
+      <p style="margin-top: 0px; margin-left: 1px">
+        Your location will be: http://localhost:5173/#/{{ listUrl }}
+      </p>
     </div>
 
     <!-- Lista på alla listor -->

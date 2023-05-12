@@ -13,7 +13,8 @@
         categories: [],
         showCategoryDropdown: false,
         showSortDropdown: false,
-        listId: this.$route.params.id,
+        listUrl: this.$route.params.url,
+        listId: null,
         listName: null,
       }
     },
@@ -60,13 +61,14 @@
       },
       async getProducts() {
         const data = await fetch(
-          `http://localhost:3000/api/selectedProduct/${this.listId}`,
+          `http://localhost:3000/api/selectedProductByUrl/${this.listUrl}`,
         )
         this.productList = await data.json()
         this.productList.forEach((product) => {
           product.amount = 0
         })
         this.listName = this.productList[0].listName
+        this.listId = this.productList[0].list_Id
       },
       sortProductList(sortOption) {
         if (sortOption === this.sortOption) {
