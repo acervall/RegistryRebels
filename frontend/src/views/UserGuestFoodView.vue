@@ -73,15 +73,18 @@
 
 <template>
   <h1>Food</h1>
-
+<div class="guest-container">
   <h3>Antal gäster: {{ totalIDs }}</h3>
-  <ul>
-    <li>Vegetariskt: {{ foodCounts.vegetarian }} st</li>
-    <li>Gluten: {{ foodCounts.gluten }} st</li>
-    <li>Laktos: {{ foodCounts.lactose }} st</li>
-    <li>Annat: {{ foodCounts.other }} st</li>
-  </ul>
+  </div>
+  <div class="food-container">
+    <ul>
+    <li><span class="styled-part">Vegetariskt:</span> {{ foodCounts.vegetarian }} st</li>
+    <li><span class="styled-part">Gluten:</span> {{ foodCounts.gluten }} st</li>
+    <li><span class="styled-part">Laktos:</span> {{ foodCounts.lactose }} st</li>
+    <li><span class="styled-part">Annat:</span> {{ foodCounts.other }} st</li>
+</ul>
 
+</div>
   <!-- 1 räkna alla Id -->
   <!-- 2. räkna alla specialkost -->
 </template>
@@ -89,5 +92,27 @@
 <style lang="scss" scoped>
   ul {
     list-style: none;
+    padding: 0;
+  }
+  li {
+    margin-top: 0.5rem;
+  }
+  h1 {
+    padding: 0;
+    margin: 1rem
+  }
+  .styled-part {
+    font-weight: 700;
+  }
+  .guest-container {
+    background-color: #efefef;
+    padding: 16px;
+  }
+  .food-container {
+    -moz-box-shadow: 0 0 3px #ccc;
+    -webkit-box-shadow: 0 0 3px #ccc;
+    box-shadow: 0 0 3px #ccc;
+    padding: 16px;
+    margin: 24px 0;
   }
 </style>
