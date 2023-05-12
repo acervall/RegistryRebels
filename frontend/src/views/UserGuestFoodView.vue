@@ -1,71 +1,75 @@
 <script>
   export default {
-    // name: 'UserGuestFoodView',
+    // Marcus
+    computed: {
+      allGuests() {
+        return this.guestList.flat()
+      },
+      // beräknar matkombinationerna
+      foodCombinations() {
+        const allGuests = this.allGuests
+
+        const foodList = allGuests
+          // skapar ny array foodlist med allGuests och kombinerar dem
+          // sorterar matvalen
+          .map((person) => person.foodChoice.sort().join(', '))
+          // matval tom = äter allt
+          .map((item) => (item === '' ? 'Äter allt' : item))
+
+        // tom array lagrar unika matkombinationer och antal
+        // beräknar och presenterar statistik
+        const allFoodCombinations = []
+        foodList.forEach((foodStr) => {
+          const found = allFoodCombinations.find((food) => food.str === foodStr)
+          if (found) {
+            found.count++
+          } else {
+            allFoodCombinations.push({ str: foodStr, count: 1 })
+          }
+        })
+
+        return allFoodCombinations.sort((a, b) => {
+          if (a.count > b.count) return -1
+          if (a.count < b.count) return 1
+          return 0
+        })
+      },
+    },
+
     created() {
       this.getParticipant()
     },
     data() {
       return {
         participants: [],
-        name: '',
-        foodChoice: [],
-        attending: true,
-        group: '',
-        _id: '',
-        totalIDs: 0,
-
-        foodCounts: {
-          vegetarian: 0,
-          gluten: 0,
-          lactose: 0,
-          other: 0,
-        },
+        guestList: [],
       }
     },
     methods: {
       async getParticipant() {
         const res = await fetch('http://localhost:3000/api/party')
         const json = await res.json()
-        // this.participants = json.data
-        // console.log(this.participants)
+
+        // uppdaterar guestList med matpreferensvärden
+        this.guestList = json.data.reduce(
+          (acc, curr) => [...acc, curr.participants],
+          [],
+        )
 
         // Uppdaterar participants arrayen
         this.participants = json.data.reduce((acc, party) => {
-          const partyParticipants = party.participants.map((participant) => ({
-            _id: participant._id,
-            name: participant.name,
-            foodChoice: participant.foodChoice,
-          }))
+          const partyParticipants = party.participants.map(
+            (participant) => ({}),
+          )
           return [...acc, ...partyParticipants]
         }, [])
         // anropar
         this.countTotalIDs()
       },
-      // räknar antal
+
       countTotalIDs() {
-        // antal gäster
+        //räknar antal gäster
         this.totalIDs = this.participants.length
-        // itererar över alla gästerna
-        this.participants.forEach((participant) => {
-          // itererar varje foodChoice
-          participant.foodChoice.forEach((choice) => {
-            // Kollar vad gästen väljer och ökar
-            switch (choice.toLowerCase()) {
-              // ej skiftkänsligt
-              case 'vegetariskt':
-                this.foodCounts.vegetarian++
-                break
-              case 'gluten':
-                this.foodCounts.gluten++
-                break
-              case 'laktos':
-                this.foodCounts.lactose++
-                break
-              default:
-                this.foodCounts.other++
-            }
-          })
-        })
       },
     },
   }
@@ -87,22 +91,11 @@
     <h3>Antal gäster: {{ totalIDs }}</h3>
   </div>
   <div class="food-container">
-    <ul>
-      <li>
-        <span class="styled-part">Vegetariskt:</span>
-        {{ foodCounts.vegetarian }} st
-      </li>
-      <li>
-        <span class="styled-part">Gluten:</span> {{ foodCounts.gluten }} st
-      </li>
-      <li>
-        <span class="styled-part">Laktos:</span> {{ foodCounts.lactose }} st
-      </li>
-      <li><span class="styled-part">Annat:</span> {{ foodCounts.other }} st</li>
-    </ul>
+    <p v-for="foodChoice in foodCombinations">
+      <span class="styled-part"> {{ foodChoice.str }}: </span>
+      {{ foodChoice.count }}
+    </p>
   </div>
-  <!-- 1 räkna alla Id -->
-  <!-- 2. räkna alla specialkost -->
 </template>
 
 <style lang="scss" scoped>
