@@ -97,7 +97,7 @@
           product.amount--
         }
       },
-      itemAdded(productId) {
+      itemAdded(productId, selectedProductAmount) {
         this.loadingIcon = true
         const productIndex = this.productList.findIndex(
           (p) => p.product_Id === productId,
@@ -111,6 +111,7 @@
           query: {
             productId: productId,
             amount: product.amount,
+            selectedProductAmount: selectedProductAmount,
           },
         })
       },
@@ -203,10 +204,10 @@
         <p class="product-price">{{ product.productPrice }}:-</p>
       </div>
       <div>
-        <p class="smaller-gray">Qty: 4</p>
+        <p class="smaller-gray">Qty: {{ product.selectedProductAmount }}</p>
         <button
           class="select-btn button-dark"
-          @click="itemAdded(product.product_Id)"
+          @click="itemAdded(product.product_Id, product.selectedProductAmount)"
         >
           <p v-if="!product.itemAdd">Select</p>
           <p v-else>Added</p>

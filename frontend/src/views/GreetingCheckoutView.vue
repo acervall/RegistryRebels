@@ -8,10 +8,12 @@
         guestName: null,
         greetingMessage: null,
         url: 'http://localhost:3000/',
-        wishedAmount: 4,
+        wishedAmount: null,
       }
     },
     created() {
+      const amountItem = this.$route.query.selectedProductAmount
+      this.wishedAmount = amountItem
       const productId = this.$route.query.productId
       this.productId = productId
       this.getProduct()
@@ -22,6 +24,7 @@
           'http://localhost:3000/api/products/' + this.productId,
         )
         this.productItem = await data.json()
+        console.log(this.productItem)
       },
       addAmount() {
         if (this.amountItems < this.wishedAmount) {
