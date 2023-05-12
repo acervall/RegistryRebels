@@ -39,93 +39,29 @@
 </script>
 
 <template>
-  <h1>Registry Rebels</h1>
-  <div class="container">
-    <form @submit.prevent="userSignIn()" class="loginform">
-      <label id="lab-email" for="email">Email</label>
-      <input id="input-email" type="text" v-model="userEmail" />
-      <label id="lab-password" for="password">Password</label>
-      <input id="input-passw" type="password" v-model="userPassword" />
-      <input class="button-dark" type="submit" value="Sign in" />
+  <div id="signin">
+    <h1>Registry Rebels</h1>
 
-      <div id="para-and-link">
-        <router-link to="/signup">
-          <a> sign in</a>
-        </router-link>
+    <div class="form-section">
+      <form @submit.prevent="userSignIn()" class="loginform">
+        <label for="email">Email</label>
+        <input class="txt-input" type="text" v-model="userEmail" />
+
+        <label for="password">Password</label>
+        <input class="txt-input" type="password" v-model="userPassword" />
+
+        <input class="button-dark" type="submit" value="Sign in" />
+      </form>
+
+      <div id="a-div">
+        <p>
+          <router-link to="/signup">
+            <a> sign up</a>
+          </router-link>
+        </p>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
-  h1 {
-    margin-top: 20%;
-  }
-
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 50%;
-    margin-top: 20%;
-  }
-
-  #lab-email {
-    margin-right: 110%;
-    margin-bottom: 10px;
-  }
-
-  #lab-password {
-    margin-top: 10%;
-    margin-right: 100%;
-  }
-
-  input {
-    height: 100%;
-    width: 250px;
-    height: 40px;
-  }
-
-  #input-email {
-    margin-top: 10px;
-  }
-
-  #input-passw {
-    margin-top: 10px;
-  }
-
-  .button {
-    margin-top: 20%;
-    background-color: black;
-    width: 100px;
-    height: 37px;
-  }
-
-  // #singin-btn-h3 {
-  //   color: white;
-  //   font-weight: 400;
-  //   font-size: 18px;
-  //   line-height: 22.25px;
-  //   text-align: center;
-  // }
-
-  a {
-    color: grey;
-    text-decoration: none;
-  }
-
-  #para-and-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  #para-and-link p {
-    margin-right: 5px;
-  }
-</style>
+<style lang="scss" scoped></style>
