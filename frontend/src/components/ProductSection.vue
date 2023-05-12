@@ -246,13 +246,14 @@
   .product-image-container {
     align-self: center;
     margin-left: 5px;
-    min-width: 25vw;
+    min-height: 10vw;
+    min-width: 10vw;
     text-align: center;
     margin: 1rem;
   }
   img {
-    max-height: 25vw;
-    max-width: 25vw;
+    max-height: 25vh;
+    max-width: 25vh;
     align-self: center;
   }
 
