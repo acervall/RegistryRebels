@@ -60,12 +60,10 @@
         try {
           let response
           if (categoryId === 1) {
-            // If category is 'all gifts', retrieve all products
             response = await fetch(
               `http://localhost:3000/api/selectedProduct/${this.listId}`,
             )
           } else {
-            // If category is not 'all gifts', retrieve products associated with category
             response = await fetch(
               `http://localhost:3000/api/selectedProduct/${this.listId}/${categoryId}`,
             )
