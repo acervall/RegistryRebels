@@ -207,7 +207,14 @@
               {{ product.productPrice }}:-
             </h4>
           </div>
-          <div class="edit-product-icon">
+          <div
+            @click="
+              $router.push({
+                path: `/editProduct/${listId}/${product.selectedProduct_Id}`,
+              })
+            "
+            class="edit-product-icon"
+          >
             <img
               src="/assets/edit-button-svgrepo-com.svg"
               alt="happy hikers logo"

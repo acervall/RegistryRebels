@@ -137,6 +137,49 @@ router.post('/api/product/:id', async (req, res) => {
   }
 })
 
+// Uppdaterar en produkt i både product & selectedProduct
+router.put('/api/product/:productId/:selectedProductId', async (req, res) => {
+  const sql = 'CALL updateProduct(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+  const params = [
+    req.body.productName,
+    req.body.productPrice,
+    req.body.productImg,
+    req.body.productURL,
+    req.body.productCategory_Id,
+    req.body.selectedProductFavorite,
+    req.body.selectedProductPurchased,
+    req.body.selectedProductAmount,
+  ]
+
+  console.log('PARAMS: ', params)
+
+  try {
+    await connection.query(
+      sql,
+      [req.params.productId, req.params.selectedProductId, ...params],
+      (error) => {
+        if (error?.code === 'ER_DUP_ENTRY') {
+          res.status(409).json({
+            success: false,
+            error: error,
+            message: 'Product name already exists',
+          })
+        } else if (error) {
+          throw error
+        } else {
+          res.status(201).json({
+            success: true,
+            error: '',
+            message: 'Product has been added',
+          })
+        }
+      },
+    )
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+})
+
 // Change a current product. Target specific product ID
 router.put('/api/products', async (req, res) => {
   let sql =

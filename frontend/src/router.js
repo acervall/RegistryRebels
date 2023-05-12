@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
+import EditProductView from './views/EditProductView.vue'
 import HomeView from './views/HomeView.vue'
 import HomeViewUser from './views/HomeViewUser.vue'
 import GreetingCheckoutView from './views/GreetingCheckoutView.vue'
@@ -16,6 +17,10 @@ import UserListAddView from './views/UserListAddView.vue'
 export default createRouter({
   history: createWebHashHistory(),
   routes: [
+    {
+      component: EditProductView,
+      path: '/editProduct/:listId/:productId',
+    },
     {
       component: HomeView,
       path: '/',
@@ -46,7 +51,6 @@ export default createRouter({
       component: UserHomeView,
       path: '/userhome',
     },
-
     {
       component: UserListsOverView,
       path: '/userlistsoverview',

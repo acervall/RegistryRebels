@@ -1,17 +1,18 @@
-DROP TABLE guest;
-USE registryrebels;
+-- DROP TABLE guest;
+-- USE registryrebels;
+DROP DATABASE IF EXISTS RegistryRebels;
 
 CREATE DATABASE RegistryRebels DEFAULT CHARACTER SET = 'utf8mb4';
 
 USE RegistryRebels;
 
-DROP TABLE guestSelectedProduct;
-DROP TABLE guest;
-DROP TABLE selectedProduct;
-DROP TABLE list;
-DROP TABLE user;
-DROP TABLE product;
-DROP TABLE category;
+DROP TABLE IF EXISTS guestSelectedProduct;
+DROP TABLE IF EXISTS guest;
+DROP TABLE IF EXISTS selectedProduct;
+DROP TABLE IF EXISTS list;
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS category;
 
 -- Categories
 
