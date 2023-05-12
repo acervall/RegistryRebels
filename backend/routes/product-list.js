@@ -126,11 +126,11 @@ router.get('/api/selectedProduct/:listId/:categoryId', async (req, res) => {
 router.post('/api/selectedProduct/:id', async (req, res) => {
   // Skapar en selectedProduct och kopplar till list (med id)
   const params = Object.entries({
-    selectedProductP_Id: req.body?.selectedProductP_Id,
     selectedProductPriority: req.body?.selectedProductPriority,
     selectedProductFavorite: req.body?.selectedProductFavorite,
     selectedProductPurchased: req.body?.selectedProductPurchased,
     selectedProductAmount: req.body?.selectedProductAmount,
+    selectedProductP_Id: req.body?.selectedProductP_Id,
   }).filter((kv) => kv[1] || kv[1] === 0)
 
   const columns = params.map((kv) => kv[0])

@@ -3,6 +3,7 @@
   export default {
     created() {
       this.getCategories()
+      console.log(this.listId)
     },
     computed: {
       showProducts() {
@@ -27,10 +28,10 @@
         selectedCategory: null,
         url: '',
         validated: false,
-        listId: 1,
         productList: [],
         searchTerm: null,
         addCategoryOpen: false,
+        selectedProductP_Id: null,
       }
     },
     emits: ['close'],
@@ -61,7 +62,7 @@
         }
       },
       async addProduct() {
-        const options = {
+        const options1 = {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -78,12 +79,37 @@
             selectedProductAmount: this.amount,
           }),
         }
+        const options2 = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            selectedProductP_Id: this.selectedProductP_Id,
+            selectedProductPriority: 0,
+            selectedProductFavorite: this.favorite,
+            selectedProductPurchased: 0,
+            selectedProductAmount: this.amount,
+          }),
+        }
         if (this.validated) {
           try {
-            const data = await fetch(
-              `http://localhost:3000/api/product/${this.listId}`,
-              options,
-            )
+            let data
+            if (
+              this.productList
+                .map((product) => product.productName.toLowerCase())
+                .includes(this.name.toLowerCase())
+            ) {
+              data = await fetch(
+                `http://localhost:3000/api/selectedProduct/${this.listId}`,
+                options2,
+              )
+            } else {
+              data = await fetch(
+                `http://localhost:3000/api/product/${this.listId}`,
+                options1,
+              )
+            }
             const res = await data.json()
             if (res.success === true && data.ok) {
               this.addConfirmation = true
@@ -123,6 +149,7 @@
       },
       selectProduct(product) {
         // console.log(product)
+        this.selectedProductP_Id = product.product_Id
         this.imgSrc = product.productImg
         this.name = product.productName
         this.searchTerm = product.productName
@@ -145,6 +172,12 @@
         } else {
           this.validated = false
         }
+      },
+    },
+    props: {
+      listId: {
+        type: Number,
+        required: true,
       },
     },
     watch: {
