@@ -1,17 +1,13 @@
 <script>
   import CategorySelection from '../components/CategorySelection.vue'
   import ProductSection from '../components/ProductSection.vue'
-  import UserListSection from '../components/UserListSection.vue'
   import NavBar from '../components/NavBar.vue'
-  import AddProduct from '../components/AddProduct.vue'
 
   export default {
     components: {
       ProductSection,
-      UserListSection,
       CategorySelection,
       NavBar,
-      AddProduct,
     },
   }
 </script>
@@ -22,9 +18,6 @@
     <NavBar />
     <CategorySelection />
     <ProductSection />
-    <ProductSectionUser />
-    <UserListSection />
-    <AddProduct />
   </div>
 </template>
 
@@ -35,5 +28,7 @@
     left: 0;
     z-index: -1;
     width: 100vw;
+    background-color: #ffffff;
+    opacity: 75%;
   }
 </style>

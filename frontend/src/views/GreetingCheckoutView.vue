@@ -4,90 +4,104 @@
       return {
         productItem: null,
         productId: null,
-        amountItems: 0,
-        guestName: "",
-        greetingMessage: ""
+        amountItems: 1,
+        guestName: null,
+        greetingMessage: null,
+        url: 'http://localhost:3000/',
+        wishedAmount: null,
       }
     },
     created() {
-      const productId = this.$route.query.productId;
+      const amountItem = this.$route.query.selectedProductAmount
+      this.wishedAmount = amountItem
+      const productId = this.$route.query.productId
       this.productId = productId
       this.getProduct()
     },
     methods: {
       async getProduct() {
-      const data = await fetch('http://localhost:3000/api/products/' + this.productId)
-      this.productItem = await data.json()
-      // this.productList.forEach(product => {
-      //   product.amount = 0
-      // })
+        const data = await fetch(
+          'http://localhost:3000/api/products/' + this.productId,
+        )
+        this.productItem = await data.json()
+        console.log(this.productItem)
+      },
+      addAmount() {
+        if (this.amountItems < this.wishedAmount) {
+          this.amountItems++
+        }
+      },
+      subtractAmount() {
+        if (this.amountItems > 0) {
+          this.amountItems--
+        }
+      },
+
+      async leaveGreeting() {
+        if (this.guestName != null || this.greetingMessage != null) {
+          const createGreeting = await fetch(`${this.url}api/guest`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              amountItems: this.amountItems,
+              guestName: this.guestName,
+              greetingMessage: this.greetingMessage,
+            }),
+          })
+          const data = await createGreeting.json()
+          if (data.success) {
+            localStorage.setItem('User', this.userName)
+            this.$router.push({ path: '/userhome' })
+          }
+        } else {
+          console.log('Du måste fylla i alla fält')
+        }
+      },
     },
-    addAmount() {
-      if (this.amountItems < 9) {
-        this.amountItems++
-      }
-    },
-    subtractAmount() {
-      if (this.amountItems > 0) {
-        this.amountItems--
-      }
-    },
-  }
   }
 </script>
 
 <template>
-  <!-- Test 1 -->
-  <!-- <div id="greeting-container">
-    <h2>Tack för ditt köp!</h2>
-    <h4>Lämna gärna en hälsning </h4>
-    <form action="">
-      <textarea id="greeting-input" name="greeting" rows="8" cols="40" />
-      <br />
-      <div id="btn-container">
-        <input id="submit-greeting-btn" type="submit" value="Submit" @click="$emit('submit-greeting')" />
-        <input id="cancel-greeting-btn" value="Cancel" @click="$emit('submit-greeting')" />
-      </div>
-    </form>
-  </div> -->
-
-  <!-- Test 2 -->
   <div id="main-container-greeting">
     <div id="intro-container">
-      <router-link to="/">
-        <img
-            id="test"
-            src="/assets/left-arrow-7252.svg"
-            alt="left arrow"
-          />
-      </router-link>
       <h1>Gift this item</h1>
     </div>
     <div class="product-bought-container">
       <img :src="productItem[0].productImg" alt="product image" />
-        <div class="product-details-container">
-          <h3> {{ productItem[0].productName }} </h3>
-          <p>From: Sandra Olsen</p>
-          <p style="word-break: break-all;">Greeting: {{ greetingMessage }}</p>
-        </div>
-        <div class="product-details-container" style="margin-left: auto; margin-top: 2px;">
-          <p style="margin-top: 4px;">Wished: 4</p>
-          <p>Amount: {{ amountItems }}</p>
-        </div>
+      <div class="product-details-container">
+        <p class="product-title">{{ productItem[0].productName }}</p>
+        <p>From: {{ guestName }}</p>
+        <p style="word-break: break-all">Greeting: {{ greetingMessage }}</p>
+      </div>
+      <div
+        class="product-details-container"
+        style="margin-left: auto; margin-top: 2px"
+      >
+        <p style="margin-top: 4px">Wished: {{ wishedAmount }}</p>
+        <p>Amount: {{ amountItems }}</p>
+      </div>
     </div>
   </div>
-  <div style=" margin-left: 10px;" id="input-container-greeting">
+  <div style="margin-left: 10px" id="input-container-greeting">
     <h3>Your Name</h3>
     <div id="name-input-container">
-      <input placeholder="Sandra Olsen" required type="text" v-model="guestName" />
+      <input required type="text" v-model="guestName" />
       <div class="add-subtract-container">
-          <button class="subtract-btn" @click="subtractAmount">-</button>
-          <span class="counter-value"> {{ amountItems }} </span>
-          <button class="add-btn" @click="addAmount">+</button>
+        <button class="subtract-btn" @click="subtractAmount">-</button>
+        <span class="counter-value"> {{ amountItems }} </span>
+        <button class="add-btn" @click="addAmount">+</button>
       </div>
     </div>
     <h3>Leave a greeting</h3>
-    <textarea id="greeting-input" placeholder="Nydelig!" name="greeting" rows="8" cols="42" v-model="greetingMessage"/>
+    <textarea
+      id="greeting-input"
+      name="greeting"
+      rows="8"
+      cols="42"
+      v-model="greetingMessage"
+    />
     <div id="submit-btn-container">
       <input id="submit-buy-btn" value="SAVE" />
     </div>
@@ -95,57 +109,6 @@
 </template>
 
 <style scoped>
-* {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
-      sans-serif;
-}
-  /* #greeting-container {
-    position: fixed;
-    top: 30vh;
-    left: 3.3vh;
-    border: 1px solid black;
-    width: 85%;
-    display: flex;
-    flex-direction: column;
-    padding: 10px 0px 20px 0px;
-    align-items: center;
-    color: rgb(0, 0, 0);
-    background-color: rgb(255, 255, 255);
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  textarea {
-    border: 1px solid black;
-  }
-
-  #btn-container {
-    width: 70%;
-    display: flex;
-    justify-content: space-around;
-  }
-
-  #submit-greeting-btn {
-    width: 85px;
-    height: 30px;
-    background-color: #828576;
-    border-radius: 5px;
-    border: none;
-  }
-
-  #cancel-greeting-btn {
-    width: 81px;
-    height: 28px;
-    text-align: center;
-    background-color: #ccccca;
-    border-radius: 5px;
-    border: none;
-  } */
-
   #intro-container {
     display: flex;
     justify-content: flex-start;
@@ -189,7 +152,7 @@
 
   .product-details-container p {
     color: rgb(182, 182, 182);
-    font-size: .85rem;
+    font-size: 0.85rem;
     width: 150px;
   }
 
@@ -252,8 +215,6 @@
     border: none;
     border-radius: 5px;
     color: rgb(223, 223, 223);
-    background-color: #787A6E;
-
+    background-color: #787a6e;
   }
-
 </style>

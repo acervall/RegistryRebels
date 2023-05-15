@@ -30,6 +30,23 @@ router.delete('/api/selectedProduct/:id', async (req, res) => {
   }
 })
 
+router.get('/api/selectedProduct/stat/:id', async (req, res) => {
+  const id = req.params.id
+  const sql = `
+  SELECT COUNT(*) as 'unique-products', SUM(sP.selectedProductAmount) as 'total-products' FROM selectedProduct as sP
+  WHERE sP.selectedProductList_Id = ?;`
+  try {
+    connection.query(sql, [id], (error, results) => {
+      if (error) {
+        throw error
+      }
+      res.json(results)
+    })
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 router.get('/api/selectedProduct/:id', async (req, res) => {
   // Visar alla produkter i list (med id)
   let sql = `
@@ -64,14 +81,107 @@ router.get('/api/selectedProduct/:id', async (req, res) => {
   }
 })
 
+router.get('/api/selectedProductByUrl/:url', async (req, res) => {
+  // Visar alla produkter i list (med url)
+  let sql = `
+  SELECT * FROM selectedProduct as sP
+  INNER JOIN list l on sP.selectedProductList_Id = l.list_Id
+  INNER JOIN product p on sP.selectedProductP_Id = p.product_Id
+  INNER JOIN category c on p.productCategory_Id = c.category_Id
+  WHERE l.listUrl = ?`
+
+  let searchTerm = req.body?.searchTerm
+  if (searchTerm) {
+    sql += ` AND p.productName LIKE ?;`
+    searchTerm = `%${searchTerm}%`
+  }
+  const params = [req.params.url, searchTerm].filter((value) => value)
+
+  console.log('SQL: ', sql, ' PARAMS: ', params)
+
+  try {
+    await connection.query(sql, params, function (error, results) {
+      if (error) {
+        if (error) throw error
+      }
+      res.json(results)
+    })
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: error,
+      message: error.message,
+    })
+  }
+})
+
+router.get(
+  '/api/selectedProduct/product/:listId/:selectedProductId',
+  async (req, res) => {
+    // Visar alla produkter i list (med id)
+    let sql = `
+  SELECT * FROM selectedProduct as sP
+  INNER JOIN list l on sP.selectedProductList_Id = l.list_Id
+  INNER JOIN product p on sP.selectedProductP_Id = p.product_Id
+  INNER JOIN category c on p.productCategory_Id = c.category_Id
+  WHERE sP.selectedProductList_Id = ?
+  AND sP.selectedProduct_Id = ?`
+
+    const params = [req.params.listId, req.params.selectedProductId]
+
+    try {
+      await connection.query(sql, params, function (error, results) {
+        if (error) {
+          if (error) throw error
+        }
+        res.json(results)
+      })
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        error: error,
+        message: error.message,
+      })
+    }
+  },
+)
+
+router.get('/api/selectedProduct/:listId/:categoryId', async (req, res) => {
+  // Visar alla produkter i list (med id)
+  let sql = `
+  SELECT * FROM selectedProduct as sP
+  INNER JOIN list l on sP.selectedProductList_Id = l.list_Id
+  INNER JOIN product p on sP.selectedProductP_Id = p.product_Id
+  INNER JOIN category c on p.productCategory_Id = c.category_Id
+  WHERE sP.selectedProductList_Id = ?
+  AND c.category_Id = ?`
+
+  const params = [req.params.listId, req.params.categoryId]
+
+  try {
+    await connection.query(sql, params, function (error, results) {
+      if (error) {
+        if (error) throw error
+      }
+      res.json(results)
+    })
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: error,
+      message: error.message,
+    })
+  }
+})
+
 router.post('/api/selectedProduct/:id', async (req, res) => {
   // Skapar en selectedProduct och kopplar till list (med id)
   const params = Object.entries({
-    selectedProductP_Id: req.body?.selectedProductP_Id,
     selectedProductPriority: req.body?.selectedProductPriority,
     selectedProductFavorite: req.body?.selectedProductFavorite,
     selectedProductPurchased: req.body?.selectedProductPurchased,
     selectedProductAmount: req.body?.selectedProductAmount,
+    selectedProductP_Id: req.body?.selectedProductP_Id,
   }).filter((kv) => kv[1] || kv[1] === 0)
 
   const columns = params.map((kv) => kv[0])

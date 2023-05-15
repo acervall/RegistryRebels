@@ -23,8 +23,14 @@ router.get('/api/guest', async (req, res) => {
 
 // Create new guest and greeting
 router.post('/api/guest', async (req, res) => {
-  const params = [req.body.guestName, req.body.guestGreeting]
-  const sql = 'INSERT INTO guest (guestName, guestGreeting) VALUES (?,?)'
+  const params = [
+    req.body.guestName,
+    req.body.guestGreeting,
+    req.body.productItem,
+    req.body.productId,
+    req.body.amountItems,
+  ]
+  const sql = 'INSERT INTO guest (guestName, guestGreeting) VALUES (?,?) '
 
   try {
     await connection.query(sql, params, (error, result) => {

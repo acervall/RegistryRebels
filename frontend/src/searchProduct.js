@@ -1,19 +1,8 @@
-async function searchProduct(listId, searchTerm) {
-  // const options = {
-  //   method: 'GET',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({
-  //     categoryName: this.newCategoryName,
-  //   }),
-  // }
-  // }
-  const res = await fetch(`http://localhost:3000/api/selectedProduct/${listId}`)
+async function searchProduct(searchTerm) {
+  const res = await fetch(`http://localhost:3000/api/product/${searchTerm}`)
   const products = await res.json()
-  return products.filter((product) =>
-    product.productName.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+  console.log('I SEARCH: ', products)
+  return products
 }
 
 export default searchProduct

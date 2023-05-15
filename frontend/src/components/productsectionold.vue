@@ -1,7 +1,10 @@
 <script>
-  import { routeLocationKey } from 'vue-router'
+  // import GreetingMessage from '../components/GreetingMessage.vue'
 
   export default {
+    // components: {
+    //   GreetingMessage,
+    // },
     created() {
       this.getProducts()
       this.getCategories()
@@ -13,11 +16,18 @@
         categories: [],
         showCategoryDropdown: false,
         showSortDropdown: false,
-        listUrl: this.$route.params.url,
-        listId: null,
-        listName: null,
+
+        // greetingsWindow: false,
       }
     },
+    // computed: {
+    // greetingWindowActive() {
+    //   return {
+    //     opacity: this.greetingsWindow ? 0.3 : 1,
+    //     position: this.greetingsWindow ? 'fixed' : 'static'
+    //   };
+    // }
+    // },
     methods: {
       toggleDropdown(type) {
         if (type === 'category') {
@@ -43,13 +53,11 @@
           let response
           if (categoryId === 1) {
             // If category is 'all gifts', retrieve all products
-            response = await fetch(
-              `http://localhost:3000/api/selectedProduct/${this.listId}`,
-            )
+            response = await fetch(`http://localhost:3000/api/products`)
           } else {
             // If category is not 'all gifts', retrieve products associated with category
             response = await fetch(
-              `http://localhost:3000/api/selectedProduct/${this.listId}/${categoryId}`,
+              `http://localhost:3000/api/category/${categoryId}/products`,
             )
           }
           const data = await response.json()
@@ -60,15 +68,11 @@
         }
       },
       async getProducts() {
-        const data = await fetch(
-          `http://localhost:3000/api/selectedProductByUrl/${this.listUrl}`,
-        )
+        const data = await fetch('http://localhost:3000/api/products')
         this.productList = await data.json()
         this.productList.forEach((product) => {
           product.amount = 0
         })
-        this.listName = this.productList[0].listName
-        this.listId = this.productList[0].list_Id
       },
       sortProductList(sortOption) {
         if (sortOption === this.sortOption) {
@@ -89,6 +93,10 @@
         }
       },
 
+      updateGreetingsWindow() {
+        this.greetingsWindow = false
+      },
+
       addAmount(product) {
         if (product.amount < 9) {
           product.amount++
@@ -99,7 +107,7 @@
           product.amount--
         }
       },
-      itemAdded(productId, selectedProductAmount) {
+      itemAdded(productId) {
         this.loadingIcon = true
         const productIndex = this.productList.findIndex(
           (p) => p.product_Id === productId,
@@ -108,21 +116,21 @@
         this.greetingsWindow = true
         const product = this.productList[productIndex]
 
-        this.$router.push({
-          path: '/checkout',
-          query: {
-            productId: productId,
-            amount: product.amount,
-            selectedProductAmount: selectedProductAmount,
-          },
-        })
+        setTimeout(() => {
+          this.$router.push({
+            path: '/checkout',
+            query: {
+              productId: productId,
+              amount: product.amount,
+            },
+          })
+        }, 1500)
       },
     },
   }
 </script>
 
 <template>
-  <h1 class="title">{{ listName }}</h1>
   <div id="main-container">
     <div class="filterContainer">
       <div class="categoryContainerBox">
@@ -160,7 +168,7 @@
         </div>
         <div v-show="showCategoryDropdown" class="categoryList">
           <button
-            class="button button-dark"
+            class="button"
             v-for="category in categories"
             :key="category.category_Id"
             :class="{ active: category.category_Id === selectedCategory }"
@@ -173,14 +181,14 @@
       <div class="sortContainerBox">
         <div v-show="showSortDropdown" class="sortOptions">
           <button
-            class="button button-dark"
+            class="button"
             :class="{ active: sortOption === 'name' }"
             @click="sortProductList('name')"
           >
             Name
           </button>
           <button
-            class="button button-dark"
+            class="button"
             :class="{ active: sortOption === 'price' }"
             @click="sortProductList('price')"
           >
@@ -191,92 +199,144 @@
     </div>
 
     <div
-      class="product-container"
+      id="products-container"
       v-for="product in productList"
       :key="product.product_Id"
     >
       <div class="product-image-container">
         <img :src="product.productImg" alt="product image" />
       </div>
-      <div class="product-info">
-        <a :href="product.productURL" target="_blank" class="product-title">{{
-          product.productName
-        }}</a>
-        <p class="smaller-gray">{{ product.categoryName }}</p>
-        <p class="product-price">{{ product.productPrice }}:-</p>
+      <div id="product-info-container">
+        <div class="title-price-container">
+          <a :href="product.productURL" target="_blank">{{
+            product.productName
+          }}</a>
+        </div>
+        <div class="title-price-container">
+          <p>{{ product.categoryName }}</p>
+        </div>
+        <div class="price-amount-container">
+          <p>{{ product.productPrice }}:-</p>
+        </div>
       </div>
-      <div>
-        <p class="smaller-gray">Qty: {{ product.selectedProductAmount }}</p>
-        <button
-          class="select-btn button-dark"
-          @click="itemAdded(product.product_Id, product.selectedProductAmount)"
-        >
-          <p v-if="!product.itemAdd">Select</p>
-          <p v-else>Added</p>
-        </button>
+      <div
+        id="product-info-container"
+        style="justify-content: space-around; margin-left: auto"
+      >
+        <div class="title-price-container">
+          <p style="margin-left: auto">Qty: 4</p>
+        </div>
+        <div class="wish-amount-container">
+          <button class="select-btn" @click="itemAdded(product.product_Id)">
+            <p v-if="!product.itemAdd">Select</p>
+            <p v-else>Added</p>
+          </button>
+        </div>
       </div>
     </div>
   </div>
+  <!-- <GreetingMessage v-if="greetingsWindow" @submit-greeting="updateGreetingsWindow" /> -->
 </template>
 
 <style scoped>
-  .product-container {
-    width: 95vw;
+  @import url('https://fonts.cdnfonts.com/css/lindsey');
+  @import url('https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@300;400&display=swap');
+
+  /*  * {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+      sans-serif;
+  }*/
+  #products-container {
+    width: 97.5%;
     display: flex;
     background-color: #ffffff;
     margin: 25px 5px;
-    padding: 5px;
-    height: max-content;
   }
 
-  .product-container div:last-child {
+  #product-info-container {
+    margin: 8px 18px 15px 15px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    margin: 0 15px 20px 0;
-    align-items: end;
   }
 
-  .product-info {
-    width: 45vw;
+  .title-price-container {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-top: 1rem;
+    margin: 4px 0px;
+  }
+
+  .title-price-container a {
+    text-decoration: none;
+    color: #212121;
+    font-weight: 600;
+  }
+
+  .title-price-container p {
+    color: grey;
+  }
+
+  .wish-amount-container {
+    margin-top: 3px;
+    width: 100%;
+  }
+
+  .price-amount-container p {
+    font-size: 21px;
+    font-family: Libre Caslon Display;
+    font-weight: 500;
+    letter-spacing: -1px;
+  }
+
+  p,
+  a,
+  h4 {
+    margin: 3px;
+    padding: 0px;
   }
 
   .product-image-container {
     align-self: center;
     margin-left: 5px;
-    min-height: 10vw;
-    min-width: 10vw;
+    min-width: 25vw;
     text-align: center;
     margin: 1rem;
   }
   img {
-    max-height: 15vh;
-    max-width: 15vh;
+    /*    width: 96px;
+    height: 96px;*/
+    max-height: 25vw;
+    max-width: 25vw;
     align-self: center;
+
+    /* border-radius: 50%; */
+    /* object-fit: cover; */
   }
 
   .select-btn {
     width: 76px;
     height: 32px;
+    background-color: rgb(44, 31, 28);
     border-radius: 0px;
     border: none;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-transform: uppercase;
   }
-
-  .button-dark p {
-    background-color: rgb(44, 31, 28);
-  }
-  .button-dark:disabled p {
+  .select-btn:disabled {
     background-color: #cbbaa4;
   }
 
-  /* FILTRERING */
+  .select-btn p {
+    color: white;
+    font-size: 0.85rem;
+    font-family: Libre Caslon Display;
+    margin-top: 4px;
+  }
+  .categoryContainer {
+    display: flex;
+    flex-direction: row;
+  }
+
   .filterContainer {
     display: flex;
     justify-content: center;

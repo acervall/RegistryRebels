@@ -42,33 +42,6 @@ router.get('/api/products/:id', async (req, res) => {
   }
 })
 
-router.get('/api/product/:searchTerm', async (req, res) => {
-  // Visar alla produkter i list (med id)
-  let sql = `
-  SELECT * FROM product as p
-  INNER JOIN category c on p.productCategory_Id = c.category_Id
-  WHERE p.productName LIKE ?`
-
-  let searchTerm = '%' + req.params.searchTerm + '%'
-
-  const params = [searchTerm].filter((value) => value)
-
-  try {
-    await connection.query(sql, params, function (error, results) {
-      if (error) {
-        if (error) throw error
-      }
-      res.json(results)
-    })
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      error: error,
-      message: error.message,
-    })
-  }
-})
-
 //Add a new product
 router.post('/api/products', async (req, res) => {
   let sql =
@@ -97,86 +70,6 @@ router.post('/api/products', async (req, res) => {
       success: false,
       error: error.message,
     })
-  }
-})
-
-// Lägger till en produkt i både product & selectedProduct
-router.post('/api/product/:id', async (req, res) => {
-  const sql = 'CALL addNewProduct(?, ?, ?, ?, ?, ?, ?, ?, ?)'
-  const params = [
-    req.body.productName,
-    req.body.productPrice,
-    req.body.productImg,
-    req.body.productURL,
-    req.body.productCategory_Id,
-    req.body.selectedProductFavorite,
-    req.body.selectedProductPurchased,
-    req.body.selectedProductAmount,
-  ]
-
-  try {
-    await connection.query(sql, [...params, req.params.id], (error) => {
-      if (error?.code === 'ER_DUP_ENTRY') {
-        res.status(409).json({
-          success: false,
-          error: error,
-          message: 'Product name already exists',
-        })
-      } else if (error) {
-        throw error
-      } else {
-        res.status(201).json({
-          success: true,
-          error: '',
-          message: 'Product has been added',
-        })
-      }
-    })
-  } catch (error) {
-    return res.status(500).json(error)
-  }
-})
-
-// Uppdaterar en produkt i både product & selectedProduct
-router.put('/api/product/:productId/:selectedProductId', async (req, res) => {
-  const sql = 'CALL updateProduct(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-  const params = [
-    req.body.productName,
-    req.body.productPrice,
-    req.body.productImg,
-    req.body.productURL,
-    req.body.productCategory_Id,
-    req.body.selectedProductFavorite,
-    req.body.selectedProductPurchased,
-    req.body.selectedProductAmount,
-  ]
-
-  console.log('PARAMS: ', params)
-
-  try {
-    await connection.query(
-      sql,
-      [req.params.productId, req.params.selectedProductId, ...params],
-      (error) => {
-        if (error?.code === 'ER_DUP_ENTRY') {
-          res.status(409).json({
-            success: false,
-            error: error,
-            message: 'Product name already exists',
-          })
-        } else if (error) {
-          throw error
-        } else {
-          res.status(201).json({
-            success: true,
-            error: '',
-            message: 'Product has been added',
-          })
-        }
-      },
-    )
-  } catch (error) {
-    return res.status(500).json(error)
   }
 })
 

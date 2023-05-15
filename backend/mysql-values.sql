@@ -23,8 +23,9 @@ VALUES (
     );
 
 INSERT INTO
-    list (listName, listU_Id)
-VALUES ('Bröllop', 1), ('30-fest', 2);
+    list (listName, listImage, listUrl, listDate, listU_Id)
+VALUES ('Bröllop', 'https://images.pexels.com/photos/2788488/pexels-photo-2788488.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', '1', 'Augusti 12, 2023', 1),
+       ('30-fest', 'https://images.unsplash.com/photo-1527540306398-8b8794516f95?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1110&q=80', '2', 'Augusti 12, 2023', 2);
 
 INSERT INTO
     product (
@@ -112,3 +113,25 @@ INSERT INTO
         productPurchased
     )
 VALUES (1, 1, 1), (2, 2, 1);
+
+
+SHOW TABLES;
+
+SELECT * FROM category;
+
+SELECT * FROM guest;
+
+SELECT * FROM guestSelectedProduct;
+
+SELECT * FROM list;
+
+SELECT * FROM product;
+
+SELECT * FROM selectedProduct;
+
+SELECT * FROM user;
+
+SELECT *
+FROM selectedProduct
+    INNER JOIN product ON product.product_Id = selectedProduct.selectedProductP_Id
+    INNER JOIN list ON list.list_Id = selectedProduct.selectedProductList_Id;

@@ -1,8 +1,18 @@
+-- DROP TABLE guest;
+-- USE registryrebels;
 DROP DATABASE IF EXISTS RegistryRebels;
 
 CREATE DATABASE RegistryRebels DEFAULT CHARACTER SET = 'utf8mb4';
 
 USE RegistryRebels;
+
+DROP TABLE IF EXISTS guestSelectedProduct;
+DROP TABLE IF EXISTS guest;
+DROP TABLE IF EXISTS selectedProduct;
+DROP TABLE IF EXISTS list;
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS category;
 
 -- Categories
 
@@ -49,6 +59,9 @@ CREATE TABLE
     list (
         list_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         listName VARCHAR(50),
+        listImage VARCHAR(500),
+        listUrl VARCHAR(100),
+        listDate VARCHAR(50),
         listU_Id INT,
         FOREIGN KEY (listU_Id) REFERENCES user (user_Id)
     );

@@ -26,3 +26,32 @@ BEGIN
     VALUES (selectedProductFavorite, selectedProductPurchased, selectedProductAmount, (SELECT LAST_INSERT_ID()), selectedProductList_Id);
 END //
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS updateProduct;
+DELIMITER //
+CREATE PROCEDURE updateProduct(IN product_Id INT, selectedProduct_Id INT, productName VARCHAR(50), productPrice INT, productImg VARCHAR(500),
+productURL VARCHAR(500), productCategory_Id INT, selectedProductFavorite BOOLEAN, selectedProductPurchased INT,
+selectedProductAmount INT)
+BEGIN
+    /* Uppdaterar en produkt */
+    UPDATE product as p
+    SET
+    p.productName = productName,
+    p.productPrice = productPrice,
+    p.productImg = productImg,
+    p.productURL = productURL,
+    p.productCategory_Id = productCategory_Id
+    WHERE p.product_Id = product_Id;
+
+    /* Uppdaterar en selectedProduct */
+    UPDATE selectedProduct as sP
+    SET
+    sP.selectedProductFavorite = selectedProductFavorite,
+    sP.selectedProductPurchased = selectedProductPurchased,
+    sP.selectedProductAmount = selectedProductAmount,
+    sP.selectedProductP_Id = product_Id,
+    sP.selectedProductList_Id = selectedProductList_Id
+    WHERE sP.selectedProduct_Id = selectedProduct_Id;
+
+END //
+DELIMITER ;

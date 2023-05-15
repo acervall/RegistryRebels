@@ -43,15 +43,16 @@
         console.log('Svar från backend: ', data)
       },
 
-      toggleChangeList() {
-        this.showChangeList = !this.showChangeList
-        console.log('Klickar på ändra-ikonen')
-      },
+      // toggleChangeList() {
+      //   this.showChangeList = !this.showChangeList
+      //   console.log('Klickar på ändra-ikonen')
+      // },
 
       // SKA ändra och skicka listan till databasen
-      async changeList(list_Id) {
+
+      async changeList(listU_Id, list_Id) {
         // this.listU_Id,
-        console.log('Innan send', this.listName, this.list_Id)
+        console.log('Innan send', this.listName, this.listU_Id, this.list_Id)
         const send = await fetch(
           'http://localhost:3000/api/user-product-list',
           {
@@ -60,14 +61,39 @@
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+              // använder funktion
               listName: this.listName,
-              list_Id: this.list_Id,
+              // använder paramertarna
+              listU_Id,
+              list_Id,
             }),
           },
+          this.getUserList(),
         )
 
         const data = await send.json()
         console.log('Svar från backend: ', data)
+        console.log(
+          'Värdena har ändrats',
+          this.listName,
+          this.listU_Id,
+          this.list_Id,
+        )
+      },
+
+      toggleChangeList() {
+        // if (!this.showChangeList) {
+        //   !this.showChangeList
+        //   this.changeList(this.listU_Id)
+        // } else if (this.showChangeList) {
+        //   this.showChangeList
+        // }
+
+        // false                true
+        this.showChangeList = !this.showChangeList
+        console.log('Klickar på ändra-ikonen')
+        // this.changeList(this.listU_Id)
+        // console.log('Värdena har ändrats', this.listName, this.listU_Id)
       },
 
       // Tar bort en lista när jag klickar på trashcan
@@ -91,7 +117,6 @@
 
         const data = await send.json()
         console.log('Svar från backend: ', data)
-        // console.log('Efter send', list_Id)
       },
     },
   }
@@ -173,19 +198,19 @@
             </svg>
           </div>
         </div>
-
-        <!-- Formulär för att ändra en lista -->
-        <form v-if="showChangeList" v-on:submit="changeList">
-          <label for="changeName">Ändra namn på listan: </label>
-          <input type="text" v-model="listName" />
-
-          <label for="list-Id">List-Id: </label>
-          <input type="number" v-model="list_Id" />
-          <input type="submit" value="Save list" />
-        </form>
       </div>
 
-      <!-- Trash -->
+      <!-- Formulär för att ändra en lista -->
+      <form
+        v-if="showChangeList"
+        v-on:submit="changeList(user.listU_Id, user.list_Id)"
+      >
+        <label for="changeName">Ändra namn på listan: </label>
+        <input type="text" v-model="listName" />
+        <label for="listU-id">User Id: </label>
+        <input type="number" v-model="listU_Id" />
+        <input type="submit" value="Save list" />
+      </form>
     </div>
   </div>
 </template>
@@ -193,5 +218,24 @@
 <style scoped>
   ul {
     list-style: none;
+  }
+
+  li {
+    font-weight: 700;
+  }
+
+  #vsg-container {
+    display: flex;
+    /* flex-direction: row; */
+  }
+
+  #change-btn {
+    margin-left: 15%;
+    display: flex;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
   }
 </style>

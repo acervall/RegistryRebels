@@ -1,19 +1,10 @@
 <script>
-  import searchProduct from '../searchProduct'
   export default {
     created() {
+      this.selectedProductId = this.$route.params.productId
+      this.listId = this.$route.params.listId
       this.getCategories()
-      console.log(this.listId)
-    },
-    computed: {
-      showProducts() {
-        return (
-          this.productList.length > 0 &&
-          this.searchTerm.length > 0 &&
-          (this.name !== this.productList[0]?.productName ||
-            this.searchTerm !== this.name)
-        )
-      },
+      this.getProduct()
     },
     data() {
       return {
@@ -28,13 +19,13 @@
         selectedCategory: null,
         url: '',
         validated: false,
-        productList: [],
-        searchTerm: null,
+        listId: 1,
         addCategoryOpen: false,
-        selectedProductP_Id: null,
+        productId: null,
+        selectedProductId: null,
+        purchased: false,
       }
     },
-    emits: ['close'],
     methods: {
       addCategory() {
         if (
@@ -42,7 +33,6 @@
             .map((cat) => cat.categoryName.toLowerCase())
             .includes(this.newCategoryName.toLowerCase())
         ) {
-          console.log(this.categories)
           const options = {
             method: 'POST',
             headers: {
@@ -61,9 +51,9 @@
             })
         }
       },
-      async addProduct() {
-        const options1 = {
-          method: 'POST',
+      async updateProduct() {
+        const options = {
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
@@ -73,58 +63,30 @@
             productImg: this.imgSrc,
             productURL: this.url,
             productCategory_Id: this.selectedCategory,
-            selectedProductPriority: 0,
             selectedProductFavorite: this.favorite,
-            selectedProductPurchased: 0,
-            selectedProductAmount: this.amount,
-          }),
-        }
-        const options2 = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            selectedProductP_Id: this.selectedProductP_Id,
-            selectedProductPriority: 0,
-            selectedProductFavorite: this.favorite,
-            selectedProductPurchased: 0,
+            selectedProductPurchased: this.purchased,
             selectedProductAmount: this.amount,
           }),
         }
         if (this.validated) {
           try {
-            let data
-            if (
-              this.productList
-                .map((product) => product.productName.toLowerCase())
-                .includes(this.name.toLowerCase())
-            ) {
-              data = await fetch(
-                `http://localhost:3000/api/selectedProduct/${this.listId}`,
-                options2,
-              )
-            } else {
-              data = await fetch(
-                `http://localhost:3000/api/product/${this.listId}`,
-                options1,
-              )
-            }
+            const data = await fetch(
+              `http://localhost:3000/api/product/${this.productId}/${this.selectedProductId}`,
+              options,
+            )
             const res = await data.json()
             if (res.success === true && data.ok) {
               this.addConfirmation = true
               setTimeout(() => {
-                this.$emit('close')
+                this.$router.push(this.$router.options.history.state.back)
               }, 2000)
             } else {
+              console.log('STATUS: ', data.status, 'MSG: ', res.message)
               throw new Error({ status: data.status, message: res.message })
             }
-          } catch (error) {
-            console.table(error)
-            this.classRemoveFrom('name')
+          } catch (err) {
+            console.error(err)
           }
-        } else {
-          console.log('Needs more data')
         }
       },
       classAddTo(ref) {
@@ -140,22 +102,27 @@
         const data = await fetch('http://localhost:3000/api/category')
         this.categories = await data.json()
       },
+      async getProduct() {
+        const data = await fetch(
+          `http://localhost:3000/api/selectedProduct/product/${this.listId}/${this.selectedProductId}`,
+        )
+        const product = (await data.json())[0]
+        this.amount = product.selectedProductAmount
+        this.favorite = product?.selectedProductfavorite || false
+        this.imgSrc = product.productImg
+        this.name = product.productName
+        this.price = product.productPrice
+        this.productId = product.product_Id
+        this.url = product.productURL
+        this.selectedCategory = product.category_Id
+        this.purchased = product?.purchased || 0
+      },
       openAddNewCategory() {
         this.selectedCategory = null
         this.addCategoryOpen = true
       },
       selectCategory(id) {
         this.selectedCategory = id
-      },
-      selectProduct(product) {
-        // console.log(product)
-        this.selectedProductP_Id = product.product_Id
-        this.imgSrc = product.productImg
-        this.name = product.productName
-        this.searchTerm = product.productName
-        this.price = product.productPrice
-        this.selectedCategory = product.category_Id
-        this.url = product.productURL
       },
       validateData() {
         if (
@@ -174,25 +141,12 @@
         }
       },
     },
-    props: {
-      listId: {
-        type: Number,
-        required: true,
-      },
-    },
     watch: {
       addConfirmation(isActive) {
         if (isActive) {
           setTimeout(() => {
             this.addConfirmation = false
           }, 2000)
-        }
-      },
-      searchTerm(updatedSearchTerm) {
-        if (updatedSearchTerm.length > 0) {
-          searchProduct(updatedSearchTerm).then(
-            (res) => (this.productList = res),
-          )
         }
       },
       url(updatedUrl) {
@@ -242,64 +196,16 @@
         v-show="!favorite"
         name="co-star"
       />
-      <h3>Add new item</h3>
-      <span @click.prevent="addProduct" class="btn">
-        Save
+      <h3>Update item</h3>
+      <span @click.prevent="updateProduct" class="btn">
+        Update
         <Transition name="first-render">
           <v-icon v-if="addConfirmation" name="fc-checkmark" />
         </Transition>
       </span>
     </div>
-    <label for="search">Search product</label>
-    <div :class="`input-container ${!showProducts ? 'margin-bottom' : ''}`">
-      <input
-        id="search"
-        placeholder="Kaffebryggare"
-        type="text"
-        v-model.trim="searchTerm"
-      />
-      <v-icon
-        @click="searchTerm = ''"
-        class="icon"
-        name="io-close-circle-outline"
-      />
-    </div>
-    <Transition name="first-render">
-      <TransitionGroup
-        class="product-list"
-        v-show="showProducts"
-        name="list"
-        tag="ul"
-      >
-        <li
-          @click="selectProduct(product)"
-          @keyup.enter="selectProduct(product)"
-          :key="product.product_Id"
-          class="product"
-          v-for="product in productList"
-          tabindex="0"
-        >
-          <!-- <pre>{{ product }}</pre> -->
-          <img
-            class="search-list-img"
-            :src="product.productImg"
-            alt="product.productName"
-            :key="'img' + product.product_Id"
-          />
-          <p
-            :key="'text' + product.product_Id"
-            v-shortText="{ text: product.productName, chars: 30 }"
-          />
-        </li>
-      </TransitionGroup>
-    </Transition>
-    <label for="name">{{
-      `${
-        searchTerm === name && searchTerm.length > 0
-          ? 'Product name'
-          : 'or create a new one'
-      }`
-    }}</label>
+
+    <label for="name">Product name</label>
     <div class="input-container margin-bottom">
       <input id="name" ref="name" type="text" v-model.trim="name" />
       <v-icon @click="name = ''" class="icon" name="io-close-circle-outline" />
@@ -389,6 +295,7 @@
     padding: 32px 16px;
     font-family: Sen;
     font-size: 0.75rem;
+    height: calc(100vh - 16px);
   }
   ul.category-container {
     padding: 0;
