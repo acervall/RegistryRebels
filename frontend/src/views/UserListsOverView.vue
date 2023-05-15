@@ -85,7 +85,7 @@
           <router-link :to="list.listUrl">
             <h3>{{ list.listName }}</h3>
           </router-link>
-          <p class="date-text">{{ currentDate }}</p>
+          <p class="date-text">{{ list.listDate }}</p>
           <div class="items-amount-box">
             <p>{{ itemsAmount[index] }} Items</p>
           </div>

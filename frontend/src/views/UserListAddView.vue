@@ -28,6 +28,7 @@
           `http://localhost:3000/api/user-product-list/user/${this.user_Id}`,
         )
         this.userList = await data.json()
+        console.log(this.userList)
       },
 
       async addList() {
@@ -147,6 +148,19 @@
 <template>
   <div id="main-container">
     <div id="intro-container">
+      <router-link to="/userlistsoverview">
+        <svg
+          class="svg-left"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 25 25"
+        >
+          <path
+            style="fill: #767676"
+            d="M24 12.001H2.914l5.294-5.295-.707-.707L1 12.501l6.5 6.5.707-.707-5.293-5.293H24v-1z"
+            data-name="Left"
+          />
+        </svg>
+      </router-link>
       <h1>Add new List</h1>
       <div @click="addList" id="save-container">
         <p>Save</p>
@@ -201,7 +215,7 @@
         />
         <div class="align-list-info">
           <h3 class="h3Wishlist">{{ user.listName }}</h3>
-          <p class="idInfo">Specifika user id: {{ user.listU_Id }}</p>
+          <p style="font-size: .8rem;"> {{ user.listDate }} </p>
         </div>
         <div id="vsg-container">
           <div id="change-btn">
@@ -273,12 +287,7 @@
           type="text"
           v-model="changeListName"
         />
-        <label class="labelChange" for="listU-id">User Id: </label>
-        <input
-          class="input-text-placeholder"
-          type="number"
-          v-model="listU_Id"
-        />
+
         <input class="change-info-btn" type="submit" value="Save changes" />
       </form>
     </div>
@@ -289,7 +298,7 @@
   @import url('https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@300;400&display=swap');
   h1 {
     font-size: 1.25rem;
-    margin: 0 0 0 55px;
+    margin: 0 0 0 20px;
     width: 100%;
     text-align: center;
     font-family: 'sen';
@@ -304,12 +313,17 @@
   #intro-container {
     display: flex;
     align-items: center;
-    margin: 30px 0px 50px 0px;
+    margin: 25px 0px 50px 0px;
+  }
+
+  .svg-left {
+    margin-top: 0px;
+    margin-left: 1px;
   }
 
   #intro-container p {
     margin-left: auto;
-    margin-right: 15px;
+    margin-right: 5px;
   }
   .idInfo {
     font-size: 0.5rem;
@@ -398,4 +412,6 @@
     font-size: 0.75rem;
     padding-bottom: 3rem;
   }
+
+
 </style>
