@@ -2,7 +2,6 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 import EditProductView from './views/EditProductView.vue'
 import HomeView from './views/HomeView.vue'
-import HomeViewUser from './views/HomeViewUser.vue'
 import GreetingCheckoutView from './views/GreetingCheckoutView.vue'
 import RsvpView from './views/RsvpView.vue'
 import UserSignupView from './views/UserSignupView.vue'
@@ -14,16 +13,27 @@ import UserGuestOverView from './views/UserGuestOverView.vue'
 import UserGuestFoodView from './views/UserGuestFoodView.vue'
 import UserListAddView from './views/UserListAddView.vue'
 
+function isSignedIn() {
+  return localStorage.getItem('user_Id') ? true : false // amazing
+}
+
 export default createRouter({
   history: createWebHashHistory(),
   routes: [
     {
+      beforeEnter(to, from, next) {
+        if (isSignedIn()) {
+          next()
+        } else {
+          next('/')
+        }
+      },
       component: EditProductView,
       path: '/editProduct/:listId/:productId',
     },
     {
       component: HomeView,
-      path: '/:id',
+      path: '/:url',
     },
     {
       component: GreetingCheckoutView,
@@ -42,26 +52,62 @@ export default createRouter({
       path: '/',
     },
     {
+      beforeEnter(to, from, next) {
+        if (isSignedIn()) {
+          next()
+        } else {
+          next('/')
+        }
+      },
       component: UserHomeView,
       path: '/userhome',
     },
     {
+      beforeEnter(to, from, next) {
+        if (isSignedIn()) {
+          next()
+        } else {
+          next('/')
+        }
+      },
       component: UserListsOverView,
       path: '/userlistsoverview',
     },
     {
+      beforeEnter(to, from, next) {
+        if (isSignedIn()) {
+          next()
+        } else {
+          next('/')
+        }
+      },
       component: UserListView,
       path: '/userlist/:id',
     },
     {
+      beforeEnter(to, from, next) {
+        if (isSignedIn()) {
+          next()
+        } else {
+          next('/')
+        }
+      },
       component: UserGuestOverView,
-      path: '/UserGuestOverView',
+      path: '/userguestoverview',
     },
     {
       component: UserGuestFoodView,
-      path: '/UserGuestFoodView',
+
+      path: '/userguestfoodview',
     },
     {
+      beforeEnter(to, from, next) {
+        if (isSignedIn()) {
+          next()
+        } else {
+          next('/')
+        }
+      },
       component: UserListAddView,
       path: '/userlistadd',
     },

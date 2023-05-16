@@ -30,6 +30,23 @@ router.delete('/api/selectedProduct/:id', async (req, res) => {
   }
 })
 
+router.get('/api/selectedProduct/stat/:id', async (req, res) => {
+  const id = req.params.id
+  const sql = `
+  SELECT COUNT(*) as 'unique-products', SUM(sP.selectedProductAmount) as 'total-products' FROM selectedProduct as sP
+  WHERE sP.selectedProductList_Id = ?;`
+  try {
+    connection.query(sql, [id], (error, results) => {
+      if (error) {
+        throw error
+      }
+      res.json(results)
+    })
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 router.get('/api/selectedProduct/:id', async (req, res) => {
   // Visar alla produkter i list (med id)
   let sql = `
@@ -53,6 +70,33 @@ router.get('/api/selectedProduct/:id', async (req, res) => {
       if (error) {
         if (error) throw error
       }
+      res.json(results)
+    })
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: error,
+      message: error.message,
+    })
+  }
+})
+
+router.get('/api/selectedProductByUrl/:url', async (req, res) => {
+  // Visar alla produkter i list (med url)
+  console.log(req.params.url)
+  let sql = `
+  SELECT * FROM selectedProduct as sP
+  INNER JOIN list l on sP.selectedProductList_Id = l.list_Id
+  INNER JOIN product p on sP.selectedProductP_Id = p.product_Id
+  INNER JOIN category c on p.productCategory_Id = c.category_Id
+  WHERE l.listUrl = ?`
+
+  try {
+    await connection.query(sql, [req.params.url], function (error, results) {
+      if (error) {
+        if (error) throw error
+      }
+      console.log(results)
       res.json(results)
     })
   } catch (error) {

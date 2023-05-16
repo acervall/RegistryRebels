@@ -19,29 +19,6 @@
           0,
         )
       },
-      // foodCombinations() {
-      //   const allGuests = this.allGuests
-
-      //   const foodList = allGuests
-      //     .map((person) => person.foodChoice.sort().join(', '))
-      //     .map((item) => (item === '' ? 'Äter allt' : item))
-
-      //   const allFoodCombinations = []
-      //   foodList.forEach((foodStr) => {
-      //     const found = allFoodCombinations.find((food) => food.str === foodStr)
-      //     if (found) {
-      //       found.count++
-      //     } else {
-      //       allFoodCombinations.push({ str: foodStr, count: 1 })
-      //     }
-      //   })
-
-      //   return allFoodCombinations.sort((a, b) => {
-      //     if (a.count > b.count) return -1
-      //     if (a.count < b.count) return 1
-      //     return 0
-      //   })
-      // },
       totalGuests() {
         return this.allGuests.length
       },
@@ -61,6 +38,19 @@
 </script>
 
 <template>
+  <router-link to="/userhome">
+    <svg
+      class="svg-left"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 25 25"
+    >
+      <path
+        style="fill: #767676"
+        d="M24 12.001H2.914l5.294-5.295-.707-.707L1 12.501l6.5 6.5.707-.707-5.293-5.293H24v-1z"
+        data-name="Left"
+      />
+    </svg>
+  </router-link>
   <h1>Guests</h1>
   <div class="summary-container">
     <div class="column">
@@ -68,11 +58,7 @@
       <p>Invited: {{ totalGuests }}</p>
       <p>Attending: {{ totalAttending }}</p>
     </div>
-    <div class="column">
-      <!-- <p v-for="foodChoice in foodCombinations">
-        {{ foodChoice.str }}: {{ foodChoice.count }}
-      </p> -->
-    </div>
+    <div class="column"></div>
   </div>
   <div class="party-container" v-for="(party, index) in guestList">
     <div class="party-info">
@@ -101,6 +87,11 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+  }
+
+  .svg-left {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 
   ul {

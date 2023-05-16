@@ -14,6 +14,7 @@
         showSortDropdown: false,
         listId: null,
         listName: '',
+        listStat: {},
       }
     },
     created() {
@@ -21,6 +22,7 @@
       this.getProducts()
       this.getCategories()
       this.getUserList()
+      this.getStatList()
     },
     methods: {
       async getUserList() {
@@ -84,6 +86,19 @@
           console.error(error)
         }
       },
+      async getStatList() {
+        const stat = await fetch(
+          `http://localhost:3000/api/selectedProduct/stat/${this.listId}`,
+        )
+        this.listStat = (await stat.json())[0]
+      },
+      onClose() {
+        this.showAddProduct = false
+        this.getProducts()
+        this.getCategories()
+        this.getUserList()
+        this.getStatList()
+      },
       toggleDropdown(type) {
         if (type === 'category') {
           this.showCategoryDropdown = !this.showCategoryDropdown
@@ -104,13 +119,25 @@
           `http://localhost:3000/api/selectedProduct/${this.listId}`,
         )
         this.productList = await data.json()
-        console.log(this.productList, ' id: ', this.listId)
       },
     },
   }
 </script>
 
 <template>
+  <router-link to="/userlistsoverview">
+    <svg
+      class="svg-left"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 25 25"
+    >
+      <path
+        style="fill: #767676"
+        d="M24 12.001H2.914l5.294-5.295-.707-.707L1 12.501l6.5 6.5.707-.707-5.293-5.293H24v-1z"
+        data-name="Left"
+      />
+    </svg>
+  </router-link>
   <div class="UserListContainer">
     <h1 class="ListTitle">{{ listName }}</h1>
     <div class="filterContainer">
@@ -189,11 +216,7 @@
         </div>
       </div>
     </div>
-    <AddProduct
-      v-if="showAddProduct"
-      @close="showAddProduct = false"
-      :list-id="listId"
-    />
+    <AddProduct v-if="showAddProduct" @close="onClose" :list-id="listId" />
     <div id="main-container">
       <div
         id="products-container"
@@ -245,6 +268,12 @@
         </div>
       </div>
     </div>
+    <p class="extra-stat">
+      Unique products: {{ listStat['unique-products'] || 0 }}
+    </p>
+    <p class="extra-stat">
+      Total products: {{ listStat['total-products'] || 0 }}
+    </p>
   </div>
 </template>
 
@@ -379,5 +408,16 @@
   .chevronDown {
     height: 0.75rem;
     margin-left: 0.25rem;
+  }
+
+  .extra-stat {
+    text-align: center;
+    &:first-of-type {
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+    &:last-of-type {
+      margin-bottom: 24px;
+    }
   }
 </style>

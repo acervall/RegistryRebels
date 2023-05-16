@@ -14,11 +14,14 @@
         group: 0,
         attending: true,
         specialNeedsHost: false,
+        formSubmitted: false
       }
     },
     methods: {
       async submitForm() {
+        this.formSubmitted = true
         this.group++
+
         const participants = []
         const hostFoodChoice = []
 
@@ -115,7 +118,8 @@
 </script>
 
 <template>
-  <main>
+  <div class="background-color"></div>
+  <main v-if="!formSubmitted">
     <div id="intro-text-container">
       <h1>Répondez S'il Vous Plait</h1>
       <h2>"Snälla svara"</h2>
@@ -286,10 +290,20 @@
       />
     </div>
   </main>
+  <div class="form-sent-container" v-else>
+    <h1>Kul {{ firstName }}!</h1>
+    <h2>Vi ses den 12 Augusti!</h2>
+  </div>
 </template>
 
 <style scoped>
-  main {
+  .background-color {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200%;
     background-color: #cbbaa4;
   }
 
@@ -414,5 +428,13 @@
     position: absolute;
     top: 3.5px;
     left: 7px;
+  }
+
+  .form-sent-container {
+    margin-left: 10px;
+  }
+  .form-sent-container h1{
+    margin-left: 0px;
+    margin-bottom: 5px;
   }
 </style>

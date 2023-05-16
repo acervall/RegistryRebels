@@ -60,6 +60,7 @@ CREATE TABLE
         list_Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         listName VARCHAR(50),
         listImage VARCHAR(500),
+        listUrl VARCHAR(100),
         listDate VARCHAR(50),
         listU_Id INT,
         FOREIGN KEY (listU_Id) REFERENCES user (user_Id)
@@ -88,6 +89,6 @@ CREATE TABLE
         guestSelectedProductS_Id INT,
         guestSelectedProductG_Id INT,
         productPurchased INT,
-        FOREIGN KEY (guestSelectedProduct_Id) REFERENCES selectedProduct(selectedProduct_Id),
+        FOREIGN KEY (guestSelectedProductS_Id) REFERENCES selectedProduct(selectedProduct_Id),
         FOREIGN KEY (guestSelectedProductG_Id) REFERENCES guest(guest_Id)
     );

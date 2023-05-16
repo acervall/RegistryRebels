@@ -32,7 +32,8 @@
           const data = await createUser.json()
           if (data.success) {
             localStorage.setItem('User', this.userName)
-            this.$router.push({ path: '/userhome' })
+            localStorage.setItem('user_Id', this.user_Id)
+            this.$router.push({ path: '/' })
           }
         } else {
           console.log('Du måste fylla i alla fält')
@@ -69,7 +70,7 @@
           v-model="userPassword"
         />
 
-        <input class="button-dark" type="submit" value="Sign up" />
+        <input class="button-dark pointer" type="submit" value="Sign up" />
       </form>
 
       <div>

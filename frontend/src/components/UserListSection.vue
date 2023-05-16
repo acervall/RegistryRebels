@@ -5,6 +5,7 @@
     },
     data() {
       return {
+        // Tom array för alla listor
         userList: [],
         listName: '',
         listU_Id: '',
@@ -43,15 +44,8 @@
         console.log('Svar från backend: ', data)
       },
 
-      // toggleChangeList() {
-      //   this.showChangeList = !this.showChangeList
-      //   console.log('Klickar på ändra-ikonen')
-      // },
-
-      // SKA ändra och skicka listan till databasen
-
+      // Ändrar och skickar listan till databasen
       async changeList(listU_Id, list_Id) {
-        // this.listU_Id,
         console.log('Innan send', this.listName, this.listU_Id, this.list_Id)
         const send = await fetch(
           'http://localhost:3000/api/user-product-list',
@@ -81,19 +75,11 @@
         )
       },
 
+      // funktion som hanterar om textfäten ska visas eller inte när edit-ikonen klickas på
       toggleChangeList() {
-        // if (!this.showChangeList) {
-        //   !this.showChangeList
-        //   this.changeList(this.listU_Id)
-        // } else if (this.showChangeList) {
-        //   this.showChangeList
-        // }
-
         // false                true
         this.showChangeList = !this.showChangeList
         console.log('Klickar på ändra-ikonen')
-        // this.changeList(this.listU_Id)
-        // console.log('Värdena har ändrats', this.listName, this.listU_Id)
       },
 
       // Tar bort en lista när jag klickar på trashcan
@@ -126,7 +112,7 @@
   <div id="main-container">
     <h1>Create Wislist</h1>
     <div>
-      <!-- Formulär -->
+      <!-- Formulär lägg till en lista-->
       <form v-on:submit="addList">
         <label for="listName">Namn på listan :</label>
         <input type="text" id="listName" v-model="listName" />
