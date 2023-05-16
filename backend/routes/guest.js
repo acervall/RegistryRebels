@@ -3,11 +3,38 @@ const connection = require('../connection')
 const router = express.Router()
 
 // View all guest and greetings
-
 router.get('/api/guest', async (req, res) => {
   const sql = 'SELECT * FROM guest'
   try {
     await connection.query(sql, (error, results) => {
+      if (error) {
+        console.error(error.sqlMessage)
+      } else {
+        res.json(results)
+      }
+    })
+  } catch (error) {
+    return res.status(500).json({
+      error,
+    })
+  }
+})
+
+// Get guest by name
+router.get('/api/guest/:name', async (req, res) => {
+  const sql = `
+  SELECT u.userName, g.guest_Id, g.guestName, g.guestGreeting, p.productName, p.productImg, p.productURL, p.productPrice, c.categoryName FROM guest as g
+  INNER JOIN guestSelectedProduct gSP on g.guest_Id = gSP.guestSelectedProductG_Id
+  INNER JOIN selectedProduct sP on gSP.guestSelectedProductS_Id = sP.selectedProduct_Id
+  INNER JOIN product p on sP.selectedProductP_Id = p.product_Id
+  INNER JOIN category c on p.productCategory_Id = c.category_Id
+  INNER JOIN list l on sP.selectedProductList_Id = l.list_Id
+  INNER JOIN user u on l.listU_Id = u.user_Id
+  WHERE guestName LIKE ?;
+  `
+  const name = req.params.name
+  try {
+    await connection.query(sql, [name], (error, results) => {
       if (error) {
         console.error(error.sqlMessage)
       } else {

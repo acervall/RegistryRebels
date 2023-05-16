@@ -56,9 +56,9 @@
           const data = await createGreeting.json()
           console.log('createGreeting: ', createGreeting, ' data: ', data)
           if (data.success) {
-            localStorage.setItem('User', this.userName)
+            localStorage.setItem('guest', this.guestName)
             setTimeout(() => {
-              this.$router.push(this.$router.options.history.state.back)
+              this.$router.push('/guest')
             }, 1000)
           }
         } else {
@@ -122,7 +122,7 @@
     />
     <div id="submit-btn-container">
       <input
-        class="button button-dark"
+        class="button pointer button-dark"
         id="submit-buy-btn"
         type="button"
         value="Save"

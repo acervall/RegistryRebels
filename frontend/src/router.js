@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import EditProductView from './views/EditProductView.vue'
 import HomeView from './views/HomeView.vue'
 import GreetingCheckoutView from './views/GreetingCheckoutView.vue'
+import GuestViewBought from './views/GuestViewBought.vue'
 import RsvpView from './views/RsvpView.vue'
 import UserSignupView from './views/UserSignupView.vue'
 import UserSigninView from './views/UserSigninView.vue'
@@ -38,6 +39,10 @@ export default createRouter({
     {
       component: GreetingCheckoutView,
       path: '/checkout',
+    },
+    {
+      component: GuestViewBought,
+      path: '/guest',
     },
     {
       component: RsvpView,
