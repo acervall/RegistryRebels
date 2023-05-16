@@ -54,9 +54,12 @@
             }),
           })
           const data = await createGreeting.json()
+          console.log('createGreeting: ', createGreeting, ' data: ', data)
           if (data.success) {
-            localStorage.setItem('User', this.userName)
-            this.$router.push({ path: '/userhome' })
+            localStorage.setItem('guest', this.guestName)
+            setTimeout(() => {
+              this.$router.push('/guest')
+            }, 1000)
           }
         } else {
           console.log('Du måste fylla i alla fält')
@@ -106,7 +109,13 @@
       v-model="greetingMessage"
     />
     <div id="submit-btn-container">
-      <button id="submit-buy-btn" value="SAVE" @click="leaveGreeting()">SAVE</button>
+      <input
+        class="button pointer button-dark"
+        id="submit-buy-btn"
+        type="button"
+        value="Save"
+        @click.prevent="leaveGreeting()"
+      />
     </div>
   </div>
 </template>
@@ -139,7 +148,6 @@
   .product-bought-container {
     display: flex;
     border-radius: 2px;
-    box-shadow: 2px 3px 6px rgb(158, 158, 158);
     width: 100%;
     margin-top: 40px;
   }
@@ -208,16 +216,10 @@
   #submit-btn-container {
     display: flex;
     justify-content: flex-end;
-    margin-top: 10px;
+    margin: 1rem 0;
   }
 
   #submit-buy-btn {
-    width: 75px;
-    height: 30px;
-    text-align: center;
-    border: none;
-    border-radius: 5px;
-    color: rgb(223, 223, 223);
-    background-color: #787a6e;
+    width: fit-content;
   }
 </style>
