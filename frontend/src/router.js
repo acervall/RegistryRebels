@@ -13,10 +13,21 @@ import UserGuestOverView from './views/UserGuestOverView.vue'
 import UserGuestFoodView from './views/UserGuestFoodView.vue'
 import UserListAddView from './views/UserListAddView.vue'
 
+function isSignedIn() {
+  return localStorage.getItem('user_Id') ? true : false // amazing
+}
+
 export default createRouter({
   history: createWebHashHistory(),
   routes: [
     {
+      beforeEnter(to, from, next) {
+        if (isSignedIn()) {
+          next()
+        } else {
+          next('/')
+        }
+      },
       component: EditProductView,
       path: '/editProduct/:listId/:productId',
     },
@@ -41,18 +52,46 @@ export default createRouter({
       path: '/',
     },
     {
+      beforeEnter(to, from, next) {
+        if (isSignedIn()) {
+          next()
+        } else {
+          next('/')
+        }
+      },
       component: UserHomeView,
       path: '/userhome',
     },
     {
+      beforeEnter(to, from, next) {
+        if (isSignedIn()) {
+          next()
+        } else {
+          next('/')
+        }
+      },
       component: UserListsOverView,
       path: '/userlistsoverview',
     },
     {
+      beforeEnter(to, from, next) {
+        if (isSignedIn()) {
+          next()
+        } else {
+          next('/')
+        }
+      },
       component: UserListView,
       path: '/userlist/:id',
     },
     {
+      beforeEnter(to, from, next) {
+        if (isSignedIn()) {
+          next()
+        } else {
+          next('/')
+        }
+      },
       component: UserGuestOverView,
       path: '/userguestoverview',
     },
@@ -62,6 +101,13 @@ export default createRouter({
       path: '/userguestfoodview',
     },
     {
+      beforeEnter(to, from, next) {
+        if (isSignedIn()) {
+          next()
+        } else {
+          next('/')
+        }
+      },
       component: UserListAddView,
       path: '/userlistadd',
     },
