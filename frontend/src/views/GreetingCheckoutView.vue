@@ -45,9 +45,10 @@
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              amountItems: this.amountItems,
               guestName: this.guestName,
-              greetingMessage: this.greetingMessage,
+              guestGreeting: this.greetingMessage,
+              productId: this.productId,
+              amountItems: this.amountItems,
             }),
           })
           const data = await createGreeting.json()
@@ -103,7 +104,7 @@
       v-model="greetingMessage"
     />
     <div id="submit-btn-container">
-      <input id="submit-buy-btn" value="SAVE" />
+      <input id="submit-buy-btn" value="SAVE" @click="leaveGreeting()" />
     </div>
   </div>
 </template>

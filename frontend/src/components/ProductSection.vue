@@ -116,6 +116,7 @@
         })
       },
     },
+    /* TODO: UTVECKLINGSPOTENTIAL gör knapp inactive if qty <= 0  */
   }
 </script>
 
@@ -204,7 +205,10 @@
         <p class="product-price">{{ product.productPrice }}:-</p>
       </div>
       <div>
-        <p class="smaller-gray">Qty: {{ product.selectedProductAmount }}</p>
+        <p class="smaller-gray">
+          Qty:
+          {{ product.selectedProductAmount - product.selectedProductPurchased }}
+        </p>
         <button
           class="select-btn button-dark"
           @click="itemAdded(product.product_Id, product.selectedProductAmount)"
