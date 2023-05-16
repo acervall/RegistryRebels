@@ -14,6 +14,7 @@
         showSortDropdown: false,
         listId: null,
         listName: '',
+        listUrl: '',
         listStat: {},
       }
     },
@@ -34,6 +35,7 @@
         )
         if (matchingList) {
           this.listName = matchingList.listName
+          this.listUrl = matchingList.listUrl
         } else {
           this.listName = 'List not found'
         }
@@ -139,7 +141,9 @@
     </svg>
   </router-link>
   <div class="UserListContainer">
-    <h1 class="ListTitle">{{ listName }}</h1>
+    <h1 @click="$router.push(`/${listUrl}`)" class="ListTitle pointer">
+      {{ listName }}
+    </h1>
     <div class="filterContainer">
       <div class="categoryContainerBox">
         <div class="sortContainerBox">
