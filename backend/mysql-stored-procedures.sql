@@ -55,3 +55,26 @@ BEGIN
 
 END //
 DELIMITER ;
+
+/* Update stuff after purchassjdfhjkdsh */
+DROP PROCEDURE IF EXISTS buyProduct;
+DELIMITER //
+CREATE PROCEDURE buyProduct(IN guestName VARCHAR(50), guestGreeting VARCHAR(250), product_Id INT,productPurchased INT)
+BEGIN
+  /* Registrerar guest och greeting */
+  INSERT INTO guest (guestName, guestGreeting) VALUES (guestName, guestGreeting);
+
+  /* Registrerar produkt i mellantabell */
+  INSERT INTO guestselectedproduct (
+    guestSelectedProductG_Id,
+    guestSelectedProductS_Id,
+    productPurchased)
+    VALUES ((SELECT LAST_INSERT_ID()), product_Id,productPurchased);
+
+  /* Uppdaterar antal köpta produkter */
+  UPDATE selectedproduct
+  SET selectedProductPurchased = selectedProductPurchased + productPurchased
+  WHERE selectedProduct_Id = product_Id;
+
+END //
+DELIMITER ;

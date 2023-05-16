@@ -89,6 +89,6 @@ CREATE TABLE
         guestSelectedProductS_Id INT,
         guestSelectedProductG_Id INT,
         productPurchased INT,
-        FOREIGN KEY (guestSelectedProduct_Id) REFERENCES selectedProduct(selectedProduct_Id),
+        FOREIGN KEY (guestSelectedProductS_Id) REFERENCES selectedProduct(selectedProduct_Id),
         FOREIGN KEY (guestSelectedProductG_Id) REFERENCES guest(guest_Id)
     );

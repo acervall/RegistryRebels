@@ -238,7 +238,12 @@
             <p>{{ product.categoryName }}</p>
           </div>
           <div style="margin-top: auto" class="wish-amount-container">
-            <p>Wished amount: {{ product.selectedProductAmount }}</p>
+            <p>
+              Wished amount:
+              {{
+                product.selectedProductAmount - product.selectedProductPurchased
+              }}
+            </p>
           </div>
         </div>
         <div style="margin-left: auto" id="product-info-container">

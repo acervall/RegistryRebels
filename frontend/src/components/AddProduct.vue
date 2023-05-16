@@ -196,6 +196,7 @@
             (res) => (this.productList = res),
           )
         }
+        this.validateData()
       },
       url(updatedUrl) {
         if (updatedUrl.length >= 3) {

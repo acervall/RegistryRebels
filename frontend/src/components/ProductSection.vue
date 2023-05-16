@@ -99,7 +99,7 @@
           product.amount--
         }
       },
-      itemAdded(productId, selectedProductAmount) {
+      itemAdded(productId, selectedProductAmount, selectedProduct_Id) {
         this.loadingIcon = true
         const productIndex = this.productList.findIndex(
           (p) => p.product_Id === productId,
@@ -113,11 +113,13 @@
           query: {
             productId: productId,
             amount: product.amount,
+            selectedProduct_Id: selectedProduct_Id,
             selectedProductAmount: selectedProductAmount,
           },
         })
       },
     },
+    /* TODO: UTVECKLINGSPOTENTIAL gör knapp inactive if qty <= 0  */
   }
 </script>
 
@@ -206,10 +208,19 @@
         <p class="product-price">{{ product.productPrice }}:-</p>
       </div>
       <div>
-        <p class="smaller-gray">Qty: {{ product.selectedProductAmount }}</p>
+        <p class="smaller-gray">
+          Qty:
+          {{ product.selectedProductAmount - product.selectedProductPurchased }}
+        </p>
         <button
           class="select-btn button-dark"
-          @click="itemAdded(product.product_Id, product.selectedProductAmount)"
+          @click="
+            itemAdded(
+              product.product_Id,
+              product.selectedProductAmount,
+              product.selectedProduct_Id,
+            )
+          "
         >
           <p v-if="!product.itemAdd">Select</p>
           <p v-else>Added</p>
