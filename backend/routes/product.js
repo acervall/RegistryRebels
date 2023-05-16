@@ -5,7 +5,7 @@ const router = express.Router()
 // Renders all the products with highest price first
 router.get('/api/products', async (req, res) => {
   const sql =
-    'SELECT product_Id, categoryName, productName, productPrice, productImg, productURL FROM category INNER JOIN product ON category.category_Id = product.productCategory_Id ORDER BY product.productPrice DESC'
+    'SELECT product_Id, categoryName, productName, productPrice, productImg, productURL FROM category INNER JOIN product ON category.category_Id = product.productCategory_Id ORDER BY product_Id'
   try {
     await connection.query(sql, (error, results) => {
       if (error) {

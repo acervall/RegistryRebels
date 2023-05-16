@@ -67,11 +67,6 @@
 </script>
 
 <template>
-  <pre>{{ productItem }}</pre>
-  <p>{{ guestName }}</p>
-  <p>greetingmsg: {{ greetingMessage }}</p>
-  <p>selectedProductId: {{ selectedProduct_Id }}</p>
-  <p>amountItems: {{ amountItems }}</p>
   <div id="main-container-greeting">
     <div id="intro-container">
       <h1>Gift this item</h1>
@@ -85,7 +80,7 @@
       </div>
       <div
         class="product-details-container"
-        style="margin-left: auto; margin-top: 2px"
+        style="margin-left: auto; margin-top: 10px"
       >
         <p style="margin-top: 4px">Wished: {{ wishedAmount }}</p>
         <p>Amount: {{ amountItems }}</p>
@@ -111,7 +106,7 @@
       v-model="greetingMessage"
     />
     <div id="submit-btn-container">
-      <button id="submit-buy-btn" value="SAVE" @click="leaveGreeting()" />
+      <button id="submit-buy-btn" value="SAVE" @click="leaveGreeting()">SAVE</button>
     </div>
   </div>
 </template>
@@ -151,7 +146,7 @@
 
   .product-details-container {
     margin-top: 0px;
-    padding: 12px;
+    padding: 12px 0px;
   }
 
   .product-details-container h3 {
