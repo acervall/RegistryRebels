@@ -197,6 +197,7 @@
       v-for="product in productList"
       :key="product.product_Id"
     >
+      <pre>{{ product }}</pre>
       <div class="product-image-container">
         <img :src="product.productImg" alt="product image" />
       </div>
