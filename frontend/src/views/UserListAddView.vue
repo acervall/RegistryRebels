@@ -162,7 +162,7 @@
         </svg>
       </router-link>
       <h1>Add new List</h1>
-      <div @click="addList" id="save-container">
+      <div @click="addList" class="pointer" id="save-container">
         <p>Save</p>
       </div>
     </div>
@@ -215,7 +215,7 @@
         />
         <div class="align-list-info">
           <h3 class="h3Wishlist">{{ user.listName }}</h3>
-          <p style="font-size: .8rem;"> {{ user.listDate }} </p>
+          <p style="font-size: 0.8rem">{{ user.listDate }}</p>
         </div>
         <div id="vsg-container">
           <div id="change-btn">
@@ -412,6 +412,4 @@
     font-size: 0.75rem;
     padding-bottom: 3rem;
   }
-
-
 </style>

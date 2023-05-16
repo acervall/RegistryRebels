@@ -72,7 +72,12 @@
     </router-link>
     <h1>My lists</h1>
     <router-link to="/userlistadd">
-      <input id="new-list-btn" type="button" value="Create new list" />
+      <input
+        class="pointer"
+        id="new-list-btn"
+        type="button"
+        value="Create new list"
+      />
     </router-link>
     <div
       v-for="(list, index) in userList"
@@ -90,7 +95,10 @@
             <p>{{ itemsAmount[index] }} Items</p>
           </div>
         </div>
-        <div class="burger-box" @click="triggerSpecificList(list.list_Id)">
+        <div
+          class="burger-box pointer"
+          @click="triggerSpecificList(list.list_Id)"
+        >
           <span />
           <span />
         </div>
