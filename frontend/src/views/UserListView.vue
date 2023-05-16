@@ -119,7 +119,6 @@
           `http://localhost:3000/api/selectedProduct/${this.listId}`,
         )
         this.productList = await data.json()
-        console.log(this.productList, ' id: ', this.listId)
       },
     },
   }
@@ -264,8 +263,12 @@
         </div>
       </div>
     </div>
-    <p class="extra-stat">Unique products: {{ listStat['unique-products'] }}</p>
-    <p class="extra-stat">Total products: {{ listStat['total-products'] }}</p>
+    <p class="extra-stat">
+      Unique products: {{ listStat['unique-products'] || 0 }}
+    </p>
+    <p class="extra-stat">
+      Total products: {{ listStat['total-products'] || 0 }}
+    </p>
   </div>
 </template>
 
@@ -404,5 +407,12 @@
 
   .extra-stat {
     text-align: center;
+    &:first-of-type {
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+    &:last-of-type {
+      margin-bottom: 24px;
+    }
   }
 </style>
