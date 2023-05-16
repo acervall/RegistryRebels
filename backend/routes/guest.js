@@ -30,9 +30,10 @@ router.post('/api/guest', async (req, res) => {
     req.body.amountItems,
   ]
   const sql = `CALL buyProduct(?,?,?,?)`
+  console.log(params)
 
   try {
-    await connection.query(sql, params, (error, result) => {
+    await connection.query(sql, params, (error) => {
       if (error) {
         if (error) throw error
       }

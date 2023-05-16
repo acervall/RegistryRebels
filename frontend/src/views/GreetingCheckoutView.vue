@@ -67,14 +67,19 @@
 </script>
 
 <template>
+  <pre>{{ productItem }}</pre>
+  <p>{{ guestName }}</p>
+  <p>greetingmsg: {{ greetingMessage }}</p>
+  <p>selectedProductId: {{ selectedProduct_Id }}</p>
+  <p>amountItems: {{ amountItems }}</p>
   <div id="main-container-greeting">
     <div id="intro-container">
       <h1>Gift this item</h1>
     </div>
     <div class="product-bought-container">
-      <img :src="productItem[0].productImg" alt="product image" />
+      <img :src="productItem[0]?.productImg" alt="product image" />
       <div class="product-details-container">
-        <p class="product-title">{{ productItem[0].productName }}</p>
+        <p class="product-title">{{ productItem[0]?.productName }}</p>
         <p>From: {{ guestName }}</p>
         <p style="word-break: break-all">Greeting: {{ greetingMessage }}</p>
       </div>
