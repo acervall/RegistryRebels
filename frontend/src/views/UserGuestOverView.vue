@@ -19,29 +19,6 @@
           0,
         )
       },
-      // foodCombinations() {
-      //   const allGuests = this.allGuests
-
-      //   const foodList = allGuests
-      //     .map((person) => person.foodChoice.sort().join(', '))
-      //     .map((item) => (item === '' ? 'Äter allt' : item))
-
-      //   const allFoodCombinations = []
-      //   foodList.forEach((foodStr) => {
-      //     const found = allFoodCombinations.find((food) => food.str === foodStr)
-      //     if (found) {
-      //       found.count++
-      //     } else {
-      //       allFoodCombinations.push({ str: foodStr, count: 1 })
-      //     }
-      //   })
-
-      //   return allFoodCombinations.sort((a, b) => {
-      //     if (a.count > b.count) return -1
-      //     if (a.count < b.count) return 1
-      //     return 0
-      //   })
-      // },
       totalGuests() {
         return this.allGuests.length
       },
@@ -81,11 +58,7 @@
       <p>Invited: {{ totalGuests }}</p>
       <p>Attending: {{ totalAttending }}</p>
     </div>
-    <div class="column">
-      <!-- <p v-for="foodChoice in foodCombinations">
-        {{ foodChoice.str }}: {{ foodChoice.count }}
-      </p> -->
-    </div>
+    <div class="column"></div>
   </div>
   <div class="party-container" v-for="(party, index) in guestList">
     <div class="party-info">

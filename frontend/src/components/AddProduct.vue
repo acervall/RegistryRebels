@@ -105,6 +105,7 @@
                 options2,
               )
             } else {
+              console.log(this.listId)
               data = await fetch(
                 `http://localhost:3000/api/product/${this.listId}`,
                 options1,
@@ -122,9 +123,10 @@
           } catch (error) {
             console.table(error)
             this.classRemoveFrom('name')
+            this.$refs.name.placeholder = error.message
           }
         } else {
-          console.log('Needs more data')
+          this.classRemoveFrom('name')
         }
       },
       classAddTo(ref) {
