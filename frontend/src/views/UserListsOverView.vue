@@ -95,10 +95,19 @@
             <p>{{ itemsAmount[index] }} Items</p>
           </div>
         </div>
-        <div
+        <!--        <div
+          class="burger-box pointer"
           class="burger-box pointer"
           @click="triggerSpecificList(list.list_Id)"
+          >-->
+        <div
+          @click="triggerSpecificList(list.list_Id)"
+          class="edit-product-icon"
         >
+          <img
+            src="/assets/edit-button-svgrepo-com.svg"
+            alt="happy hikers logo"
+          />
           <span />
           <span />
         </div>
@@ -175,17 +184,18 @@
     font-size: 0.8rem;
   }
 
-  .burger-box {
+  .edit-product-icon {
     display: flex;
     flex-direction: column;
     margin-left: auto;
     margin-right: 15px;
   }
 
-  .burger-box span {
+  .edit-product-icon {
     width: 30px;
-    height: 3px;
-    background-color: rgb(32, 32, 32);
     margin-bottom: 5px;
+  }
+  .edit-product-icon img {
+    width: 30px;
   }
 </style>

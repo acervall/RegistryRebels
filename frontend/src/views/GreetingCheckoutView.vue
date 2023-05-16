@@ -4,6 +4,7 @@
       return {
         productItem: null,
         productId: null,
+        selectedProduct_Id: null,
         amountItems: 1,
         guestName: null,
         greetingMessage: null,
@@ -13,6 +14,7 @@
     },
     created() {
       const amountItem = this.$route.query.selectedProductAmount
+      this.selectedProduct_Id = this.$route.query.selectedProduct_Id
       this.wishedAmount = amountItem
       const productId = this.$route.query.productId
       this.productId = productId
@@ -47,7 +49,7 @@
             body: JSON.stringify({
               guestName: this.guestName,
               guestGreeting: this.greetingMessage,
-              productId: this.productId,
+              productId: this.selectedProduct_Id,
               amountItems: this.amountItems,
             }),
           })
@@ -104,7 +106,7 @@
       v-model="greetingMessage"
     />
     <div id="submit-btn-container">
-      <input id="submit-buy-btn" value="SAVE" @click="leaveGreeting()" />
+      <button id="submit-buy-btn" value="SAVE" @click="leaveGreeting()" />
     </div>
   </div>
 </template>
