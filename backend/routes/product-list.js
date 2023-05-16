@@ -83,6 +83,7 @@ router.get('/api/selectedProduct/:id', async (req, res) => {
 
 router.get('/api/selectedProductByUrl/:url', async (req, res) => {
   // Visar alla produkter i list (med url)
+  console.log(req.params.url)
   let sql = `
   SELECT * FROM selectedProduct as sP
   INNER JOIN list l on sP.selectedProductList_Id = l.list_Id
@@ -90,20 +91,12 @@ router.get('/api/selectedProductByUrl/:url', async (req, res) => {
   INNER JOIN category c on p.productCategory_Id = c.category_Id
   WHERE l.listUrl = ?`
 
-  let searchTerm = req.body?.searchTerm
-  if (searchTerm) {
-    sql += ` AND p.productName LIKE ?;`
-    searchTerm = `%${searchTerm}%`
-  }
-  const params = [req.params.url, searchTerm].filter((value) => value)
-
-  console.log('SQL: ', sql, ' PARAMS: ', params)
-
   try {
-    await connection.query(sql, params, function (error, results) {
+    await connection.query(sql, [req.params.url], function (error, results) {
       if (error) {
         if (error) throw error
       }
+      console.log(results)
       res.json(results)
     })
   } catch (error) {

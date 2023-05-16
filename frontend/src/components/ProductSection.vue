@@ -67,8 +67,8 @@
         this.productList.forEach((product) => {
           product.amount = 0
         })
-        this.listName = this.productList[0].listName
-        this.listId = this.productList[0].list_Id
+        this.listName = this.productList[0]?.listName
+        this.listId = this.productList[0]?.list_Id
       },
       sortProductList(sortOption) {
         if (sortOption === this.sortOption) {
