@@ -38,7 +38,7 @@ router.post('/api/guest', async (req, res) => {
         if (error) throw error
       }
       return res.status(201).json({
-        succes: true,
+        success: true,
         message: 'New guest and greeting added.',
       })
     })

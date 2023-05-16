@@ -38,60 +38,68 @@
 </script>
 
 <template>
-  <router-link to="/userhome">
-    <svg
-      class="svg-left"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 25 25"
-    >
-      <path
-        style="fill: #767676"
-        d="M24 12.001H2.914l5.294-5.295-.707-.707L1 12.501l6.5 6.5.707-.707-5.293-5.293H24v-1z"
-        data-name="Left"
-      />
-    </svg>
-  </router-link>
-  <h1>Guests</h1>
-  <div class="summary-container">
-    <div class="column">
-      <p><a href="/#/UserGuestFoodView">Food page</a></p>
-      <p>Invited: {{ totalGuests }}</p>
-      <p>Attending: {{ totalAttending }}</p>
+  <div class="container">
+    <router-link to="/userhome">
+      <svg
+        class="svg-left"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 25 25"
+      >
+        <path
+          style="fill: #767676"
+          d="M24 12.001H2.914l5.294-5.295-.707-.707L1 12.501l6.5 6.5.707-.707-5.293-5.293H24v-1z"
+          data-name="Left"
+        />
+      </svg>
+    </router-link>
+    <h1>Guests</h1>
+    <div class="summary-container">
+      <div class="column">
+        <p><a href="/#/UserGuestFoodView">Food page</a></p>
+        <p>Invited: {{ totalGuests }}</p>
+        <p>Attending: {{ totalAttending }}</p>
+      </div>
+      <div class="column"></div>
     </div>
-    <div class="column"></div>
-  </div>
-  <div class="party-container" v-for="(party, index) in guestList">
-    <div class="party-info">
-      <p>People: {{ party.length }}</p>
-      <p>
-        Special food:
-        {{
-          party.reduce(
-            (acc, curr) => acc + (curr.foodChoice.length > 0 ? 1 : 0),
-            0,
-          )
-        }}
-      </p>
+    <div class="party-container" v-for="(party, index) in guestList">
+      <div class="party-info">
+        <p>People: {{ party.length }}</p>
+        <p>
+          Special food:
+          {{
+            party.reduce(
+              (acc, curr) => acc + (curr.foodChoice.length > 0 ? 1 : 0),
+              0,
+            )
+          }}
+        </p>
+      </div>
+      <ul>
+        <li class="person-container" v-for="person in party" :key="person._id">
+          <p>{{ person.name }}</p>
+          <p>{{ person.foodChoice.join(', ') }}</p>
+        </li>
+      </ul>
     </div>
-    <ul>
-      <li class="person-container" v-for="person in party" :key="person._id">
-        <p>{{ person.name }}</p>
-        <p>{{ person.foodChoice.join(', ') }}</p>
-      </li>
-    </ul>
   </div>
 </template>
 
 <style lang="scss" scoped>
-  * {
+  *:not(.container) {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
   }
 
+  .container {
+    width: 95%;
+    margin: 0 auto;
+  }
+
   .svg-left {
     margin-top: 2rem;
     margin-bottom: 2rem;
+    margin-left: 8px;
   }
 
   ul {

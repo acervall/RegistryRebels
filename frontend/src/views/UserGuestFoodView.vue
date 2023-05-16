@@ -76,29 +76,31 @@
 </script>
 
 <template>
-  <router-link to="/UserGuestOverView">
-    <svg
-      class="svg-left"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 25 25"
-    >
-      <path
-        style="fill: #767676"
-        d="M24 12.001H2.914l5.294-5.295-.707-.707L1 12.501l6.5 6.5.707-.707-5.293-5.293H24v-1z"
-        data-name="Left"
-      />
-    </svg>
-  </router-link>
+  <div class="container">
+    <router-link to="/UserGuestOverView">
+      <svg
+        class="svg-left"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 25 25"
+      >
+        <path
+          style="fill: #767676"
+          d="M24 12.001H2.914l5.294-5.295-.707-.707L1 12.501l6.5 6.5.707-.707-5.293-5.293H24v-1z"
+          data-name="Left"
+        />
+      </svg>
+    </router-link>
 
-  <h1>Food</h1>
-  <div class="guest-container">
-    <h3>Antal gäster: {{ totalIDs }}</h3>
-  </div>
-  <div class="food-container">
-    <p v-for="foodChoice in foodCombinations">
-      <span class="styled-part"> {{ foodChoice.str }}: </span>
-      {{ foodChoice.count }}
-    </p>
+    <h1>Food</h1>
+    <div class="guest-container">
+      <h3>Antal gäster: {{ totalIDs }}</h3>
+    </div>
+    <div class="food-container">
+      <p v-for="foodChoice in foodCombinations">
+        <span class="styled-part"> {{ foodChoice.str }}: </span>
+        {{ foodChoice.count }}
+      </p>
+    </div>
   </div>
 </template>
 
@@ -113,6 +115,11 @@
   h1 {
     padding: 0;
     margin: 1rem;
+  }
+
+  .container {
+    width: 95%;
+    margin: 0 auto;
   }
   .styled-part {
     font-weight: 700;

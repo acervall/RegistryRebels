@@ -54,9 +54,12 @@
             }),
           })
           const data = await createGreeting.json()
+          console.log('createGreeting: ', createGreeting, ' data: ', data)
           if (data.success) {
             localStorage.setItem('User', this.userName)
-            this.$router.push({ path: '/userhome' })
+            setTimeout(() => {
+              this.$router.push(this.$router.options.history.state.back)
+            }, 1000)
           }
         } else {
           console.log('Du måste fylla i alla fält')
@@ -67,11 +70,18 @@
 </script>
 
 <template>
-  <pre>{{ productItem }}</pre>
-  <p>{{ guestName }}</p>
-  <p>greetingmsg: {{ greetingMessage }}</p>
-  <p>selectedProductId: {{ selectedProduct_Id }}</p>
-  <p>amountItems: {{ amountItems }}</p>
+  <svg
+    @click="$router.push(this.$router.options.history.state.back)"
+    class="svg-left pointer"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 25 25"
+  >
+    <path
+      style="fill: #767676"
+      d="M24 12.001H2.914l5.294-5.295-.707-.707L1 12.501l6.5 6.5.707-.707-5.293-5.293H24v-1z"
+      data-name="Left"
+    />
+  </svg>
   <div id="main-container-greeting">
     <div id="intro-container">
       <h1>Gift this item</h1>
@@ -111,7 +121,13 @@
       v-model="greetingMessage"
     />
     <div id="submit-btn-container">
-      <button id="submit-buy-btn" value="SAVE" @click="leaveGreeting()" />
+      <input
+        class="button button-dark"
+        id="submit-buy-btn"
+        type="button"
+        value="Save"
+        @click.prevent="leaveGreeting()"
+      />
     </div>
   </div>
 </template>
@@ -144,7 +160,6 @@
   .product-bought-container {
     display: flex;
     border-radius: 2px;
-    box-shadow: 2px 3px 6px rgb(158, 158, 158);
     width: 100%;
     margin-top: 40px;
   }
@@ -213,16 +228,10 @@
   #submit-btn-container {
     display: flex;
     justify-content: flex-end;
-    margin-top: 10px;
+    margin: 1rem 0;
   }
 
   #submit-buy-btn {
-    width: 75px;
-    height: 30px;
-    text-align: center;
-    border: none;
-    border-radius: 5px;
-    color: rgb(223, 223, 223);
-    background-color: #787a6e;
+    width: fit-content;
   }
 </style>
