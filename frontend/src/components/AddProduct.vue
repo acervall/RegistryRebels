@@ -3,7 +3,6 @@
   export default {
     created() {
       this.getCategories()
-      console.log(this.listId)
     },
     computed: {
       showProducts() {
@@ -18,7 +17,7 @@
     data() {
       return {
         addConfirmation: false,
-        amount: null,
+        amount: 1,
         categories: [],
         favorite: false,
         imgSrc: '',
@@ -42,7 +41,6 @@
             .map((cat) => cat.categoryName.toLowerCase())
             .includes(this.newCategoryName.toLowerCase())
         ) {
-          console.log(this.categories)
           const options = {
             method: 'POST',
             headers: {
@@ -89,7 +87,7 @@
             selectedProductPriority: 0,
             selectedProductFavorite: this.favorite,
             selectedProductPurchased: 0,
-            selectedProductAmount: this.amount,
+            selectedProductAmount: this.amount || 1,
           }),
         }
         if (this.validated) {
@@ -105,7 +103,6 @@
                 options2,
               )
             } else {
-              console.log(this.listId)
               data = await fetch(
                 `http://localhost:3000/api/product/${this.listId}`,
                 options1,
@@ -121,9 +118,7 @@
               throw new Error({ status: data.status, message: res.message })
             }
           } catch (error) {
-            console.table(error)
-            this.classRemoveFrom('name')
-            this.$refs.name.placeholder = error.message
+            console.error(error)
           }
         } else {
           this.classRemoveFrom('name')
@@ -150,7 +145,6 @@
         this.selectedCategory = id
       },
       selectProduct(product) {
-        // console.log(product)
         this.selectedProductP_Id = product.product_Id
         this.imgSrc = product.productImg
         this.name = product.productName
